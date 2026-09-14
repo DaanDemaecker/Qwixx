@@ -10,6 +10,7 @@
 /Qwixx/[Bb]uilds/
 /Qwixx/[Ll]ogs/
 /Qwixx/[Uu]ser[Ss]ettings/
+/Builds/
 *.log
 
 # MemoryCaptures can get excessive in size.
