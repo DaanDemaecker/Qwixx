@@ -1,4 +1,7 @@
+using System;
 using Unity.Netcode;
+using Unity.Netcode.Transports.SinglePlayer;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 namespace HelloWorld
@@ -10,10 +13,73 @@ namespace HelloWorld
     public class HelloWorldManager : MonoBehaviour
     {
         private NetworkManager m_NetworkManager;
+        private UnityTransport _unityTransport;
+        private SinglePlayerTransport _singlePlayerTransport;
+
+        public enum StartType
+        {
+            SinglePlayer,
+            Client,
+            Host,
+            Server
+        }
+
+        private string _playerName = string.Empty;
 
         private void Awake()
         {
             m_NetworkManager = GetComponent<NetworkManager>();
+
+            if (m_NetworkManager != null)
+            {
+
+                m_NetworkManager.ConnectionApprovalCallback = ApprovalCheck;
+
+                m_NetworkManager.OnClientDisconnectCallback += OnCLientDisconnectedCallback;
+            }
+
+            _singlePlayerTransport = GetComponent<SinglePlayerTransport>();
+            _unityTransport = GetComponent<UnityTransport>();
+        }
+
+        private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+        {
+            // The client identifier to be authenticated
+            UInt64 clientId = request.ClientNetworkId;
+
+            // Additional connection data defined by user code
+            byte[] connectionData = request.Payload;
+
+            string playerName = System.Text.Encoding.Default.GetString(connectionData);
+
+            // Your approval logic determines the following values
+            response.Approved = true;
+            response.CreatePlayerObject = true;
+
+            // The Prefab hash value of the NetworkPrefab, if null the default NetworkManager player Prefab is used
+            response.PlayerPrefabHash = null;
+
+            // Position to spawn the player object (if null it uses default of Vector3.zero)
+            response.Position = Vector3.zero;
+
+            // Rotation to spawn the player object (if null it uses the default of Quaternion.identity)
+            response.Rotation = Quaternion.identity;
+
+            // If response.Approved is false, you can provide a message that explains the reason why via ConnectionApprovalResponse.Reason
+            // On the client-side, NetworkManager.DisconnectReason will be populated with this message via DisconnectReasonMessage
+            response.Reason = $"I just really don't like {playerName}";
+
+            // If additional approval steps are needed, set this to true until the additional steps are complete
+            // once it transitions from true to false the connection approval response will be processed.
+            response.Pending = false;
+        }
+
+        private void OnCLientDisconnectedCallback(ulong obj)
+        {
+            if(!m_NetworkManager.IsServer && m_NetworkManager.DisconnectReason != string.Empty)
+            {
+                Debug.LogError($"Approval Declined Reason: {m_NetworkManager.DisconnectReason}");
+            }
         }
 
         private void OnGUI()
@@ -35,9 +101,49 @@ namespace HelloWorld
 
         private void StartButtons()
         {
-            if (GUILayout.Button("Host")) m_NetworkManager.StartHost();
-            if (GUILayout.Button("Client")) m_NetworkManager.StartClient();
-            if (GUILayout.Button("Server")) m_NetworkManager.StartServer();
+            if (GUILayout.Button("SinglePlayer"))
+            {
+                StartSession(StartType.SinglePlayer);
+            }
+
+            if (GUILayout.Button("Host"))
+            {
+                StartSession(StartType.Host);
+            }
+
+            _playerName = GUILayout.TextField(_playerName, 25);
+
+            if (GUILayout.Button("Client"))
+            {
+                m_NetworkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(_playerName);
+
+                StartSession(StartType.Client);
+            }
+            if (GUILayout.Button("Server"))
+            {
+                StartSession(StartType.Server);
+            }
+        }
+
+        private void StartSession(StartType type)
+        {
+            bool startStatus = false;
+
+            m_NetworkManager.NetworkConfig.NetworkTransport = type == StartType.SinglePlayer ? _singlePlayerTransport : _unityTransport;
+            
+            switch(type)
+            {
+                case StartType.SinglePlayer:
+                case StartType.Host:
+                    startStatus = m_NetworkManager.StartHost();
+                    break;
+                case StartType.Server:
+                    startStatus = m_NetworkManager.StartServer();
+                    break;
+                case StartType.Client:
+                    startStatus = m_NetworkManager.StartClient();
+                    break;
+            }
         }
 
         private void StatusLabels()
