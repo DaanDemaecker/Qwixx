@@ -24,7 +24,7 @@ namespace HelloWorld
             Server
         }
 
-        private string _playerName = string.Empty;
+        private string _serverIP = string.Empty;
 
         private void Awake()
         {
@@ -101,25 +101,25 @@ namespace HelloWorld
 
         private void StartButtons()
         {
-            if (GUILayout.Button("SinglePlayer"))
+            if (GUILayout.Button("SinglePlayer", GUILayout.Height(50)))
             {
                 StartSession(StartType.SinglePlayer);
             }
 
-            if (GUILayout.Button("Host"))
+            if (GUILayout.Button("Host", GUILayout.Height(50)))
             {
                 StartSession(StartType.Host);
             }
 
-            _playerName = GUILayout.TextField(_playerName, 25);
+            _serverIP = GUILayout.TextField(_serverIP, 25, GUILayout.Height(50));
 
-            if (GUILayout.Button("Client"))
+            if (GUILayout.Button("Client", GUILayout.Height(50)))
             {
-                m_NetworkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(_playerName);
+                m_NetworkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(_serverIP);
 
                 StartSession(StartType.Client);
             }
-            if (GUILayout.Button("Server"))
+            if (GUILayout.Button("Server", GUILayout.Height(50)))
             {
                 StartSession(StartType.Server);
             }
@@ -134,13 +134,18 @@ namespace HelloWorld
             switch(type)
             {
                 case StartType.SinglePlayer:
+                    startStatus = m_NetworkManager.StartHost();
+                    break;
                 case StartType.Host:
+                    _unityTransport.SetConnectionData("0.0.0.0", 7777);
                     startStatus = m_NetworkManager.StartHost();
                     break;
                 case StartType.Server:
+                    _unityTransport.SetConnectionData("0.0.0.0", 7777);
                     startStatus = m_NetworkManager.StartServer();
                     break;
                 case StartType.Client:
+                    _unityTransport.SetConnectionData(_serverIP, 7777);
                     startStatus = m_NetworkManager.StartClient();
                     break;
             }
