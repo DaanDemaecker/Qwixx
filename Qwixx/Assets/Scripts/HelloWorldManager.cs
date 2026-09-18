@@ -45,7 +45,7 @@ namespace HelloWorld
         private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
             // The client identifier to be authenticated
-            UInt64 clientId = request.ClientNetworkId;
+            ulong clientId = request.ClientNetworkId;
 
             // Additional connection data defined by user code
             byte[] connectionData = request.Payload;
