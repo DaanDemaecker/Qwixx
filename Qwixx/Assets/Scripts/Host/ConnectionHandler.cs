@@ -9,8 +9,13 @@ public class ConnectionHandler : MonoBehaviour
     [SerializeField]
     private List<uint> _alternatePrefabs = new();
 
+    private const int HOST_PREFAB_INDEX = 0;
+
     private const ushort PORT = 2222;
     private const string HOST_ADRESS = "0.0.0.0";
+
+    private const string HOST_CONNECTION_DATA = "Host:\"True\"";
+    private const string CLIENT_CONNECTION_DATA = "Host:\"False\"";
 
     private NetworkManager _networkManager;
     private UnityTransport _unityTransport;
@@ -43,9 +48,9 @@ public class ConnectionHandler : MonoBehaviour
 
             response.Approved = true;
             response.CreatePlayerObject = true;
-            if (_alternatePrefabs.Count > 0)
+            if (_alternatePrefabs.Count >= HOST_PREFAB_INDEX)
             {
-                response.PlayerPrefabHash = _alternatePrefabs[0];
+                response.PlayerPrefabHash = _alternatePrefabs[HOST_PREFAB_INDEX];
             }
         }
         else
@@ -93,7 +98,7 @@ public class ConnectionHandler : MonoBehaviour
                 _unityTransport.SetConnectionData(HOST_ADRESS, PORT);
             }
 
-            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes("Host:\"True\"");
+            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(HOST_CONNECTION_DATA);
             _networkManager.StartHost();
         }
     }
@@ -106,7 +111,7 @@ public class ConnectionHandler : MonoBehaviour
             {
                 _unityTransport.SetConnectionData(hostAddress, PORT);
             }
-            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes("Host:\"False\"");
+            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(CLIENT_CONNECTION_DATA);
             _networkManager.StartClient();
         }
     }
