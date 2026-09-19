@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerCamera : NetworkBehaviour
 {
+    [SerializeField]
+    private GameObject _canvas;
+
     public override void OnNetworkSpawn()
     {
         if (IsLocalPlayer)
@@ -14,6 +17,11 @@ public class PlayerCamera : NetworkBehaviour
                 Camera.main.gameObject.SetActive(false);
                 camera.enabled = true;
             }
+        }
+
+        if(_canvas != null)
+        {
+            _canvas.SetActive(IsOwner);
         }
     }
 }
