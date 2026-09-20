@@ -624,7 +624,7 @@ MonoBehaviour:
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
     Address: 0.0.0.0
-    Port: 2222
+    Port: 5555
     WebSocketPath: /
     ServerListenAddress: 127.0.0.1
     ClientBindPort: 0

@@ -8,6 +8,7 @@ public class PlayerCamera : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+
         if (IsLocalPlayer)
         {
             Camera camera = GetComponent<Camera>();
@@ -17,6 +18,11 @@ public class PlayerCamera : NetworkBehaviour
                 Camera.main.gameObject.SetActive(false);
                 camera.enabled = true;
             }
+        }
+        else
+        {
+            AudioListener listener = GetComponent<AudioListener>();
+            listener.enabled = false;
         }
 
         if(_canvas != null)
