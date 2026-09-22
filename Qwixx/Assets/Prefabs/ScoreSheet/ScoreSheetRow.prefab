@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 9114966979550938911}
   - component: {fileID: 6985281313852610224}
   - component: {fileID: 7676874222895230529}
-  - component: {fileID: 5735710246922633847}
   m_Layer: 5
   m_Name: ScoreSheetRow
   m_TagString: Untagged
@@ -414,8 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Material: {fileID: 2100000, guid: 8e81ad2e5d9c46646b8ec2f07cbe16fc, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -458,21 +457,6 @@ MonoBehaviour:
   - {fileID: 381038085979134550}
   - {fileID: 4533826944074288258}
   _highestValueIndex: -1
---- !u!114 &5735710246922633847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7499989519373634905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fe6bf6b051c3e84baa70ee7ad095d60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ColorUpdateParent
-  _colorLookup: {fileID: 11400000, guid: 8aca4cbf14b59b2418dfa197a724acec, type: 2}
-  _color: 0
-  _children: []
 --- !u!1001 &553284482775815424
 PrefabInstance:
   m_ObjectHideFlags: 0

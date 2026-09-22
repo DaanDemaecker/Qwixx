@@ -28,6 +28,9 @@ public class ScoreSheetEntry : MonoBehaviour
 
     private bool _crossedOff = false;
 
+    private const float DISABLED_ALPHA = 1.0f;
+    private const float ENABLED_ALPHA = 0.5f;
+
     public bool CrossedOff
     {
         get
@@ -44,23 +47,32 @@ public class ScoreSheetEntry : MonoBehaviour
         }
     }
 
-    public void Disable()
+    public void SetEnabled(bool value)
     {
         if (_background != null)
         {
             Color color = _background.color;
-            color.a = 1;
+            if (value)
+            {
+                color.a = ENABLED_ALPHA;
+            }
+            else
+            {
+                color.a = DISABLED_ALPHA;
+            }
             _background.color = color;
         }
     }
 
-    public void CrossOff()
+    public void CrossOff(bool value)
     {
+        _crossedOff = value;
+
+
         if (_crossout != null)
         {
-            _crossout.SetActive(true);
+            _crossout.SetActive(_crossedOff);
         }
-        _crossedOff = true;
     }
 
     public void OnValidate()

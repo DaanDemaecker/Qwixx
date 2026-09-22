@@ -41,13 +41,13 @@ public class ScoreSheetRow : MonoBehaviour
     {
         for (int i = 0; i < _entries.Count; ++i)
         {
-            _entries[i].Disable();
+            _entries[i].SetEnabled();
             if (value == _entries[i].Value)
             {
                 if (!_entries[i].CrossedOff)
                 {
                     _crossedOffAmount++;
-                    _entries[i].CrossOff();
+                    _entries[i].CrossOff(true);
                     _highestValueIndex = Mathf.Max(_highestValueIndex, i);
                 }
 
