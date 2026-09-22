@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 
 public class ScoreSheetOptions : MonoBehaviour
@@ -11,80 +12,66 @@ public class ScoreSheetOptions : MonoBehaviour
         public int Value;
     }
 
-    [SerializeField]
-    private ScoreSheetRow _redRow = null;
+    [Serializable]
+    private struct ColorRowPair
+    {
+        public DiceColor Color;
+        public ScoreSheetRow Row;
+    }
 
     [SerializeField]
-    private ScoreSheetRow _yellowRow = null;
-
-    [SerializeField]
-    private ScoreSheetRow _greenRow = null;
-
-    [SerializeField]
-    private ScoreSheetRow _blueRow = null;
+    private List<ColorRowPair> _rowPairs = new();
 
     private Dictionary<DiceColor, ScoreSheetRow> _rows = new();
 
+    [SerializeField]
+    private GameObject _nColoredOptionsObject = null;
 
     [SerializeField]
-    private List<ScoreSheetOption> _whiteOptions = new();
-
-
-    [SerializeField]
-    private GameObject _coloredOptions = null;
-
+    private GameObject _coloredOptionsObject = null;
 
     [SerializeField]
-    private ScoreSheetOption _redOption1 = null;
+    private List<ScoreSheetOption> _nColoredOptions = new();
+
+
+    [Serializable]
+    private struct ColorOptionsPair
+    {
+        public DiceColor Color;
+        public ScoreSheetOptionPair Pair;
+    }
 
     [SerializeField]
-    private ScoreSheetOption _redOption2 = null;
-
-
-    [SerializeField]
-    private ScoreSheetOption _yellowOption1 = null;
+    private List<ColorOptionsPair> _pairPairs = new();
 
     [SerializeField]
-    private ScoreSheetOption _yellowOption2 = null;
+    private Dictionary<DiceColor, ScoreSheetOptionPair> _pairs = null;
 
 
-    [SerializeField]
-    private ScoreSheetOption _greenOption1 = null;
-
-    [SerializeField]
-    private ScoreSheetOption _greenOption2 = null;
-
-
-    [SerializeField]
-    private ScoreSheetOption _blueOption1 = null;
-
-    [SerializeField]
-    private ScoreSheetOption _blueOption2 = null;
-
-
-    private SelectedOption _whiteOptionSelected = new SelectedOption { Color = DiceColor.White, Value = -1 };
-    private SelectedOption _colouredOptionSelected = new SelectedOption { Color = DiceColor.White, Value = -1 };
+    private SelectedOption _nColorOptionSelected = new SelectedOption { Color = DiceColor.Color0, Value = -1 };
+    private SelectedOption _colouredOptionSelected = new SelectedOption { Color = DiceColor.Color0, Value = -1 };
 
     private void Awake()
     {
-        _rows[DiceColor.Red] = _redRow;
-        _rows[DiceColor.Yellow] = _yellowRow;
-        _rows[DiceColor.Green] = _greenRow;
-        _rows[DiceColor.Blue] = _blueRow;
 
+        _rows = _rowPairs.ToDictionary(x => x.Color, x => x.Row);
 
-        foreach (var option in _whiteOptions)
+        _pairs = _pairPairs.ToDictionary(x => x.Color, x => x.Pair);
+
+        foreach(var pair in _pairs)
+        {
+            pair.Value.AddListener(OptionSelected);
+        }
+
+        foreach (var option in _nColoredOptions)
         {
             option.ButtonClickedEvent.AddListener(OptionSelected);
         }
-
-        _redOption1.ButtonClickedEvent.AddListener(OptionSelected);
-        _redOption2.ButtonClickedEvent.AddListener(OptionSelected);
     }
 
-    private void OptionSelected(DiceColor color, int value, bool whiteOption)
+    private void OptionSelected(DiceColor color, int value, bool nColoredOption)
     {
-        if(whiteOption)
+        if(nColoredOption)
         {
             if(color == _colouredOptionSelected.Color && value == _colouredOptionSelected.Value)
             {
@@ -93,7 +80,7 @@ public class ScoreSheetOptions : MonoBehaviour
         }
         else
         {
-            if (color == _whiteOptionSelected.Color && value == _whiteOptionSelected.Value)
+            if (color == _nColorOptionSelected.Color && value == _nColorOptionSelected.Value)
             {
                 return;
             }
@@ -112,16 +99,16 @@ public class ScoreSheetOptions : MonoBehaviour
         if (_rows.ContainsKey(color) && _rows[color] != null)
 
 
-            if (whiteOption)
+            if (nColoredOption)
             {
-                if (_whiteOptionSelected.Value >= 0)
+                if (_nColorOptionSelected.Value >= 0)
                 {
-                    _rows[_whiteOptionSelected.Color].Select(_whiteOptionSelected.Value, false);
+                    _rows[_nColorOptionSelected.Color].Select(_nColorOptionSelected.Value, false);
                 }
 
-                _whiteOptionSelected.Color = color;
-                _whiteOptionSelected.Value = value;
-                _rows[_whiteOptionSelected.Color].Select(_whiteOptionSelected.Value, true);
+                _nColorOptionSelected.Color = color;
+                _nColorOptionSelected.Value = value;
+                _rows[_nColorOptionSelected.Color].Select(_nColorOptionSelected.Value, true);
             }
             else
             {
@@ -138,7 +125,7 @@ public class ScoreSheetOptions : MonoBehaviour
 
     public void SetWhite(int number)
     {
-        foreach(var option in _whiteOptions)
+        foreach(var option in _nColoredOptions)
         {
             if(_rows.ContainsKey(option.Color) && _rows[option.Color] != null)
             {
@@ -151,37 +138,38 @@ public class ScoreSheetOptions : MonoBehaviour
         }
     }
 
-    public void SetRed(int number1, int number2, bool activePlayer)
+    public void SetColor1(int number1, int number2, bool activePlayer)
     {
-        if(_coloredOptions != null)
+        if(_coloredOptionsObject != null)
         {
-            _coloredOptions.SetActive(activePlayer);
+            _coloredOptionsObject.SetActive(activePlayer);
         }
 
         if (activePlayer)
         {
-            if(_redRow == null)
+            if (!_rows.ContainsKey(DiceColor.Color1) || _rows[DiceColor.Color1] == null)
             {
                 return;
             }
 
-            if (_redOption1 != null)
+            if (!_pairs.ContainsKey(DiceColor.Color1) || _pairs[DiceColor.Color1] == null)
             {
-                _redOption1.SetValue(number1, _redRow.CanBeCrossed(number1));
+                return;
             }
 
-            if (_redOption2 != null)
-            {
-                _redOption2.SetValue(number2, _redRow.CanBeCrossed(number2));
-            }
+            bool canbeCrossed1 =  _rows[DiceColor.Color1].CanBeCrossed(number1);
+            
+            bool canbeCrossed2 =  _rows[DiceColor.Color1].CanBeCrossed(number2);
+
+            _pairs[DiceColor.Color1].SetValues(number1, number2, canbeCrossed1, canbeCrossed2);
         }
     }
 
     public void OnConfirmChoicesClicked()
     {
-        if (_rows.ContainsKey(_whiteOptionSelected.Color) && _rows[_whiteOptionSelected.Color] != null )
+        if (_rows.ContainsKey(_nColorOptionSelected.Color) && _rows[_nColorOptionSelected.Color] != null )
         {
-            _rows[_whiteOptionSelected.Color].Cross(_whiteOptionSelected.Value);
+            _rows[_nColorOptionSelected.Color].Cross(_nColorOptionSelected.Value);
         }
 
         if (_rows.ContainsKey(_colouredOptionSelected.Color) && _rows[_colouredOptionSelected.Color] != null)
@@ -189,10 +177,10 @@ public class ScoreSheetOptions : MonoBehaviour
             _rows[_colouredOptionSelected.Color].Cross(_colouredOptionSelected.Value);
         }
 
-        _whiteOptionSelected.Color = DiceColor.White;
-        _whiteOptionSelected.Value = -1;
+        _nColorOptionSelected.Color = DiceColor.Color0;
+        _nColorOptionSelected.Value = -1;
 
-        _colouredOptionSelected.Color = DiceColor.White;
+        _colouredOptionSelected.Color = DiceColor.Color0;
         _colouredOptionSelected.Value = -1;
     }
 }

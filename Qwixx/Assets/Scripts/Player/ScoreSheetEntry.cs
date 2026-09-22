@@ -23,6 +23,9 @@ public class ScoreSheetEntry : MonoBehaviour
     [SerializeField]
     private Image _background = null;
 
+    [SerializeField]
+    private TMPro.TextMeshProUGUI _text = null;
+
     private bool _crossedOff = false;
 
     public bool CrossedOff
@@ -45,7 +48,9 @@ public class ScoreSheetEntry : MonoBehaviour
     {
         if (_background != null)
         {
-            _background.color = Color.gray;
+            Color color = _background.color;
+            color.a = 1;
+            _background.color = color;
         }
     }
 
@@ -56,5 +61,13 @@ public class ScoreSheetEntry : MonoBehaviour
             _crossout.SetActive(true);
         }
         _crossedOff = true;
+    }
+
+    public void OnValidate()
+    {
+        if(_text != null)
+        {
+            _text.text = _value.ToString();
+        }
     }
 }

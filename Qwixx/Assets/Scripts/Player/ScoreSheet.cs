@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreSheet : MonoBehaviour
 {
+    [SerializeField]
+    private Dictionary<DiceColor, ScoreSheetRow> _rows = new();
+
     [SerializeField]
     private ScoreSheetOptions _options = null;
 
@@ -9,8 +13,8 @@ public class ScoreSheet : MonoBehaviour
     {
         if (_options != null)
         {
-            _options.SetWhite(roll.White1 + roll.White2);
-            _options.SetRed(roll.White1 + roll.Red, roll.White2 + roll.Red, activePlayer);
+            _options.SetWhite(roll.Color0_1 + roll.Color0_2);
+            _options.SetColor1(roll.Color0_1 + roll.Color1, roll.Color0_2 + roll.Color1, activePlayer);
         }
     }
 }

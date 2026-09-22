@@ -23,7 +23,6 @@ public class ScoreSheetRow : MonoBehaviour
             }
         }
 
-
         return false;
     }
 

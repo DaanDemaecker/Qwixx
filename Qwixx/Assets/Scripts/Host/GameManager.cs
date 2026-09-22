@@ -14,20 +14,20 @@ public class GameManager : NetworkBehaviour
     {
         DiceRoll currentRoll = new DiceRoll
         {
-            White1 = Random.Range(1, 7),
-            White2 = Random.Range(1, 7),
-            Red = Random.Range(1, 7),
-            Yellow = Random.Range(1, 7),
-            Green = Random.Range(1, 7),
-            Blue = Random.Range(1, 7)
+            Color0_1 = Random.Range(1, 7),
+            Color0_2 = Random.Range(1, 7),
+            Color1 = Random.Range(1, 7),
+            Color2 = Random.Range(1, 7),
+            Color3 = Random.Range(1, 7),
+            Color4 = Random.Range(1, 7)
         };
 
-        Debug.Log($"White1, {currentRoll.White1}");
-        Debug.Log($"White2, {currentRoll.White2}");
-        Debug.Log($"Red, {currentRoll.Red}");
-        Debug.Log($"Yellow, {currentRoll.Yellow}");
-        Debug.Log($"Green, {currentRoll.Green}");
-        Debug.Log($"Blue, {currentRoll.Blue}");
+        Debug.Log($"White1, {currentRoll.Color0_1}");
+        Debug.Log($"White2, {currentRoll.Color0_2}");
+        Debug.Log($"Red, {currentRoll.Color1}");
+        Debug.Log($"Yellow, {currentRoll.Color2}");
+        Debug.Log($"Green, {currentRoll.Color3}");
+        Debug.Log($"Blue, {currentRoll.Color4}");
 
 
         RollDiceResultClientRpc(currentRoll, clientId);

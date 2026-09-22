@@ -9,13 +9,18 @@ public class ScoreSheetOption : MonoBehaviour
     private TMPro.TextMeshProUGUI _text = null;
 
     [SerializeField]
-    private DiceColor _color = DiceColor.White;
+    private DiceColor _color = DiceColor.Color0;
 
     [SerializeField]
     private GameObject _crossedOffImage = null;
 
     public DiceColor Color
     {
+        set
+        {
+            _color = value;
+        }
+
         get
         {
             return _color;
@@ -23,7 +28,7 @@ public class ScoreSheetOption : MonoBehaviour
     }
 
     [SerializeField]
-    private bool _whiteOption = true;
+    private bool _nColoredOption = true;
 
     private int _value = -1;
 
@@ -53,6 +58,6 @@ public class ScoreSheetOption : MonoBehaviour
             return;
         }
 
-        ButtonClickedEvent.Invoke(_color, _value, _whiteOption);
+        ButtonClickedEvent.Invoke(_color, _value, _nColoredOption);
     }
 }

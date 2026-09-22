@@ -11,7 +11,7 @@ public class ConnectionHandler : MonoBehaviour
 
     private const int HOST_PREFAB_INDEX = 0;
 
-    private const ushort PORT = 5555;
+    private const ushort PORT = 7777;
     private const string HOST_ADRESS = "0.0.0.0";
 
     private const string HOST_CONNECTION_DATA = "Host:\"True\"";
