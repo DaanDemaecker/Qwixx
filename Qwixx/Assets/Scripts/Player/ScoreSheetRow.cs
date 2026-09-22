@@ -41,7 +41,7 @@ public class ScoreSheetRow : MonoBehaviour
     {
         for (int i = 0; i < _entries.Count; ++i)
         {
-            _entries[i].SetEnabled();
+            _entries[i].SetEnabled(false);
             if (value == _entries[i].Value)
             {
                 if (!_entries[i].CrossedOff)

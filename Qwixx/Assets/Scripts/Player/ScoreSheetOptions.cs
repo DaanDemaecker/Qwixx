@@ -138,30 +138,30 @@ public class ScoreSheetOptions : MonoBehaviour
         }
     }
 
-    public void SetColor1(int number1, int number2, bool activePlayer)
+    public void SetColor(DiceColor color, int number1, int number2, bool activePlayer)
     {
-        if(_coloredOptionsObject != null)
+        if (_coloredOptionsObject != null)
         {
             _coloredOptionsObject.SetActive(activePlayer);
         }
 
         if (activePlayer)
         {
-            if (!_rows.ContainsKey(DiceColor.Color1) || _rows[DiceColor.Color1] == null)
+            if (!_rows.ContainsKey(color) || _rows[color] == null)
             {
                 return;
             }
 
-            if (!_pairs.ContainsKey(DiceColor.Color1) || _pairs[DiceColor.Color1] == null)
+            if (!_pairs.ContainsKey(color) || _pairs[color] == null)
             {
                 return;
             }
 
-            bool canbeCrossed1 =  _rows[DiceColor.Color1].CanBeCrossed(number1);
-            
-            bool canbeCrossed2 =  _rows[DiceColor.Color1].CanBeCrossed(number2);
+            bool canbeCrossed1 = _rows[color].CanBeCrossed(number1);
 
-            _pairs[DiceColor.Color1].SetValues(number1, number2, canbeCrossed1, canbeCrossed2);
+            bool canbeCrossed2 = _rows[color].CanBeCrossed(number2);
+
+            _pairs[color].SetValues(number1, number2, canbeCrossed1, canbeCrossed2);
         }
     }
 
