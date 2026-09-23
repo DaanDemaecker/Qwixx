@@ -8,14 +8,19 @@ public class PlayerCamera : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-
-        if (IsLocalPlayer)
+        if (IsOwner)
         {
             Camera camera = GetComponent<Camera>();
 
             if (camera != null)
             {
-                Camera.main.gameObject.SetActive(false);
+                if(IsServer)
+                {
+                    camera.transform.position = Camera.main.transform.position;
+                    camera.transform.rotation = Camera.main.transform.rotation;
+                }
+
+                Destroy(Camera.main.gameObject);
                 camera.enabled = true;
             }
         }

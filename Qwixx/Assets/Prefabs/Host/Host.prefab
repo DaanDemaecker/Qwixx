@@ -47,7 +47,7 @@ Camera:
   m_GameObject: {fileID: 674032404431196609}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.6415094, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -72,7 +72,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -195,6 +195,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ShowTopMostFoldoutHeaderGroup: 1
+  _diePrefabs:
+  - Color: 0
+    Prefab: {fileID: 1247808938924941851, guid: df7c5c06119dcec41b3c67c80e08962c, type: 3}
+  - Color: 1
+    Prefab: {fileID: 1247808938924941851, guid: 8fe985a4ea49b774090b0b84cb69a8a8, type: 3}
+  - Color: 2
+    Prefab: {fileID: 1247808938924941851, guid: 74b44cf4a2348c6489f2b48672ae034c, type: 3}
+  - Color: 3
+    Prefab: {fileID: 1247808938924941851, guid: e917923a073a077488d9a92270201bdd, type: 3}
+  - Color: 4
+    Prefab: {fileID: 1247808938924941851, guid: b61e5dc86cb6c464a91436b4fadca8bf, type: 3}
 --- !u!1 &3250280873134701548
 GameObject:
   m_ObjectHideFlags: 0

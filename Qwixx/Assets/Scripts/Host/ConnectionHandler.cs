@@ -11,7 +11,8 @@ public class ConnectionHandler : MonoBehaviour
 
     private const int HOST_PREFAB_INDEX = 0;
 
-    private const ushort PORT = 7777;
+    [SerializeField]
+    private ushort _port = 7777;
     private const string HOST_ADRESS = "0.0.0.0";
 
     private const string HOST_CONNECTION_DATA = "Host:\"True\"";
@@ -94,7 +95,7 @@ public class ConnectionHandler : MonoBehaviour
         {
             if(_unityTransport != null)
             {
-                _unityTransport.SetConnectionData(HOST_ADRESS, PORT);
+                _unityTransport.SetConnectionData(HOST_ADRESS, _port);
             }
 
             _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(HOST_CONNECTION_DATA);
@@ -108,7 +109,7 @@ public class ConnectionHandler : MonoBehaviour
         {
             if (_unityTransport != null)
             {
-                _unityTransport.SetConnectionData(hostAddress, PORT);
+                _unityTransport.SetConnectionData(hostAddress, _port);
             }
             _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(CLIENT_CONNECTION_DATA);
             _networkManager.StartClient();

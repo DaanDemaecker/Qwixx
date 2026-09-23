@@ -9,7 +9,7 @@ public class ScoreSheet : MonoBehaviour
     [SerializeField]
     private ScoreSheetOptions _options = null;
 
-    public void SetRoll(DiceRoll roll, bool activePlayer)
+    public void SetRoll(DiceRoll.DiceRollData roll, bool activePlayer)
     {
         if (_options != null)
         {

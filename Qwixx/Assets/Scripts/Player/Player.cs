@@ -35,7 +35,7 @@ public class Player : NetworkBehaviour
         }
     }
 
-    public void ReceiveRoll(DiceRoll roll, ulong activePlayerId)
+    public void ReceiveRoll(DiceRoll.DiceRollData roll, ulong activePlayerId)
     {
         if(IsOwner && _scoreSheet != null)
         {
