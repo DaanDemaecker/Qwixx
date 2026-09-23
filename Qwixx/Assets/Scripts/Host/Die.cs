@@ -27,6 +27,8 @@ public class Die : MonoBehaviour
 
     private const float MOVEMENT_DELTA = 0.5f;
 
+    private const float MAX_SLOPE_ANGLE = 5f;
+
     private Vector3 _beginPosition = Vector3.zero;
 
     public Vector3 BeginPosition
@@ -71,15 +73,12 @@ public class Die : MonoBehaviour
 
     public void Roll()
     {
-        if(_isMoving)
-        {
-            return;
-        }
-
         if(_rigidBody == null)
         {
             return;
         }
+
+        UnfreezeRigidBody();
 
         float yAngle = Random.Range(-Mathf.PI, Mathf.PI);
         float xAngle = Random.Range(0, MAX_ANGLE);
@@ -128,6 +127,13 @@ public class Die : MonoBehaviour
 
         if(mostUpSide >= 0)
         {
+            if(smallesAngle > MAX_SLOPE_ANGLE)
+            {
+                Roll();
+                return;
+            }
+
+            FreezeRigidBody();
             RollCompleteEvent.Invoke(_color, _sides[mostUpSide].Value);
         }
     }
@@ -137,6 +143,22 @@ public class Die : MonoBehaviour
         if(_beginPosition != Vector3.zero)
         {
             transform.position = _beginPosition;
+        }
+    }
+
+    private void FreezeRigidBody()
+    {
+        if (_rigidBody != null)
+        {
+            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        }
+    }
+
+    private void UnfreezeRigidBody()
+    {
+        if(_rigidBody != null)
+        {
+            _rigidBody.constraints = 0;
         }
     }
 }
