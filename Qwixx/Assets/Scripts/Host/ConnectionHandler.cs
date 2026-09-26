@@ -1,15 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConnectionHandler : MonoBehaviour
 {
     [SerializeField]
-    private List<uint> _alternatePrefabs = new();
-
-    private const int HOST_PREFAB_INDEX = 0;
+    private int _maxPlayers = 4;
 
     [SerializeField]
     private ushort _port = 7777;
@@ -17,6 +17,8 @@ public class ConnectionHandler : MonoBehaviour
 
     private const string HOST_CONNECTION_DATA = "Host:\"True\"";
     private const string CLIENT_CONNECTION_DATA = "Host:\"False\"";
+
+    private const string CONNECTION_SCENE_NAME = "LobbyScene";
 
     private NetworkManager _networkManager;
     private UnityTransport _unityTransport;
@@ -30,8 +32,16 @@ public class ConnectionHandler : MonoBehaviour
         if (_networkManager != null)
         {
             _networkManager.ConnectionApprovalCallback = ApprovalCheck;
+            _networkManager.OnClientDisconnectCallback += OnDisconnected;
         }
     }
+
+    private void OnDisconnected(ulong clientId)
+    {
+        Debug.LogError($"Client {clientId} disconnected, {_networkManager.DisconnectReason}");
+    }
+
+
 
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
@@ -45,18 +55,30 @@ public class ConnectionHandler : MonoBehaviour
 
         if(IsRequestHost(decodedData))
         {
-            Debug.Log("Connection is host");
-
             response.Approved = true;
             response.CreatePlayerObject = true;
-            if (_alternatePrefabs.Count >= HOST_PREFAB_INDEX)
-            {
-                response.PlayerPrefabHash = _alternatePrefabs[HOST_PREFAB_INDEX];
-            }
+            response.PlayerPrefabHash = null;
+            //if (_alternatePrefabs.Count >= HOST_PREFAB_INDEX)
+            //{
+            //    response.PlayerPrefabHash = _alternatePrefabs[HOST_PREFAB_INDEX];
+            //}
         }
         else
         {
-            Debug.Log("Connection is client");
+            if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals(CONNECTION_SCENE_NAME))
+            {
+                response.Approved = false;
+                response.Reason = "Game already started";
+                return;
+            }
+            // Check if the maximum number of connections has been reached, disount 1 as to not count the host as a player
+            else if (_networkManager.ConnectedClients.Count - 1 >= _maxPlayers)
+            {
+                response.Approved = false;
+                response.Reason = "Max players reached";
+                return;
+            }
+
             response.Approved = true;
             response.CreatePlayerObject = true;
             response.PlayerPrefabHash = null;

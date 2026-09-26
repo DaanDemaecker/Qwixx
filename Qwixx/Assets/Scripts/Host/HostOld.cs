@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
-public class GameManager : NetworkBehaviour
+public class HostOld : NetworkBehaviour
 {
     [Serializable]
     private struct DieColorPrefabPair
@@ -18,7 +18,7 @@ public class GameManager : NetworkBehaviour
 
     private List<Die> _diceObjects = new();
 
-    private Player _player = null;
+    private PlayerOld _player = null;
 
     private ulong _lastPlayerId = ulong.MaxValue;
 
@@ -37,7 +37,7 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void RegisterPlayer(Player player)
+    public void RegisterPlayer(PlayerOld player)
     {
         _player = player;
     }
