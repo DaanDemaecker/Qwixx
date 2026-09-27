@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ScoreSheetUi : MonoBehaviour
@@ -9,22 +10,7 @@ public class ScoreSheetUi : MonoBehaviour
     [SerializeField]
     private Image _background = null;
 
-
-
-    [SerializeField]
-    private ScoreSheetOptions _options = null;
-
-    public void SetRoll(DiceRoll.DiceRollData roll, bool activePlayer)
-    {
-        if (_options != null)
-        {
-            _options.SetWhite(roll.Color0_1 + roll.Color0_2);
-            _options.SetColor(DiceColor.Color1, roll.Color0_1 + roll.Color1, roll.Color0_2 + roll.Color1, activePlayer);
-            _options.SetColor(DiceColor.Color2, roll.Color0_1 + roll.Color2, roll.Color0_2 + roll.Color2, activePlayer);
-            _options.SetColor(DiceColor.Color3, roll.Color0_1 + roll.Color3, roll.Color0_2 + roll.Color3, activePlayer);
-            _options.SetColor(DiceColor.Color4, roll.Color0_1 + roll.Color4, roll.Color0_2 + roll.Color4, activePlayer);
-        }
-    }
+    public UnityEvent OnRollClickedEvent;
 
     public void SetInfo(LobbyPlayerData playerData)
     {
@@ -38,5 +24,10 @@ public class ScoreSheetUi : MonoBehaviour
         {
             _background.color = playerData.Color;
         }
+    }
+
+    public void OnRollClicked()
+    {
+        OnRollClickedEvent.Invoke();
     }
 }

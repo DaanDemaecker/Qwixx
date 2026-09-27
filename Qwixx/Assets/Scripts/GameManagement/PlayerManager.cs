@@ -12,7 +12,7 @@ public class PlayerManager : NetworkBehaviour
 
     private NetworkList<LobbyPlayerData> _lobbyPlayerDatas;
 
-    private List<Player> _players = new();
+    private Player _player = null;
 
     private void Awake()
     {
@@ -61,13 +61,23 @@ public class PlayerManager : NetworkBehaviour
 
                 player.transform.SetParent(transform);
 
-                Player playerComponent = null;
-                if (player.TryGetComponent<Player>(out playerComponent))
+                if (player.TryGetComponent<Player>(out _player))
                 {
-                    playerComponent.InitializeValues(GetPlayerData(NetworkManager.Singleton.LocalClientId));
+                    _player.InitializeValues(GetPlayerData(NetworkManager.Singleton.LocalClientId));
+
+                    ScoreSheet scoreSheet = null;
+                    if(player.TryGetComponent<ScoreSheet>(out scoreSheet))
+                    {
+                        SetupCallbacks(scoreSheet);
+                    }
                 }
             }
         }
+    }
+
+    private void SetupCallbacks(ScoreSheet scoreSheet)
+    {
+        scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
     }
 
     private LobbyPlayerData GetPlayerData(ulong clientId)
@@ -83,17 +93,14 @@ public class PlayerManager : NetworkBehaviour
         return new LobbyPlayerData();
     }
 
-    public void DestroyPlayers()
+    private void PlayerManager_OnRollClicked()
     {
-        DestroyPlayersRpc();
+        OnRollClickedServerRpc();
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    private void DestroyPlayersRpc()
+    [Rpc(SendTo.Server, InvokePermission =RpcInvokePermission.Everyone)]
+    private void OnRollClickedServerRpc()
     {
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
+        Debug.LogError("Player clicked roll");
     }
 }

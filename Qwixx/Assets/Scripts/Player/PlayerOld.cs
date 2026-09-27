@@ -48,7 +48,7 @@ public class PlayerOld : NetworkBehaviour
     {
         if(IsOwner && _scoreSheet != null)
         {
-            _scoreSheet.SetRoll(roll, activePlayerId == OwnerClientId);
+            //_scoreSheet.SetRoll(roll, activePlayerId == OwnerClientId);
         }
     }
 }

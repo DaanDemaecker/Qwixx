@@ -1,10 +1,15 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ScoreSheet : MonoBehaviour
 {
     [SerializeField]
     private GameObject _scoreSheetUiPrefab = null;
+
+    private ScoreSheetUi _scoreSheetUI = null;
+
+    public UnityEvent OnRollClickedEvent;
 
     public void SetInfo(LobbyPlayerData data)
     {
@@ -14,12 +19,17 @@ public class ScoreSheet : MonoBehaviour
 
             scoreSheet.transform.SetParent(Camera.main.transform, false);
 
-            ScoreSheetUi scoreSheetUi = null;
 
-            if(scoreSheet.TryGetComponent<ScoreSheetUi>(out scoreSheetUi))
+            if (scoreSheet.TryGetComponent<ScoreSheetUi>(out _scoreSheetUI))
             {
-                scoreSheetUi.SetInfo(data);
+                _scoreSheetUI.SetInfo(data);
+                _scoreSheetUI.OnRollClickedEvent.AddListener(ScoreSheet_OnRollClicked);
             }
         }
+    }
+
+    private void ScoreSheet_OnRollClicked()
+    {
+        OnRollClickedEvent.Invoke();
     }
 }
