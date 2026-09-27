@@ -592,7 +592,7 @@ MonoBehaviour:
   - {fileID: 860455906}
   _clientUi: {fileID: 9182727111263031588}
   _hostUi: {fileID: 7248150630315756208}
-  _minPlayers: 2
+  _minPlayers: 1
 --- !u!1 &681222881 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6139469331068169201, guid: 303f3d89799150149b63eeb19708a792, type: 3}
