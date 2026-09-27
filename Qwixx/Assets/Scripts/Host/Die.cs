@@ -39,7 +39,7 @@ public class Die : MonoBehaviour
         }
     }
 
-    public UnityEvent<DiceColor, int> RollCompleteEvent = new UnityEvent<DiceColor, int>();
+    public UnityEvent<DiceColor, int> OnRollCompleteEvent = new UnityEvent<DiceColor, int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -134,7 +134,7 @@ public class Die : MonoBehaviour
             }
 
             FreezeRigidBody();
-            RollCompleteEvent.Invoke(_color, _sides[mostUpSide].Value);
+            OnRollCompleteEvent.Invoke(_color, _sides[mostUpSide].Value);
         }
     }
 

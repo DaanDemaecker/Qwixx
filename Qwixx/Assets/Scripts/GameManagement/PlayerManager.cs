@@ -14,6 +14,8 @@ public class PlayerManager : NetworkBehaviour
 
     private Player _player = null;
 
+    private Host _host = null;
+
     private void Awake()
     {
         _lobbyPlayerDatas = new();
@@ -50,7 +52,16 @@ public class PlayerManager : NetworkBehaviour
         {
             if (_hostPrefab != null)
             {
-                Instantiate(_hostPrefab);
+                GameObject host = Instantiate(_hostPrefab);
+                Host hostComponent = null;
+
+                if(host.TryGetComponent<Host>(out hostComponent))
+                {
+                    hostComponent.SpawnDice();
+
+                    _host = hostComponent;
+                }
+
             }
         }
         else
@@ -101,6 +112,9 @@ public class PlayerManager : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission =RpcInvokePermission.Everyone)]
     private void OnRollClickedServerRpc()
     {
-        Debug.LogError("Player clicked roll");
+        if(_host != null)
+        {
+            _host.RollDice();
+        }
     }
 }

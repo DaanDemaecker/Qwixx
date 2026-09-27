@@ -115,7 +115,7 @@ public class HostOld : NetworkBehaviour
         {
             dieComponent.BeginPosition = startPos;
             dieComponent.MoveToStartPosition();
-            dieComponent.RollCompleteEvent.AddListener(RollComplete);
+            dieComponent.OnRollCompleteEvent.AddListener(RollComplete);
 
             _diceObjects.Add(dieComponent);
         }
