@@ -442,7 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae390ae48de2ec4d87dd90c914e3b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionHandler
-  _port: 2222
+  _maxPlayers: 4
+  _port: 1111
 --- !u!114 &748655685
 MonoBehaviour:
   m_ObjectHideFlags: 0

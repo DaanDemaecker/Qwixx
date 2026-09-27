@@ -64,14 +64,7 @@ public class LobbyDataManager : NetworkBehaviour
 
             if (playerManager != null)
             {
-                List<LobbyPlayerData> lobbyPlayerDatas = new List<LobbyPlayerData>();
-
-                foreach(LobbyPlayerData data in _lobbyPlayerDatas)
-                {
-                    lobbyPlayerDatas.Add(data);
-                }
-
-                playerManager.StartLoadingGameScene(lobbyPlayerDatas);
+                playerManager.StartLoadingGameScene(_lobbyPlayerDatas);
             }
 
             sceneManager.LoadSceneNetwork(GAME_SCENE_NAME, false);

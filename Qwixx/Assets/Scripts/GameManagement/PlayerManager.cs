@@ -10,10 +10,22 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField]
     private GameObject _playerPrefab = null;
 
-    private List<LobbyPlayerData> _lobbyPlayerDatas = new();
-    public void StartLoadingGameScene(List<LobbyPlayerData> playerDatas)
+    private NetworkList<LobbyPlayerData> _lobbyPlayerDatas;
+
+    private List<Player> _players = new();
+
+    private void Awake()
     {
-        _lobbyPlayerDatas = playerDatas;
+        _lobbyPlayerDatas = new();
+    }
+    public void StartLoadingGameScene(NetworkList<LobbyPlayerData> playerDatas)
+    {
+        foreach(LobbyPlayerData data in playerDatas)
+        {
+            _lobbyPlayerDatas.Add(data);
+        }
+
+
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
     }
 
@@ -25,37 +37,34 @@ public class PlayerManager : NetworkBehaviour
 
     public void SpawnPlayers()
     {
-        SpawnPlayerRpc();        
+        if(IsHost)
+        {
+            SpawnPlayerRpc();        
+        }
     }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.ClientsAndHost)]
     private void SpawnPlayerRpc()
     {
-        foreach(ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        if (IsHost)
         {
-            if (OwnerClientId == clientId)
+            if (_hostPrefab != null)
             {
-                if (_hostPrefab != null)
-                {
-                   Instantiate(_hostPrefab);
-                }
+                Instantiate(_hostPrefab);
             }
-            else
+        }
+        else
+        {
+            if (_playerPrefab != null)
             {
-                if (_playerPrefab != null)
-                {
-                    GameObject player = Instantiate(_playerPrefab);
-                    NetworkObject networkObjectComponent = null;
-                    if(player.TryGetComponent<NetworkObject>(out networkObjectComponent))
-                    {
-                        networkObjectComponent.Spawn(true);
-                    }
+                GameObject player = Instantiate(_playerPrefab);
 
-                    Player playerComponent = null;
-                    if (player.TryGetComponent<Player>(out playerComponent))
-                    {
-                        playerComponent.InitializeValues(GetPlayerData(clientId));
-                    }
+                player.transform.SetParent(transform);
+
+                Player playerComponent = null;
+                if (player.TryGetComponent<Player>(out playerComponent))
+                {
+                    playerComponent.InitializeValues(GetPlayerData(NetworkManager.Singleton.LocalClientId));
                 }
             }
         }

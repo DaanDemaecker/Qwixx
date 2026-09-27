@@ -1,27 +1,25 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _scoreSheetPrefab = null;
-
     private string _playerName = "Player";
     private Color _playerColor = Color.white;
-    private int _playerNumber = 0;
+    private int _playerNumber = -1;
+    private ulong _clientId = ulong.MaxValue;
 
-
-    public void StartGame()
-    {
-        if(_scoreSheetPrefab!= null)
-        {
-            Instantiate(_scoreSheetPrefab).transform.parent = Camera.main.transform;
-        }
-    }
+    private ScoreSheet _scoreSheet = null;
 
     public void InitializeValues(LobbyPlayerData data)
     {
         _playerName = data.Name.ToString();
         _playerColor = data.Color;
         _playerNumber = data.PlayerNumber;
+        _clientId = data.ClientId;
+
+        if(TryGetComponent<ScoreSheet>(out _scoreSheet))
+        {
+            _scoreSheet.SetInfo(data);
+        }
     }
 }

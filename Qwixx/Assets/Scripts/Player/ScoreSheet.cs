@@ -1,23 +1,25 @@
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ScoreSheet : MonoBehaviour
 {
     [SerializeField]
-    private Dictionary<DiceColor, ScoreSheetRow> _rows = new();
+    private GameObject _scoreSheetUiPrefab = null;
 
-    [SerializeField]
-    private ScoreSheetOptions _options = null;
-
-    public void SetRoll(DiceRoll.DiceRollData roll, bool activePlayer)
+    public void SetInfo(LobbyPlayerData data)
     {
-        if (_options != null)
+        if (_scoreSheetUiPrefab != null)
         {
-            _options.SetWhite(roll.Color0_1 + roll.Color0_2);
-            _options.SetColor(DiceColor.Color1, roll.Color0_1 + roll.Color1, roll.Color0_2 + roll.Color1, activePlayer);
-            _options.SetColor(DiceColor.Color2, roll.Color0_1 + roll.Color2, roll.Color0_2 + roll.Color2, activePlayer);
-            _options.SetColor(DiceColor.Color3, roll.Color0_1 + roll.Color3, roll.Color0_2 + roll.Color3, activePlayer);
-            _options.SetColor(DiceColor.Color4, roll.Color0_1 + roll.Color4, roll.Color0_2 + roll.Color4, activePlayer);
+            var scoreSheet = Instantiate(_scoreSheetUiPrefab);
+
+            scoreSheet.transform.SetParent(Camera.main.transform, false);
+
+            ScoreSheetUi scoreSheetUi = null;
+
+            if(scoreSheet.TryGetComponent<ScoreSheetUi>(out scoreSheetUi))
+            {
+                scoreSheetUi.SetInfo(data);
+            }
         }
     }
 }
