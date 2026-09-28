@@ -58,6 +58,7 @@ public class PlayerManager : NetworkBehaviour
                 if(host.TryGetComponent<Host>(out hostComponent))
                 {
                     hostComponent.SpawnDice();
+                    hostComponent.OnRollCompleteEvent.AddListener(PlayerManager_OnRollComplete);
 
                     _host = hostComponent;
                 }
@@ -115,6 +116,20 @@ public class PlayerManager : NetworkBehaviour
         if(_host != null)
         {
             _host.RollDice();
+        }
+    }
+
+    private void PlayerManager_OnRollComplete(DiceRoll.DiceRollData data)
+    {
+        OnRollCompleteClientRpc(data);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void OnRollCompleteClientRpc(DiceRoll.DiceRollData data)
+    {
+        if(_player != null)
+        {
+            _player.SetRollData(data);
         }
     }
 }

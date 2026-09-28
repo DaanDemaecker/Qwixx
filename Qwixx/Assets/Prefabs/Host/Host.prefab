@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2372883844692032500}
   - component: {fileID: 5146328034584577551}
   - component: {fileID: 7469445335900379718}
-  - component: {fileID: 787911791322071707}
+  - component: {fileID: -2733684944704424561}
   m_Layer: 0
   m_Name: Host
   m_TagString: Untagged
@@ -74,7 +74,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Host
   ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &787911791322071707
+  _diceManager: {fileID: -2733684944704424561}
+  OnRollCompleteEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-2733684944704424561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7549626942863636254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdbf12c2d709b914cb6f6303559e1fc8, type: 3}
+  m_Script: {fileID: 11500000, guid: 92ae6c527bf1861458680e866afb8291, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParentToPlayerManager
-  ShowTopMostFoldoutHeaderGroup: 1
+  m_EditorClassIdentifier: Assembly-CSharp::DiceManager
+  _host: {fileID: 7469445335900379718}

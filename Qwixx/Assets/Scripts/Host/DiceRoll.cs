@@ -36,7 +36,7 @@ public class DiceRoll
 
     private DiceRollData _diceRoll = new DiceRollData();
 
-    public UnityEvent<DiceRollData> RollCompleteEvent = new UnityEvent<DiceRollData>();
+    public UnityEvent<DiceRollData> OnRollCompleteEvent = new UnityEvent<DiceRollData>();
 
     public void Reset()
     {
@@ -78,7 +78,7 @@ public class DiceRoll
 
         if(IsComplete())
         {
-            RollCompleteEvent.Invoke(_diceRoll);
+            OnRollCompleteEvent.Invoke(_diceRoll);
         }    
     }
 

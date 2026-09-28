@@ -33,7 +33,7 @@ public class HostOld : NetworkBehaviour
             SpawnDice();
 
             _diceRoll.Reset();
-            _diceRoll.RollCompleteEvent.AddListener(AllRollsComplete);
+            _diceRoll.OnRollCompleteEvent.AddListener(AllRollsComplete);
         }
     }
 

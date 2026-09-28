@@ -9,7 +9,7 @@ public class StartScreenManager : MonoBehaviour
     [SerializeField]
     private Button _joinGameButton;
 
-    [SerializeField]
+    //private string _hostAddress = "192.168.1.12";
     private string _hostAddress = "192.168.1.4";
 
     private void Awake()

@@ -22,4 +22,9 @@ public class Player : MonoBehaviour
             _scoreSheet.SetInfo(data);
         }
     }
+
+    public void SetRollData(DiceRoll.DiceRollData data)
+    {
+        Debug.LogError($"Roll complete: {data.Color0_1}, {data.Color0_2}, {data.Color1}, {data.Color2}, {data.Color3}, {data.Color4}");
+    }
 }

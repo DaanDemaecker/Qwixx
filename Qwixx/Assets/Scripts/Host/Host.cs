@@ -1,12 +1,14 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.Services.Matchmaker.Models;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Host : NetworkBehaviour
 {
-    List<Die> _dice = new();
+    [SerializeField]
+    private DiceManager _diceManager;
+
+    public UnityEvent<DiceRoll.DiceRollData> OnRollCompleteEvent;
 
     public void SpawnDice()
     {
@@ -16,9 +18,9 @@ public class Host : NetworkBehaviour
         {
             Die die = spawner.SpawnDie();
 
-            if(die != null)
+            if(die != null && _diceManager != null)
             {
-                _dice.Add(die);
+                _diceManager.AddDie(die);
             }
         }
     }
@@ -26,10 +28,14 @@ public class Host : NetworkBehaviour
 
     public void RollDice()
     {
-        foreach(Die die in _dice)
+        if(_diceManager != null)
         {
-            die.MoveToStartPosition();
-            die.Roll();
+            _diceManager.Roll();
         }
+    }
+
+    public void RollComplete(DiceRoll.DiceRollData data)
+    {
+        OnRollCompleteEvent.Invoke(data);
     }
 }
