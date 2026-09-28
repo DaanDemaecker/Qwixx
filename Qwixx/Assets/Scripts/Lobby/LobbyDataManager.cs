@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -159,6 +160,27 @@ public class LobbyDataManager : NetworkBehaviour
         if(toRemove >= 0)
         {
             _lobbyPlayerDatas.RemoveAt(toRemove);
+        }
+
+        ReOrderPlayerList();
+    }
+
+    private void ReOrderPlayerList()
+    {
+        for(int i = 0; i < _lobbyPlayerDatas.Count; ++i)
+        {
+            LobbyPlayerData data = _lobbyPlayerDatas[i];
+            if(data.PlayerNumber != (i + 1))
+            {
+                data.PlayerNumber = i + 1;
+
+                if(data.Name.Substring(0, "Player".Length) == "Player")
+                {
+                    data.Name = $"Player{data.PlayerNumber}";
+                }
+
+                _lobbyPlayerDatas.Set(i, data, true);
+            }
         }
     }
 
