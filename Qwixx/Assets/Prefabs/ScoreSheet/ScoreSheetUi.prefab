@@ -782,7 +782,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScoreSheetUi
   _nameText: {fileID: 6455181620255511241}
   _background: {fileID: 8371019016255805142}
+  _rollButton: {fileID: 2274201287327863793}
+  _confirmButton: {fileID: 6629581901708756022}
   OnRollClickedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConfirmTurnEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2274201287327863793
@@ -1394,9 +1399,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Roll
+      - m_Target: {fileID: 113183474782418406}
+        m_TargetAssemblyTypeName: ScoreSheetUi, Assembly-CSharp
+        m_MethodName: OnConfirmTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

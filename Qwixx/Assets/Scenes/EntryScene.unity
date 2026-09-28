@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &75300669 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8133107298809115995, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
+  m_PrefabInstance: {fileID: 625993980}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378bb1146e39de542ab19db3f4bd73e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnManager
 --- !u!1 &332956607
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1123910614014982410, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
+      propertyPath: _turnManager
+      value: 
+      objectReference: {fileID: 75300669}
     - target: {fileID: 1997801248692470100, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 960

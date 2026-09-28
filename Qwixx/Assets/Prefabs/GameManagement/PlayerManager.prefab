@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5862783667130854305}
   - component: {fileID: 5194501785609400908}
   - component: {fileID: 1123910614014982410}
+  - component: {fileID: 8133107298809115995}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -88,3 +89,17 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _hostPrefab: {fileID: 7549626942863636254, guid: deddcd0198a29634598672a954997cb4, type: 3}
   _playerPrefab: {fileID: 6712828578452902066, guid: 240c142955fb29d45b95b066c83f05a1, type: 3}
+  _turnManager: {fileID: 8133107298809115995}
+--- !u!114 &8133107298809115995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328534013105527379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378bb1146e39de542ab19db3f4bd73e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnManager
+  ShowTopMostFoldoutHeaderGroup: 1

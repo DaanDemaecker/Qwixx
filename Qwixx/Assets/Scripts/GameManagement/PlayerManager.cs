@@ -10,11 +10,15 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField]
     private GameObject _playerPrefab = null;
 
+    [SerializeField]
+    private TurnManager _turnManager = null;
+
     private NetworkList<LobbyPlayerData> _lobbyPlayerDatas;
 
     private Player _player = null;
 
     private Host _host = null;
+
 
     private void Awake()
     {
@@ -33,7 +37,16 @@ public class PlayerManager : NetworkBehaviour
 
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, System.Collections.Generic.List<ulong> clientsCompleted, System.Collections.Generic.List<ulong> clientsTimedOut)
     {
+        foreach (LobbyPlayerData data in _lobbyPlayerDatas)
+        {
+            if (_turnManager != null)
+            {
+                _turnManager.AddPlayerEntry(data.ClientId);
+            }
+        }
+
         SpawnPlayers();
+
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManager_OnLoadEventCompleted;
     }
 
@@ -62,7 +75,6 @@ public class PlayerManager : NetworkBehaviour
 
                     _host = hostComponent;
                 }
-
             }
         }
         else
@@ -90,6 +102,7 @@ public class PlayerManager : NetworkBehaviour
     private void SetupCallbacks(ScoreSheet scoreSheet)
     {
         scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
+        scoreSheet.OnConfirmTurnEvent.AddListener(PlayerManager_OnTurnConfirmed);
     }
 
     private LobbyPlayerData GetPlayerData(ulong clientId)
@@ -110,12 +123,26 @@ public class PlayerManager : NetworkBehaviour
         OnRollClickedServerRpc();
     }
 
-    [Rpc(SendTo.Server, InvokePermission =RpcInvokePermission.Everyone)]
+    private void PlayerManager_OnTurnConfirmed()
+    {
+        OnTurnConfirmedServerRpc(new RpcParams());
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void OnRollClickedServerRpc()
     {
         if(_host != null)
         {
             _host.RollDice();
+        }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void OnTurnConfirmedServerRpc(RpcParams rpcParams)
+    {
+        if(_turnManager != null)
+        {
+            _turnManager.TurnConfirmed(rpcParams.Receive.SenderClientId);
         }
     }
 
@@ -130,6 +157,20 @@ public class PlayerManager : NetworkBehaviour
         if(_player != null)
         {
             _player.SetRollData(data);
+        }
+    }
+
+    public void StartTurn(ulong activePlayerId)
+    {
+        StartTurnClientRpc(activePlayerId);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void StartTurnClientRpc( ulong activePlayerId)
+    {
+        if(_player != null)
+        {
+            _player.StartTurn(NetworkManager.Singleton.LocalClientId == activePlayerId);
         }
     }
 }

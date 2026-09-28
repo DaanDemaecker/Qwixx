@@ -10,7 +10,27 @@ public class ScoreSheetUi : MonoBehaviour
     [SerializeField]
     private Image _background = null;
 
+    [SerializeField]
+    private GameObject _rollButton = null;
+
+    [SerializeField]
+    private GameObject _confirmButton = null;
+
     public UnityEvent OnRollClickedEvent;
+    public UnityEvent OnConfirmTurnEvent;
+
+    public void Awake()
+    {
+        if(_rollButton != null)
+        {
+            _rollButton.SetActive(false);
+        }
+
+        if(_confirmButton != null)
+        {
+            _confirmButton.SetActive(true);
+        }
+    }
 
     public void SetInfo(LobbyPlayerData playerData)
     {
@@ -26,8 +46,39 @@ public class ScoreSheetUi : MonoBehaviour
         }
     }
 
+    public void StartTurn(bool activePlayer)
+    {
+        if (_rollButton != null)
+        {
+            _rollButton.SetActive(activePlayer);
+        }
+    }
+
     public void OnRollClicked()
     {
+        if(_rollButton != null)
+        {
+            _rollButton.SetActive(false);
+        }
+
         OnRollClickedEvent.Invoke();
+    }
+
+    public void OnConfirmTurn()
+    {
+        if (_confirmButton != null)
+        {
+            _confirmButton.SetActive(false);
+        }
+
+        OnConfirmTurnEvent.Invoke();
+    }
+
+    public void SetRollData()
+    {
+        if(_confirmButton != null)
+        {
+            _confirmButton.SetActive(true);
+        }
     }
 }

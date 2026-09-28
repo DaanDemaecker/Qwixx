@@ -23,8 +23,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StartTurn(bool activePlayer)
+    {
+        if(_scoreSheet != null)
+        {
+            _scoreSheet.StartTurn(activePlayer);
+        }
+    }
+
     public void SetRollData(DiceRoll.DiceRollData data)
     {
         Debug.LogError($"Roll complete: {data.Color0_1}, {data.Color0_2}, {data.Color1}, {data.Color2}, {data.Color3}, {data.Color4}");
+    
+        if(_scoreSheet != null)
+        {
+            _scoreSheet.SetRollData(data);
+        }
     }
 }
