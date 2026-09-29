@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ScoreSheetUi : MonoBehaviour
+public class ScoreSheetUiOld : MonoBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI _nameText = null;

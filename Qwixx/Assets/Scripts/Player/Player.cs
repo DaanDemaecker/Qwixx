@@ -8,7 +8,16 @@ public class Player : MonoBehaviour
     private int _playerNumber = -1;
     private ulong _clientId = ulong.MaxValue;
 
+    [SerializeField]
     private ScoreSheet _scoreSheet = null;
+
+    public ScoreSheet ScoreSheet
+    {
+        get
+        {
+            return _scoreSheet;
+        }
+    }
 
     public void InitializeValues(LobbyPlayerData data)
     {
@@ -17,7 +26,7 @@ public class Player : MonoBehaviour
         _playerNumber = data.PlayerNumber;
         _clientId = data.ClientId;
 
-        if(TryGetComponent<ScoreSheet>(out _scoreSheet))
+        if(_scoreSheet != null)
         {
             _scoreSheet.SetInfo(data);
         }

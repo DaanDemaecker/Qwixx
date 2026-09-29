@@ -89,8 +89,8 @@ public class PlayerManager : NetworkBehaviour
                 {
                     _player.InitializeValues(GetPlayerData(NetworkManager.Singleton.LocalClientId));
 
-                    ScoreSheet scoreSheet = null;
-                    if(player.TryGetComponent<ScoreSheet>(out scoreSheet))
+                    ScoreSheet scoreSheet = _player.ScoreSheet;
+                    if(scoreSheet != null)
                     {
                         SetupCallbacks(scoreSheet);
                     }
@@ -102,7 +102,7 @@ public class PlayerManager : NetworkBehaviour
     private void SetupCallbacks(ScoreSheet scoreSheet)
     {
         scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
-        scoreSheet.OnConfirmTurnEvent.AddListener(PlayerManager_OnTurnConfirmed);
+        scoreSheet.OnReadyClickedEvent.AddListener(PlayerManager_OnTurnConfirmed);
     }
 
     private LobbyPlayerData GetPlayerData(ulong clientId)

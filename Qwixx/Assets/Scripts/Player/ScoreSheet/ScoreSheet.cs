@@ -9,9 +9,12 @@ public class ScoreSheet : MonoBehaviour
 
     private ScoreSheetUi _scoreSheetUI = null;
 
+
+
+    // Events
     public UnityEvent OnRollClickedEvent;
 
-    public UnityEvent OnConfirmTurnEvent;
+    public UnityEvent OnReadyClickedEvent;
 
     public void SetInfo(LobbyPlayerData data)
     {
@@ -24,21 +27,11 @@ public class ScoreSheet : MonoBehaviour
 
             if (scoreSheet.TryGetComponent<ScoreSheetUi>(out _scoreSheetUI))
             {
-                _scoreSheetUI.SetInfo(data);
-                _scoreSheetUI.OnConfirmTurnEvent.AddListener(ScoreSheet_OnConfirmTurn);
-                _scoreSheetUI.OnRollClickedEvent.AddListener(ScoreSheet_OnRollClicked);
+                _scoreSheetUI.InitInfo(data);
+                _scoreSheetUI.OnRollClickedEvent.AddListener(() => OnRollClickedEvent.Invoke());
+                _scoreSheetUI.OnReadyClickedEvent.AddListener(() => OnReadyClickedEvent.Invoke());
             }
         }
-    }
-
-    private void ScoreSheet_OnRollClicked()
-    {
-        OnRollClickedEvent.Invoke();
-    }
-
-    private void ScoreSheet_OnConfirmTurn()
-    {
-        OnConfirmTurnEvent.Invoke();
     }
 
     public void StartTurn(bool activePlayer)
@@ -55,7 +48,7 @@ public class ScoreSheet : MonoBehaviour
 
         if(_scoreSheetUI != null)
         {
-            _scoreSheetUI.SetRollData();
+            _scoreSheetUI.SetRollData(data);
         }
     }
 

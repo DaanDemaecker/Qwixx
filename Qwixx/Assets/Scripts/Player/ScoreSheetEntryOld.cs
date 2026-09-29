@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreSheetEntry : MonoBehaviour
+public class ScoreSheetEntryOld : MonoBehaviour
 {
     [SerializeField]
     private int _value = 0;

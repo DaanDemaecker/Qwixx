@@ -6,7 +6,7 @@ public class PlayerOld : NetworkBehaviour
     private HostOld _gameManager = null;
 
     [SerializeField]
-    private ScoreSheetUi _scoreSheet = null;
+    private ScoreSheetUiOld _scoreSheet = null;
 
     [SerializeField]
     private GameObject _playerUiPrefab = null;

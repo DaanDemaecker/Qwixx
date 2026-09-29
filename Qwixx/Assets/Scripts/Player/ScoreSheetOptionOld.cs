@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ScoreSheetOption : MonoBehaviour
+public class ScoreSheetOptionOld : MonoBehaviour
 {
     public UnityEvent<DiceColor, int, bool> ButtonClickedEvent = new UnityEvent<DiceColor, int, bool>();
 

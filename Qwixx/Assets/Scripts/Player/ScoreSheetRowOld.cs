@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreSheetRow : MonoBehaviour
+public class ScoreSheetRowOld : MonoBehaviour
 {
     [SerializeField]
     private DiceColor _color;
 
     [SerializeField]
-    private List<ScoreSheetEntry> _entries = new();
+    private List<ScoreSheetEntryOld> _entries = new();
 
     public int _highestValueIndex = -1;
 
@@ -55,7 +55,7 @@ public class ScoreSheetRow : MonoBehaviour
             }
         }
 
-        foreach(ScoreSheetEntry entry in _entries)
+        foreach(ScoreSheetEntryOld entry in _entries)
         {
             entry.Select(false);
         }

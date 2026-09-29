@@ -10,7 +10,8 @@ public class StartScreenManager : MonoBehaviour
     private Button _joinGameButton;
 
     //private string _hostAddress = "192.168.1.12";
-    private string _hostAddress = "192.168.1.4";
+    //private string _hostAddress = "192.168.1.4";
+    private string _hostAddress = "127.0.0.1";
 
     private void Awake()
     {

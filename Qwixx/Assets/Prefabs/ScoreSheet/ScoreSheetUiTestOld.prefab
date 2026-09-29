@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 8371019016255805142}
   - component: {fileID: 113183474782418406}
   m_Layer: 5
-  m_Name: ScoreSheetUi
+  m_Name: ScoreSheetUiTestOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

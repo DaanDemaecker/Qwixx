@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ScoreSheetOptionPair : MonoBehaviour
+public class ScoreSheetOptionPairOld : MonoBehaviour
 {
     [SerializeField]
     private DiceColor _color = DiceColor.Color0;
 
     [SerializeField]
-    private ScoreSheetOption _option1 = null;
+    private ScoreSheetOptionOld _option1 = null;
 
     [SerializeField]
-    private ScoreSheetOption _option2 = null;
+    private ScoreSheetOptionOld _option2 = null;
 
     private void Awake()
     {

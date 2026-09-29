@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
-public class ScoreSheetOptions : MonoBehaviour
+public class ScoreSheetOptionsOld : MonoBehaviour
 {
     private struct SelectedOption
     {
@@ -16,13 +16,13 @@ public class ScoreSheetOptions : MonoBehaviour
     private struct ColorRowPair
     {
         public DiceColor Color;
-        public ScoreSheetRow Row;
+        public ScoreSheetRowOld Row;
     }
 
     [SerializeField]
     private List<ColorRowPair> _rowPairs = new();
 
-    private Dictionary<DiceColor, ScoreSheetRow> _rows = new();
+    private Dictionary<DiceColor, ScoreSheetRowOld> _rows = new();
 
     [SerializeField]
     private GameObject _nColoredOptionsObject = null;
@@ -31,21 +31,21 @@ public class ScoreSheetOptions : MonoBehaviour
     private GameObject _coloredOptionsObject = null;
 
     [SerializeField]
-    private List<ScoreSheetOption> _nColoredOptions = new();
+    private List<ScoreSheetOptionOld> _nColoredOptions = new();
 
 
     [Serializable]
     private struct ColorOptionsPair
     {
         public DiceColor Color;
-        public ScoreSheetOptionPair Pair;
+        public ScoreSheetOptionPairOld Pair;
     }
 
     [SerializeField]
     private List<ColorOptionsPair> _pairPairs = new();
 
     [SerializeField]
-    private Dictionary<DiceColor, ScoreSheetOptionPair> _pairs = null;
+    private Dictionary<DiceColor, ScoreSheetOptionPairOld> _pairs = null;
 
 
     private SelectedOption _nColorOptionSelected = new SelectedOption { Color = DiceColor.Color0, Value = -1 };
