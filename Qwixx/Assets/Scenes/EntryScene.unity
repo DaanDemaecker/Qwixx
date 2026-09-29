@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionHandler
   _maxPlayers: 4
-  _port: 7777
+  _port: 7779
 --- !u!114 &748655685
 MonoBehaviour:
   m_ObjectHideFlags: 0

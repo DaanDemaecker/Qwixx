@@ -53,7 +53,7 @@ public class DiceRoll
         switch(color)
         {
             case DiceColor.Color0:
-                if(_diceRoll.Color0_1 < 0)
+                if(_diceRoll.Color0_1 <= 0)
                 {
                     _diceRoll.Color0_1 = value;
                 }
@@ -84,12 +84,12 @@ public class DiceRoll
 
     private bool IsComplete()
     {
-        return _diceRoll.Color0_1 >= 0 &&
-            _diceRoll.Color0_2 >= 0 &&
-            _diceRoll.Color1 >= 0 &&
-            _diceRoll.Color2 >= 0 &&
-            _diceRoll.Color3 >= 0 &&
-            _diceRoll.Color4 >= 0;
+        return _diceRoll.Color0_1 > 0 &&
+            _diceRoll.Color0_2 > 0 &&
+            _diceRoll.Color1 > 0 &&
+            _diceRoll.Color2 > 0 &&
+            _diceRoll.Color3 > 0 &&
+            _diceRoll.Color4 > 0;
     }
 }
 

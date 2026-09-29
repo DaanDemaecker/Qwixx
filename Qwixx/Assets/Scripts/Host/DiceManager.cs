@@ -11,22 +11,33 @@ public class DiceManager : MonoBehaviour
 
     private List<Die> _dice = new();
 
+    private bool _initialRollDone = false;
+
     private void Awake()
     {
         _rollInfo.OnRollCompleteEvent.AddListener(DiceManager_OnRollComplete);
+        _rollInfo.Reset();
     }
 
     private void DiceManager_OnRollComplete(DiceRoll.DiceRollData data)
     {
-        if(_host != null)
+        if (_initialRollDone)
         {
-            _host.RollComplete(data);
+            if (_host != null)
+            {
+                _host.RollComplete(data);
+            }
+        }
+        else
+        {
+            _initialRollDone = true;
         }
     }
 
     public void AddDie(Die die)
     {
         _dice.Add(die);
+        die.OnRollCompleteEvent.AddListener(DiceManager_OnSingleRollComplete);
     }
 
     public void Roll()
@@ -35,7 +46,6 @@ public class DiceManager : MonoBehaviour
 
         foreach (Die die in _dice)
         {
-            die.OnRollCompleteEvent.AddListener(DiceManager_OnSingleRollComplete);
             die.MoveToStartPosition();
             die.Roll();
         }
