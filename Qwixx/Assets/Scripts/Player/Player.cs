@@ -40,13 +40,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetRollData(DiceRoll.DiceRollData data)
+    public void SetRollData(DiceRoll.DiceRollData data, bool isActivePlayer)
     {
-        Debug.LogError($"Roll complete: {data.Color0_1}, {data.Color0_2}, {data.Color1}, {data.Color2}, {data.Color3}, {data.Color4}");
-    
         if(_scoreSheet != null)
         {
-            _scoreSheet.SetRollData(data);
+            _scoreSheet.SetRollData(data, isActivePlayer);
         }
     }
 }

@@ -1,4 +1,4 @@
-using Unity.Netcode;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +9,8 @@ public class ScoreSheet : MonoBehaviour
 
     private ScoreSheetUi _scoreSheetUI = null;
 
+    [SerializeField]
+    private List<ScoreSheetRow> _scoreSheetRows = new();
 
 
     // Events
@@ -42,18 +44,28 @@ public class ScoreSheet : MonoBehaviour
         }
     }
 
-    public void SetRollData(DiceRoll.DiceRollData data)
+    public void SetRollData(DiceRoll.DiceRollData data, bool isActivePlayer)
     {
-        HandleData(data);
+        HandleData(data, out List<ScoreSheetRow.ScoreSheetRowEntry> nColoredOptions, out List<ScoreSheetRow.ScoreSheetRowEntry> coloredOptions, isActivePlayer);
 
         if(_scoreSheetUI != null)
         {
-            _scoreSheetUI.SetRollData(data);
+            _scoreSheetUI.SetRollData(nColoredOptions, coloredOptions);
         }
     }
 
-    private void HandleData(DiceRoll.DiceRollData data)
+    private void HandleData(DiceRoll.DiceRollData data, out List<ScoreSheetRow.ScoreSheetRowEntry> nColoredOptions, out List<ScoreSheetRow.ScoreSheetRowEntry> coloredOptions, bool isActivePlayer)
     {
+        nColoredOptions = new();
+        coloredOptions = new();
 
+        foreach (var row in _scoreSheetRows)
+        {
+            nColoredOptions.Add(row.GetAvailableEntryNColored(data));
+            if (isActivePlayer)
+            {
+                coloredOptions.AddRange(row.GetAvailableEntriesColored(data));
+            }
+        }
     }
 }

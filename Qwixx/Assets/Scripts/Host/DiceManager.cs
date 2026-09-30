@@ -13,6 +13,8 @@ public class DiceManager : MonoBehaviour
 
     private bool _initialRollDone = false;
 
+    private ulong _activePlayerId = 0;
+
     private void Awake()
     {
         _rollInfo.OnRollCompleteEvent.AddListener(DiceManager_OnRollComplete);
@@ -25,7 +27,7 @@ public class DiceManager : MonoBehaviour
         {
             if (_host != null)
             {
-                _host.RollComplete(data);
+                _host.RollComplete(data, _activePlayerId);
             }
         }
         else
@@ -40,8 +42,9 @@ public class DiceManager : MonoBehaviour
         die.OnRollCompleteEvent.AddListener(DiceManager_OnSingleRollComplete);
     }
 
-    public void Roll()
+    public void Roll(ulong activePlayerId)
     {
+        _activePlayerId = activePlayerId;
         _rollInfo.Reset();
 
         foreach (Die die in _dice)

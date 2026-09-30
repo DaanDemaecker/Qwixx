@@ -120,7 +120,7 @@ public class PlayerManager : NetworkBehaviour
 
     private void PlayerManager_OnRollClicked()
     {
-        OnRollClickedServerRpc();
+        OnRollClickedServerRpc(new RpcParams());
     }
 
     private void PlayerManager_OnTurnConfirmed()
@@ -129,11 +129,11 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void OnRollClickedServerRpc()
+    private void OnRollClickedServerRpc(RpcParams rpcParams)
     {
         if(_host != null)
         {
-            _host.RollDice();
+            _host.RollDice(rpcParams.Receive.SenderClientId);
         }
     }
 
@@ -146,17 +146,17 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    private void PlayerManager_OnRollComplete(DiceRoll.DiceRollData data)
+    private void PlayerManager_OnRollComplete(DiceRoll.DiceRollData data, ulong activePlayerId)
     {
-        OnRollCompleteClientRpc(data);
+        OnRollCompleteClientRpc(data, activePlayerId);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void OnRollCompleteClientRpc(DiceRoll.DiceRollData data)
+    private void OnRollCompleteClientRpc(DiceRoll.DiceRollData data, ulong activePlayerId)
     {
         if(_player != null)
         {
-            _player.SetRollData(data);
+            _player.SetRollData(data, activePlayerId == NetworkManager.Singleton.LocalClientId);
         }
     }
 

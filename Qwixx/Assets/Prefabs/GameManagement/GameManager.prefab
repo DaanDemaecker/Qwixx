@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6892630912987567514}
   - {fileID: 8711174583263129440}
+  - {fileID: 4339183337499862998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8908523787870087362
@@ -48,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 529167474
+  GlobalObjectIdHash: 3902609898
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -89,6 +90,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ShowTopMostFoldoutHeaderGroup: 1
   _sceneManager: {fileID: 1222403373383103133}
+--- !u!1 &5431499549926464796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4339183337499862998}
+  - component: {fileID: 3041365745194501484}
+  m_Layer: 0
+  m_Name: MaterialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4339183337499862998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5431499549926464796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1784762628647593058}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3041365745194501484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5431499549926464796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367370b5fdbcab649a8324b17996cc51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialManager
+  _materialList:
+  - Color: 0
+    Material: {fileID: 2100000, guid: 58c0a7406293b2143bbe8d66b975f038, type: 2}
+  - Color: 1
+    Material: {fileID: 2100000, guid: cfb0533b8dccc384f88cf1293605fb4f, type: 2}
+  - Color: 2
+    Material: {fileID: 2100000, guid: 80988b5e63ab6e94b93eb443d978433a, type: 2}
+  - Color: 3
+    Material: {fileID: 2100000, guid: 06304afbc86dd2145b83d3d9f495bae0, type: 2}
+  - Color: 4
+    Material: {fileID: 2100000, guid: 2966befe7f001f84fa70a634b2eb95c2, type: 2}
+  _uiMaterialList:
+  - Color: 0
+    Material: {fileID: 2100000, guid: acca3dfd7b11d3a4ba68e0c7b5c40506, type: 2}
+  - Color: 1
+    Material: {fileID: 2100000, guid: fe3c3f1dd98a46e4982371ca924261fe, type: 2}
+  - Color: 2
+    Material: {fileID: 2100000, guid: 2c3c3789d38b33b448f14042aaeafbdb, type: 2}
+  - Color: 3
+    Material: {fileID: 2100000, guid: 79249e4203a1ec44aa37bb7fb98c7327, type: 2}
+  - Color: 4
+    Material: {fileID: 2100000, guid: 94b15cbe20916f54e9a9877f55a1519d, type: 2}
 --- !u!1 &6631006054865737482
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class Host : NetworkBehaviour
     [SerializeField]
     private DiceManager _diceManager;
 
-    public UnityEvent<DiceRoll.DiceRollData> OnRollCompleteEvent;
+    public UnityEvent<DiceRoll.DiceRollData, ulong> OnRollCompleteEvent;
 
     public void SpawnDice()
     {
@@ -26,16 +26,16 @@ public class Host : NetworkBehaviour
     }
 
 
-    public void RollDice()
+    public void RollDice(ulong activePlayerId)
     {
         if(_diceManager != null)
         {
-            _diceManager.Roll();
+            _diceManager.Roll(activePlayerId);
         }
     }
 
-    public void RollComplete(DiceRoll.DiceRollData data)
+    public void RollComplete(DiceRoll.DiceRollData data, ulong activePlayerId)
     {
-        OnRollCompleteEvent.Invoke(data);
+        OnRollCompleteEvent.Invoke(data, activePlayerId);
     }
 }
