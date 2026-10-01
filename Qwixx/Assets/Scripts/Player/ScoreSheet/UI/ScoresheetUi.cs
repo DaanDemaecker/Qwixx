@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class ScoreSheetUi : MonoBehaviour
 {
@@ -47,6 +48,8 @@ public class ScoreSheetUi : MonoBehaviour
 
     public UnityEvent OnRollClickedEvent;
 
+    public UnityEvent<ScoreSheetRow.ScoreSheetRowEntry, bool> OnOptionClickedEvent;
+
     private void Awake()
     {
         if(_readyButton != null)
@@ -68,17 +71,31 @@ public class ScoreSheetUi : MonoBehaviour
             return;
         }
 
-        foreach(ScoreSheetRow row in rows)
+        while(_rows.Count < rows.Count)
         {
             GameObject rowObject = Instantiate(_rowPrefab, _rowParent.transform);
 
             ScoreSheetUiRow rowComponent = rowObject.GetComponent<ScoreSheetUiRow>();
 
-            if(rowComponent != null)
+            if (rowComponent != null)
             {
-                rowComponent.SetEntries(row.GetEntries());
+                _rows.Add(rowComponent);
             }
         }
+
+        for (int i = 0; i < _rows.Count; i++)
+        {
+            if (i < rows.Count)
+            {
+                _rows[i].gameObject.SetActive(true);
+                _rows[i].SetEntries(rows[i].GetEntries());
+            }
+            else
+            {
+                _rows[i].gameObject.SetActive(false);
+            }
+        }
+
     }
 
     public void InitInfo(LobbyPlayerData playerData)
@@ -121,6 +138,8 @@ public class ScoreSheetUi : MonoBehaviour
         {
             GameObject newOption = Instantiate(_optionPrefab, _nColoredOptionsParent.transform);
             ScoreSheetUiOption optionComponent = newOption.GetComponent<ScoreSheetUiOption>();
+            optionComponent.OnOptionClickedEvent.AddListener(OptionClicked);
+            optionComponent.IsNColoredOption = true;
             _nColoredOptions.Add(optionComponent);
         }
 
@@ -144,6 +163,8 @@ public class ScoreSheetUi : MonoBehaviour
         {
             GameObject newOption = Instantiate(_optionPrefab, _coloredOptionsParent.transform);
             ScoreSheetUiOption optionComponent = newOption.GetComponent<ScoreSheetUiOption>();
+            optionComponent.IsNColoredOption = false;
+            optionComponent.OnOptionClickedEvent.AddListener(OptionClicked);
             _coloredOptions.Add(optionComponent);
         }
 
@@ -177,5 +198,10 @@ public class ScoreSheetUi : MonoBehaviour
             _rollButton.gameObject.SetActive(false);
         }
         OnRollClickedEvent.Invoke();
+    }
+
+    private void OptionClicked(ScoreSheetRow.ScoreSheetRowEntry entry, bool isNColoredOption)
+    {
+        OnOptionClickedEvent.Invoke(entry, isNColoredOption);
     }
 }

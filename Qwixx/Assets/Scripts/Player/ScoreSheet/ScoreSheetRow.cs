@@ -27,6 +27,14 @@ public class ScoreSheetRow : MonoBehaviour
         Color = DiceColor.Color0
     };
 
+    public static ScoreSheetRowEntry DefaultEntry
+    {
+        get
+        {
+            return _defaultEntry;
+        }
+    }
+
     public List<ScoreSheetRowEntry> GetEntries()
     {
         return _entries;
@@ -44,6 +52,39 @@ public class ScoreSheetRow : MonoBehaviour
         }
 
         return _defaultEntry;
+    }
+
+    public void CrossEntry(ScoreSheetRowEntry entry)
+    {
+        if(entry.Value <= 0)
+        {
+            return;
+        }
+
+        bool crossedOff = false;
+
+        for(int i = _entries.Count - 1; i >= 0 ; --i)
+        {
+            if (_entries[i].Color == entry.Color && _entries[i].Value == entry.Value)
+            {
+                ScoreSheetRowEntry currentEntry = _entries[i];
+
+                currentEntry.IsCrossed = true;
+
+                _entries[i] = currentEntry;
+
+                crossedOff = true;
+            }
+
+            if(crossedOff)
+            {
+                ScoreSheetRowEntry currentEntry = _entries[i];
+
+                currentEntry.IsLocked = true;
+
+                _entries[i] = currentEntry;
+            }
+        }
     }
 
     public ScoreSheetRowEntry GetAvailableEntryNColored(DiceRoll.DiceRollData data)

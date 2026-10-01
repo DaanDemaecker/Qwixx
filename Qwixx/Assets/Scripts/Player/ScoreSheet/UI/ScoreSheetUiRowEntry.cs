@@ -8,13 +8,16 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
     [SerializeField]
     private TMPro.TextMeshProUGUI _text = null;
+
+    [SerializeField]
+    private GameObject _crossContainer = null;
     
     
     private static MaterialManager _sMaterialManager = null;
 
     public void SetEntry(ScoreSheetRow.ScoreSheetRowEntry entry)
     {
-        if(_text != null)
+        if (_text != null)
         {
             _text.text = entry.Value.ToString();
         }
@@ -23,12 +26,16 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
         {
             MaterialManager materialManager = GetMaterialManager();
 
-            if(materialManager == null)
+            if (materialManager == null)
             {
                 return;
             }
+            _background.material = materialManager.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
+        }
 
-            _background.material = materialManager.GetUiMaterial(entry.Color);
+        if (_crossContainer != null)
+        {
+            _crossContainer.SetActive(entry.IsCrossed);
         }
     }
 
