@@ -27,6 +27,12 @@ public class ScoreSheetRow : MonoBehaviour
         Color = DiceColor.Color0
     };
 
+    public List<ScoreSheetRowEntry> GetEntries()
+    {
+        return _entries;
+    }
+
+
     private ScoreSheetRowEntry GetAvailableEntry(int value, DiceColor color)
     {
         foreach (ScoreSheetRowEntry entry in _entries)

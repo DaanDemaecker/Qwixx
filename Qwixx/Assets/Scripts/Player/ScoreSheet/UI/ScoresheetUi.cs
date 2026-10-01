@@ -17,6 +17,17 @@ public class ScoreSheetUi : MonoBehaviour
     [SerializeField]
     private Button _rollButton = null;
 
+    // Rows
+    [Header("Rows")]
+    [SerializeField]
+    private GameObject _rowParent = null;
+
+    [SerializeField]
+    private GameObject _rowPrefab = null;
+
+    private List<ScoreSheetUiRow> _rows = new();
+
+    [Header("Options")]
     // Options
     [SerializeField]
     private GameObject _nColoredOptionsParent = null;
@@ -47,6 +58,26 @@ public class ScoreSheetUi : MonoBehaviour
         {
             _rollButton.onClick.AddListener(RollClicked);
             _rollButton.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetRows(List<ScoreSheetRow> rows)
+    {
+        if(_rowPrefab == null)
+        {
+            return;
+        }
+
+        foreach(ScoreSheetRow row in rows)
+        {
+            GameObject rowObject = Instantiate(_rowPrefab, _rowParent.transform);
+
+            ScoreSheetUiRow rowComponent = rowObject.GetComponent<ScoreSheetUiRow>();
+
+            if(rowComponent != null)
+            {
+                rowComponent.SetEntries(row.GetEntries());
+            }
         }
     }
 

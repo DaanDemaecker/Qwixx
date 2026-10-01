@@ -30,6 +30,7 @@ public class ScoreSheet : MonoBehaviour
             if (scoreSheet.TryGetComponent<ScoreSheetUi>(out _scoreSheetUI))
             {
                 _scoreSheetUI.InitInfo(data);
+                _scoreSheetUI.SetRows(_scoreSheetRows);
                 _scoreSheetUI.OnRollClickedEvent.AddListener(() => OnRollClickedEvent.Invoke());
                 _scoreSheetUI.OnReadyClickedEvent.AddListener(() => OnReadyClickedEvent.Invoke());
             }
