@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 6921024974582178901}
   - component: {fileID: 431142815194686508}
   - component: {fileID: 4734726099725530061}
+  - component: {fileID: 6145177838352141355}
   m_Layer: 5
   m_Name: ScoreSheetUiRowEntry
   m_TagString: Untagged
@@ -304,6 +305,21 @@ MonoBehaviour:
   _background: {fileID: 431142815194686508}
   _text: {fileID: 144514536650366467}
   _crossContainer: {fileID: 3302088989360092007}
+  _pulsing: {fileID: 6145177838352141355}
+--- !u!114 &6145177838352141355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681752656165928373}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377a48723aefe00469c85dffe6780335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PulsingComponent
+  _maxScale: 1.5
+  _minScale: 0.75
 --- !u!1 &9218775710302300061
 GameObject:
   m_ObjectHideFlags: 0

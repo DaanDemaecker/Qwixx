@@ -131,6 +131,9 @@ MonoBehaviour:
   OnRollClickedEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnOptionClickedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &169216552740235506
 GameObject:
   m_ObjectHideFlags: 0

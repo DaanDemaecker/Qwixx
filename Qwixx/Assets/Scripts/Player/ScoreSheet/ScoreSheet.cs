@@ -68,13 +68,16 @@ public class ScoreSheet : MonoBehaviour
             row.CrossEntry(_currentSelectedOptionNColored);
         }
 
+        if (_scoreSheetUI != null)
+        {
+            _scoreSheetUI.UpdateRows(_scoreSheetRows);
+            _scoreSheetUI.SetPulsating(_currentSelectedOptionColored, false);
+            _scoreSheetUI.SetPulsating(_currentSelectedOptionNColored, false);
+        }
+
         _currentSelectedOptionColored = ScoreSheetRow.DefaultEntry;
         _currentSelectedOptionNColored = ScoreSheetRow.DefaultEntry;
 
-        if (_scoreSheetUI != null)
-        {
-            _scoreSheetUI.SetRows(_scoreSheetRows);
-        }
 
         OnReadyClickedEvent.Invoke();
     }
@@ -98,22 +101,66 @@ public class ScoreSheet : MonoBehaviour
     {
         if (isNColoredOption)
         {
-            if(entry.Value == _currentSelectedOptionColored.Value && entry.Color == _currentSelectedOptionColored.Color)
+            if (entry.Value == _currentSelectedOptionColored.Value && entry.Color == _currentSelectedOptionColored.Color)
             {
-                return;
-            }    
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionColored, false);
+                    _scoreSheetUI.SetPulsating(entry, true);
+                }
 
-            _currentSelectedOptionNColored = entry;
+                _currentSelectedOptionNColored = entry;
+                _currentSelectedOptionColored = ScoreSheetRow.DefaultEntry;
+            }
+            else if (entry.Value == _currentSelectedOptionNColored.Value && entry.Color == _currentSelectedOptionNColored.Color)
+            {
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionNColored, false);
+                }
+                _currentSelectedOptionNColored = ScoreSheetRow.DefaultEntry;
+            }
+            else
+            {
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionNColored, false);
+                    _scoreSheetUI.SetPulsating(entry, true);
+                }
 
+                _currentSelectedOptionNColored = entry;
+            }
         }
         else
         {
             if (entry.Value == _currentSelectedOptionNColored.Value && entry.Color == _currentSelectedOptionNColored.Color)
             {
-                return;
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionColored, false);
+                    _scoreSheetUI.SetPulsating(entry, true);
+                }
+                _currentSelectedOptionColored = entry;
+                _currentSelectedOptionNColored = ScoreSheetRow.DefaultEntry;
             }
+            else if (entry.Value == _currentSelectedOptionColored.Value && entry.Color == _currentSelectedOptionColored.Color)
+            {
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionColored, false);
+                }
+                _currentSelectedOptionColored = ScoreSheetRow.DefaultEntry;
+            }
+            else
+            {
+                if (_scoreSheetUI != null)
+                {
+                    _scoreSheetUI.SetPulsating(_currentSelectedOptionColored, false);
+                    _scoreSheetUI.SetPulsating(entry, true);
+                }
+                _currentSelectedOptionColored = entry;
 
-            _currentSelectedOptionColored = entry;
+            }
         }
     }
 }

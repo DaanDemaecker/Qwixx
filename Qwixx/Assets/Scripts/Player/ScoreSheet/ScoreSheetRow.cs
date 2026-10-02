@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class ScoreSheetRow : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class ScoreSheetRow : MonoBehaviour
         }
     }
 
+
     public List<ScoreSheetRowEntry> GetEntries()
     {
         return _entries;
@@ -50,6 +52,7 @@ public class ScoreSheetRow : MonoBehaviour
                 return entry;
             }
         }
+
 
         return _defaultEntry;
     }

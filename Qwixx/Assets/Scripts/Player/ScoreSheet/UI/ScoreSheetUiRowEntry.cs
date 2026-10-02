@@ -11,9 +11,20 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
     [SerializeField]
     private GameObject _crossContainer = null;
+
+    [SerializeField]
+    private PulsingComponent _pulsing = null;
     
     
     private static MaterialManager _sMaterialManager = null;
+
+    public void SetPulsing(bool isPulsing)
+    {
+        if(_pulsing != null)
+        {
+            _pulsing.enabled = isPulsing;
+        }
+    }
 
     public void SetEntry(ScoreSheetRow.ScoreSheetRowEntry entry)
     {

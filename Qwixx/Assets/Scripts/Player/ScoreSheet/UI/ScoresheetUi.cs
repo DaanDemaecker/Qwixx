@@ -64,6 +64,30 @@ public class ScoreSheetUi : MonoBehaviour
         }
     }
 
+    public void SetPulsating(ScoreSheetRow.ScoreSheetRowEntry entry, bool pulsating)
+    {
+        foreach(ScoreSheetUiRow row in _rows)
+        {
+            row.SetPulsating(entry, pulsating);
+        }
+    }
+
+    public void UpdateRows(List<ScoreSheetRow> rows)
+    {
+        for (int i = 0; i < _rows.Count; i++)
+        {
+            if (i < rows.Count)
+            {
+                _rows[i].gameObject.SetActive(true);
+                _rows[i].UpdateEntries(rows[i].GetEntries());
+            }
+            else
+            {
+                _rows[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void SetRows(List<ScoreSheetRow> rows)
     {
         if(_rowPrefab == null)
@@ -71,7 +95,7 @@ public class ScoreSheetUi : MonoBehaviour
             return;
         }
 
-        while(_rows.Count < rows.Count)
+        foreach(ScoreSheetRow row in rows)
         {
             GameObject rowObject = Instantiate(_rowPrefab, _rowParent.transform);
 
@@ -80,22 +104,9 @@ public class ScoreSheetUi : MonoBehaviour
             if (rowComponent != null)
             {
                 _rows.Add(rowComponent);
+                rowComponent.SetEntries(row.GetEntries());
             }
         }
-
-        for (int i = 0; i < _rows.Count; i++)
-        {
-            if (i < rows.Count)
-            {
-                _rows[i].gameObject.SetActive(true);
-                _rows[i].SetEntries(rows[i].GetEntries());
-            }
-            else
-            {
-                _rows[i].gameObject.SetActive(false);
-            }
-        }
-
     }
 
     public void InitInfo(LobbyPlayerData playerData)
@@ -134,7 +145,12 @@ public class ScoreSheetUi : MonoBehaviour
 
     private void SetNColoredOptions(List<ScoreSheetRow.ScoreSheetRowEntry> options)
     {
-        while(_nColoredOptions.Count < options.Count)
+        if (_nColoredOptionsParent != null)
+        {
+            _nColoredOptionsParent.SetActive(true);
+        }
+
+        while (_nColoredOptions.Count < options.Count)
         {
             GameObject newOption = Instantiate(_optionPrefab, _nColoredOptionsParent.transform);
             ScoreSheetUiOption optionComponent = newOption.GetComponent<ScoreSheetUiOption>();
@@ -159,6 +175,11 @@ public class ScoreSheetUi : MonoBehaviour
 
     private void SetColoredOptions(List<ScoreSheetRow.ScoreSheetRowEntry> options)
     {
+        if (_coloredOptionsParent != null)
+        {
+            _coloredOptionsParent.SetActive(true);
+        }
+
         while (_coloredOptions.Count < options.Count)
         {
             GameObject newOption = Instantiate(_optionPrefab, _coloredOptionsParent.transform);
@@ -188,6 +209,18 @@ public class ScoreSheetUi : MonoBehaviour
         {
             _readyButton.gameObject.SetActive(false);
         }
+
+        if(_nColoredOptionsParent != null)
+        {
+            _nColoredOptionsParent.SetActive(false);
+        }
+
+        if(_coloredOptionsParent != null)
+        {
+            _coloredOptionsParent.SetActive(false);
+        }
+
+
         OnReadyClickedEvent.Invoke();
     }
 

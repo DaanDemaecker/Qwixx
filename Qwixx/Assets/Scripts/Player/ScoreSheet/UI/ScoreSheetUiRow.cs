@@ -7,7 +7,26 @@ public class ScoreSheetUiRow : MonoBehaviour
     [SerializeField]
     private GameObject _entryPrefab = null;
 
-    private List<ScoreSheetUiRowEntry> _entries = new();
+    private Dictionary<DiceColor, Dictionary<int, ScoreSheetUiRowEntry>> _entries = new();
+
+    public void SetPulsating(ScoreSheetRow.ScoreSheetRowEntry entry, bool pulsating)
+    {
+        if (_entries.ContainsKey(entry.Color) && _entries[entry.Color].ContainsKey(entry.Value))
+        {
+            _entries[entry.Color][entry.Value].SetPulsing(pulsating);
+        }
+    }
+
+    public void UpdateEntries(List<ScoreSheetRow.ScoreSheetRowEntry> entries)
+    {
+        foreach(ScoreSheetRow.ScoreSheetRowEntry entry in entries)
+        {
+            if (_entries.ContainsKey(entry.Color) && _entries[entry.Color].ContainsKey(entry.Value))
+            {
+                _entries[entry.Color][entry.Value].SetEntry(entry);
+            }
+        }
+    }
 
     public void SetEntries(List<ScoreSheetRow.ScoreSheetRowEntry> entries)
     {
@@ -16,7 +35,7 @@ public class ScoreSheetUiRow : MonoBehaviour
             return;
         }
 
-        while(_entries.Count < entries.Count)
+        foreach (ScoreSheetRow.ScoreSheetRowEntry entry in entries)
         {
             GameObject entryObject = Instantiate(_entryPrefab, transform);
 
@@ -24,22 +43,15 @@ public class ScoreSheetUiRow : MonoBehaviour
 
             if (entryComponent != null)
             {
-                _entries.Add(entryComponent);
+                if(!_entries.ContainsKey(entry.Color))
+                {
+                    _entries[entry.Color] = new Dictionary<int, ScoreSheetUiRowEntry>();
+                }
+
+                _entries[entry.Color][entry.Value] = entryComponent;
             }
         }
 
-
-        for(int i = 0; i < _entries.Count; i++)
-        {
-            if(i < entries.Count)
-            {
-                _entries[i].SetEntry(entries[i]);
-                _entries[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                _entries[i].gameObject.SetActive(false);
-            }
-        }
+        UpdateEntries(entries);
     }
 }
