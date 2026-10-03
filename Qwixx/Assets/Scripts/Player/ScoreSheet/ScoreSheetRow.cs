@@ -12,6 +12,7 @@ public class ScoreSheetRow : MonoBehaviour
         public int Value;
         public bool IsCrossed;
         public bool IsLocked;
+        public bool IsLock;
         public DiceColor Color;
     }
 
@@ -20,11 +21,16 @@ public class ScoreSheetRow : MonoBehaviour
 
     private bool _rowLocked = false;
 
+    private int _crossedCount = 0;
+
+    private const int CROSS_COUNT_TO_LOCK = 1;
+
     private static ScoreSheetRowEntry _defaultEntry = new ScoreSheetRowEntry
     {
         Value = -1,
         IsCrossed = false,
         IsLocked = true,
+        IsLock = false,
         Color = DiceColor.Color0
     };
 
@@ -59,7 +65,7 @@ public class ScoreSheetRow : MonoBehaviour
 
     public void CrossEntry(ScoreSheetRowEntry entry)
     {
-        if(entry.Value <= 0)
+        if(entry.Value < 0)
         {
             return;
         }
@@ -77,11 +83,18 @@ public class ScoreSheetRow : MonoBehaviour
                 _entries[i] = currentEntry;
 
                 crossedOff = true;
+
+                _crossedCount++;
             }
 
             if(crossedOff)
             {
                 ScoreSheetRowEntry currentEntry = _entries[i];
+
+                if(currentEntry.IsLocked)
+                {
+                    break;
+                }
 
                 currentEntry.IsLocked = true;
 
@@ -155,5 +168,44 @@ public class ScoreSheetRow : MonoBehaviour
 
 
         return list;
+    }
+
+    public ScoreSheetRowEntry GetLockEntry()
+    {
+        if (_entries.Count > 1 && _entries[_entries.Count - 1].IsLock)
+        {
+            return _entries[_entries.Count-1];
+        }
+
+        return _defaultEntry;
+    }
+
+    public bool CanLockRow(ScoreSheetRowEntry entry)
+    {
+        if(_rowLocked || _crossedCount < CROSS_COUNT_TO_LOCK)
+        {
+            return false;
+        }
+
+        ScoreSheetRowEntry finalEntry = _defaultEntry;
+
+        for(int i = _entries.Count - 1; i >= 0; --i)
+        {
+            if (_entries[i].IsLock)
+            {
+                continue;
+            }
+
+            finalEntry = _entries[i];
+            break;
+        }
+
+        if(entry.Color == finalEntry.Color && entry.Value == finalEntry.Value)
+        {
+            return true;
+        }
+
+
+        return false;
     }
 }

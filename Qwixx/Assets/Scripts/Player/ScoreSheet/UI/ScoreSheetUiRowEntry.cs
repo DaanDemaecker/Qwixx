@@ -14,6 +14,12 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
     [SerializeField]
     private PulsingComponent _pulsing = null;
+
+    [SerializeField]
+    private GameObject _textContainer = null;
+
+    [SerializeField]
+    private GameObject _lockContainer = null;
     
     
     private static MaterialManager _sMaterialManager = null;
@@ -47,6 +53,16 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
         if (_crossContainer != null)
         {
             _crossContainer.SetActive(entry.IsCrossed);
+        }
+
+        if(_textContainer != null)
+        {
+            _textContainer.SetActive(!entry.IsLock);
+        }
+
+        if (_lockContainer != null)
+        {
+            _lockContainer.SetActive(entry.IsLock);
         }
     }
 

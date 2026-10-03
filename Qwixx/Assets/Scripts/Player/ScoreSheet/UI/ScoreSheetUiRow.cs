@@ -7,6 +7,7 @@ public class ScoreSheetUiRow : MonoBehaviour
     [SerializeField]
     private GameObject _entryPrefab = null;
 
+
     private Dictionary<DiceColor, Dictionary<int, ScoreSheetUiRowEntry>> _entries = new();
 
     public void SetPulsating(ScoreSheetRow.ScoreSheetRowEntry entry, bool pulsating)
