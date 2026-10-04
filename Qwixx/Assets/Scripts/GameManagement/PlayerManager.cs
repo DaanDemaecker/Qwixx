@@ -103,7 +103,23 @@ public class PlayerManager : NetworkBehaviour
     {
         scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
         scoreSheet.OnReadyClickedEvent.AddListener(PlayerManager_OnTurnConfirmed);
+        scoreSheet.OnRowLockedEvent.AddListener(PlayerManager_OnRowLocked);
     }
+
+    private void PlayerManager_OnRowLocked(int rowIndex)
+    {
+        LockRowServerRpc(rowIndex, new RpcParams());
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void LockRowServerRpc(int rowIndex, RpcParams rpcParams)
+    {
+        if(_turnManager != null)
+        {
+            _turnManager.LockRow(rowIndex);
+        }
+    }
+
 
     private LobbyPlayerData GetPlayerData(ulong clientId)
     {
@@ -171,6 +187,20 @@ public class PlayerManager : NetworkBehaviour
         if(_player != null)
         {
             _player.StartTurn(NetworkManager.Singleton.LocalClientId == activePlayerId);
+        }
+    }
+
+    public void LockRow(int rowIndex)
+    {
+        LockRowClientRpc(rowIndex);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void LockRowClientRpc(int rowIndex)
+    {
+        if(_player != null)
+        {
+            _player.LockRow(rowIndex);
         }
     }
 }

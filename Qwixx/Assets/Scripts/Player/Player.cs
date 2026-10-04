@@ -40,6 +40,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void LockRow(int rowIndex)
+    {
+        if(_scoreSheet != null)
+        {
+            _scoreSheet.LockRow(rowIndex);
+        }
+    }
+
     public void SetRollData(DiceRoll.DiceRollData data, bool isActivePlayer)
     {
         if(_scoreSheet != null)

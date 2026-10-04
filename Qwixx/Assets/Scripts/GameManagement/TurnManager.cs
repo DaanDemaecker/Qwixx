@@ -13,6 +13,10 @@ public class TurnManager : NetworkBehaviour
 
     private Dictionary<ulong, bool> _playersReady = new();
 
+    private List<int> _tempLockedRows = new();
+
+    private List<int> _lockedRows = new();
+
     public void Awake()
     {
         _playerManager = GetComponent<PlayerManager>();
@@ -28,26 +32,49 @@ public class TurnManager : NetworkBehaviour
     {
         _playersReady[playerId] = true;
 
-        if(AllPlayersReady())
+        if (AllPlayersReady())
         {
-            ResetReadyPlayers();
+            NextTurn();
+        }
+    }
+
+    private void NextTurn()
+    {
+        ResetReadyPlayers();
+
+        HandleLockedRows();
+
+        if (_playerManager != null)
+        {
+            _playerManager.StartTurn(GetNextTurnId());
+        }
+    }
+
+    private void HandleLockedRows()
+    {
+        foreach(int rowIndex in _tempLockedRows)
+        {
+            _lockedRows.Add(rowIndex);
+
             if(_playerManager != null)
             {
-                _playerManager.StartTurn(GetNextTurnId());
+                _playerManager.LockRow(rowIndex);
             }
         }
+
+        _tempLockedRows.Clear();
     }
 
     public ulong GetNextTurnId()
     {
-        if(_playerIds.Count < 1)
+        if (_playerIds.Count < 1)
         {
             return ulong.MaxValue;
         }
 
         _currentTurnIndex++;
 
-        if(_currentTurnIndex >= _playerIds.Count)
+        if (_currentTurnIndex >= _playerIds.Count)
         {
             _currentTurnIndex = 0;
         }
@@ -57,9 +84,9 @@ public class TurnManager : NetworkBehaviour
 
     private bool AllPlayersReady()
     {
-        foreach(KeyValuePair<ulong, bool> pair in _playersReady)
+        foreach (KeyValuePair<ulong, bool> pair in _playersReady)
         {
-            if(!pair.Value)
+            if (!pair.Value)
             {
                 return false;
             }
@@ -73,6 +100,14 @@ public class TurnManager : NetworkBehaviour
         foreach (ulong key in _playersReady.Keys.ToList<ulong>())
         {
             _playersReady[key] = false;
+        }
+    }
+
+    public void LockRow(int rowIndex)
+    {
+        if (!_lockedRows.Contains(rowIndex) && !_tempLockedRows.Contains(rowIndex))
+        {
+            _tempLockedRows.Add(rowIndex);
         }
     }
 }

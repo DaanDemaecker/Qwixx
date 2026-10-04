@@ -25,6 +25,8 @@ public class ScoreSheet : MonoBehaviour
 
     public UnityEvent OnReadyClickedEvent;
 
+    public UnityEvent<int> OnRowLockedEvent;
+
 
     public void Awake()
     {
@@ -96,6 +98,19 @@ public class ScoreSheet : MonoBehaviour
         }
     }
 
+    private void LockRow(ScoreSheetRow row)
+    {
+        for(int i = 0; i < _scoreSheetRows.Count; ++i)
+        {
+            if (_scoreSheetRows[i] == row)
+            {
+                OnRowLockedEvent.Invoke(i);
+                return;
+            }
+        }
+
+    }
+
     private void ReadyClicked()
     {
         if (EntryExists(_currentSelectedOptionColored.Item1))
@@ -106,6 +121,7 @@ public class ScoreSheet : MonoBehaviour
             if(_currentSelectedOptionColored.Item2)
             {
                 currentRow.CrossEntry(currentRow.GetLockEntry());
+                LockRow(currentRow);
             }
         }
 
@@ -117,6 +133,7 @@ public class ScoreSheet : MonoBehaviour
             if (_currentSelectedOptionNColored.Item2)
             {
                 currentRow.CrossEntry(currentRow.GetLockEntry());
+                LockRow(currentRow);
             }
         }
 
@@ -247,6 +264,23 @@ public class ScoreSheet : MonoBehaviour
         }
 
         toSet = new(newValue, lockSet);
+    }
 
+    public void LockRow(int rowIndex)
+    {
+        if(rowIndex < 0 || rowIndex >= _scoreSheetRows.Count)
+        {
+            Debug.LogError("Row index is out of bounds");
+            return;
+        }
+
+        ScoreSheetRow row = _scoreSheetRows[rowIndex];
+
+        row.LockRow();
+
+        if(_scoreSheetUI != null)
+        {
+            _scoreSheetUI.UpdateRows(_scoreSheetRows);
+        }
     }
 }

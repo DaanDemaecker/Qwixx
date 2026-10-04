@@ -65,14 +65,14 @@ public class ScoreSheetRow : MonoBehaviour
 
     public void CrossEntry(ScoreSheetRowEntry entry)
     {
-        if(entry.Value < 0)
+        if (entry.Value < 0)
         {
             return;
         }
 
         bool crossedOff = false;
 
-        for(int i = _entries.Count - 1; i >= 0 ; --i)
+        for (int i = _entries.Count - 1; i >= 0; --i)
         {
             if (_entries[i].Color == entry.Color && _entries[i].Value == entry.Value)
             {
@@ -87,11 +87,11 @@ public class ScoreSheetRow : MonoBehaviour
                 _crossedCount++;
             }
 
-            if(crossedOff)
+            if (crossedOff)
             {
                 ScoreSheetRowEntry currentEntry = _entries[i];
 
-                if(currentEntry.IsLocked)
+                if (currentEntry.IsLocked)
                 {
                     break;
                 }
@@ -116,7 +116,7 @@ public class ScoreSheetRow : MonoBehaviour
 
         // Color1
         entry = GetAvailableEntry(data.Color0_1 + data.Color1, DiceColor.Color1);
-        if(entry.Value > 0)
+        if (entry.Value > 0)
         {
             list.Add(entry);
         }
@@ -174,7 +174,7 @@ public class ScoreSheetRow : MonoBehaviour
     {
         if (_entries.Count > 1 && _entries[_entries.Count - 1].IsLock)
         {
-            return _entries[_entries.Count-1];
+            return _entries[_entries.Count - 1];
         }
 
         return _defaultEntry;
@@ -182,14 +182,14 @@ public class ScoreSheetRow : MonoBehaviour
 
     public bool CanLockRow(ScoreSheetRowEntry entry)
     {
-        if(_rowLocked || _crossedCount < CROSS_COUNT_TO_LOCK)
+        if (_rowLocked || _crossedCount < CROSS_COUNT_TO_LOCK)
         {
             return false;
         }
 
         ScoreSheetRowEntry finalEntry = _defaultEntry;
 
-        for(int i = _entries.Count - 1; i >= 0; --i)
+        for (int i = _entries.Count - 1; i >= 0; --i)
         {
             if (_entries[i].IsLock)
             {
@@ -200,12 +200,31 @@ public class ScoreSheetRow : MonoBehaviour
             break;
         }
 
-        if(entry.Color == finalEntry.Color && entry.Value == finalEntry.Value)
+        if (entry.Color == finalEntry.Color && entry.Value == finalEntry.Value)
         {
             return true;
         }
 
 
         return false;
+    }
+
+    public void LockRow()
+    {
+        for (int i = _entries.Count - 1; i >= 0; --i)
+        {
+            ScoreSheetRowEntry currentEntry = _entries[i];
+
+            if(currentEntry.IsLocked)
+            {
+                return;
+            }
+
+            currentEntry.IsLocked = true;
+
+            _entries[i] = currentEntry;
+
+
+        }
     }
 }
