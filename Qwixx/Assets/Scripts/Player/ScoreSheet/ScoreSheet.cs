@@ -15,6 +15,12 @@ public class ScoreSheet : MonoBehaviour
 
     private Dictionary<DiceColor, Dictionary<int, ScoreSheetRow>> _ordereredRows = new();
 
+    private bool _isActivePlayer = false;
+
+    private int _lifeAmount = 0;
+
+    private const int MAX_LIFE_AMOUNT = 5;
+
     // Options pairs combine the currently selected entry and a bool indicating whether the lock is selected
     private Tuple<ScoreSheetRow.ScoreSheetRowEntry, bool> _currentSelectedOptionNColored = new(ScoreSheetRow.DefaultEntry, false);
 
@@ -26,6 +32,8 @@ public class ScoreSheet : MonoBehaviour
     public UnityEvent OnReadyClickedEvent;
 
     public UnityEvent<int> OnRowLockedEvent;
+
+    public UnityEvent OnPlayerDiedEvent;
 
 
     private void OnDestroy()
@@ -42,6 +50,8 @@ public class ScoreSheet : MonoBehaviour
 
     public void Awake()
     {
+        _lifeAmount = MAX_LIFE_AMOUNT;
+
         SortRows();
     }
     private void SortRows()
@@ -85,6 +95,7 @@ public class ScoreSheet : MonoBehaviour
             {
                 _scoreSheetUI.InitInfo(data);
                 _scoreSheetUI.SetRows(_scoreSheetRows);
+                _scoreSheetUI.SetHearts(_lifeAmount);
                 _scoreSheetUI.OnRollClickedEvent.AddListener(() => OnRollClickedEvent.Invoke());
                 _scoreSheetUI.OnReadyClickedEvent.AddListener(ReadyClicked);
                 _scoreSheetUI.OnOptionClickedEvent.AddListener(OptionClicked);
@@ -94,6 +105,7 @@ public class ScoreSheet : MonoBehaviour
 
     public void StartTurn(bool activePlayer)
     {
+        _isActivePlayer = activePlayer;
         if (_scoreSheetUI != null)
         {
             _scoreSheetUI.StartTurn(activePlayer);
@@ -102,6 +114,7 @@ public class ScoreSheet : MonoBehaviour
 
     public void SetRollData(DiceRoll.DiceRollData data, bool isActivePlayer)
     {
+        _isActivePlayer = isActivePlayer;
         HandleData(data, out List<ScoreSheetRow.ScoreSheetRowEntry> nColoredOptions, out List<ScoreSheetRow.ScoreSheetRowEntry> coloredOptions, isActivePlayer);
 
         if (_scoreSheetUI != null)
@@ -125,6 +138,15 @@ public class ScoreSheet : MonoBehaviour
 
     private void ReadyClicked()
     {
+        if(_isActivePlayer)
+        {
+            if(!EntryExists(_currentSelectedOptionNColored.Item1) && !EntryExists(_currentSelectedOptionColored.Item1))
+            {
+                LoseLife();
+            }
+        }
+
+
         if (EntryExists(_currentSelectedOptionColored.Item1))
         {
             ScoreSheetRow currentRow = _ordereredRows[_currentSelectedOptionColored.Item1.Color][_currentSelectedOptionColored.Item1.Value];
@@ -293,6 +315,21 @@ public class ScoreSheet : MonoBehaviour
         if(_scoreSheetUI != null)
         {
             _scoreSheetUI.UpdateRows(_scoreSheetRows);
+        }
+    }
+
+    private void LoseLife()
+    {
+        _lifeAmount--;
+
+        if(_scoreSheetUI != null)
+        {
+            _scoreSheetUI.LoseHeart();
+        }
+
+        if(_lifeAmount <= 0)
+        {
+            OnPlayerDiedEvent.Invoke();
         }
     }
 }

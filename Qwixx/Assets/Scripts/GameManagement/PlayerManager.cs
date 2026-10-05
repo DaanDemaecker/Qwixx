@@ -106,6 +106,21 @@ public class PlayerManager : NetworkBehaviour
         scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
         scoreSheet.OnReadyClickedEvent.AddListener(PlayerManager_OnTurnConfirmed);
         scoreSheet.OnRowLockedEvent.AddListener(PlayerManager_OnRowLocked);
+        scoreSheet.OnPlayerDiedEvent.AddListener(PlayerManager_OnPlayerDied);
+    }
+
+    private void PlayerManager_OnPlayerDied()
+    {
+        PlayerDiedServerRpc();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void PlayerDiedServerRpc()
+    {
+        if(_turnManager != null)
+        {
+            _turnManager.PlayerDied();
+        }
     }
 
     private void PlayerManager_OnRowLocked(int rowIndex)

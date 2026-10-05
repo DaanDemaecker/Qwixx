@@ -19,6 +19,8 @@ public class TurnManager : NetworkBehaviour
 
     private const int MAX_LOCKED_ROWS = 1;
 
+    private bool _playerDied = false;
+
     public void Awake()
     {
         _playerManager = GetComponent<PlayerManager>();
@@ -62,6 +64,11 @@ public class TurnManager : NetworkBehaviour
     private bool ShouldGameEnd()
     {
         if(_lockedRows.Count >= MAX_LOCKED_ROWS)
+        {
+            return true;
+        }
+
+        if(_playerDied)
         {
             return true;
         }
@@ -136,5 +143,10 @@ public class TurnManager : NetworkBehaviour
         {
             _tempLockedRows.Add(rowIndex);
         }
+    }
+
+    public void PlayerDied()
+    {
+        _playerDied = true;
     }
 }

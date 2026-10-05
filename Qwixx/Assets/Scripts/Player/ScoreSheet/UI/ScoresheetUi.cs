@@ -18,6 +18,16 @@ public class ScoreSheetUi : MonoBehaviour
     [SerializeField]
     private Button _rollButton = null;
 
+    // Hears
+    [Header("Hearts")]
+    [SerializeField]
+    private GameObject _heartPrefab = null;
+
+    [SerializeField]
+    private GameObject _heartParent = null;
+
+    private List<ScoreSheetUiHeart> _hearts = new();
+
     // Rows
     [Header("Rows")]
     [SerializeField]
@@ -120,6 +130,34 @@ public class ScoreSheetUi : MonoBehaviour
         {
             _name.color = playerData.Color;
             _name.text = playerData.Name.ToString();
+        }
+    }
+
+    public void SetHearts(int amount)
+    {
+        if(_heartPrefab != null && _heartParent != null)
+        {
+            for(int i = 0; i < amount; ++i)
+            {
+                GameObject heartObject = Instantiate(_heartPrefab, _heartParent.transform);
+
+                if(heartObject.TryGetComponent<ScoreSheetUiHeart>(out ScoreSheetUiHeart heartComponent))
+                {
+                    _hearts.Add(heartComponent);
+                }
+            }
+        }
+    }
+
+    public void LoseHeart()
+    {
+        foreach(ScoreSheetUiHeart heart in _hearts)
+        {
+            if(heart.IsAlive)
+            {
+                heart.DisableHeart();
+                break;
+            }
         }
     }
 
