@@ -17,6 +17,8 @@ public class TurnManager : NetworkBehaviour
 
     private List<int> _lockedRows = new();
 
+    private const int MAX_LOCKED_ROWS = 1;
+
     public void Awake()
     {
         _playerManager = GetComponent<PlayerManager>();
@@ -44,9 +46,34 @@ public class TurnManager : NetworkBehaviour
 
         HandleLockedRows();
 
-        if (_playerManager != null)
+        if (!ShouldGameEnd())
         {
-            _playerManager.StartTurn(GetNextTurnId());
+            if (_playerManager != null)
+            {
+                _playerManager.StartTurnClientRpc(GetNextTurnId());
+            }
+        }
+        else
+        {
+            EndGame();
+        }
+    }
+
+    private bool ShouldGameEnd()
+    {
+        if(_lockedRows.Count >= MAX_LOCKED_ROWS)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void EndGame()
+    {
+        if(_playerManager != null)
+        {
+            _playerManager.EndGame();
         }
     }
 
@@ -58,7 +85,7 @@ public class TurnManager : NetworkBehaviour
 
             if(_playerManager != null)
             {
-                _playerManager.LockRow(rowIndex);
+                _playerManager.LockRowClientRpc(rowIndex);
             }
         }
 

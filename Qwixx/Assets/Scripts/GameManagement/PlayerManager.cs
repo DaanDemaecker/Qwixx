@@ -19,6 +19,8 @@ public class PlayerManager : NetworkBehaviour
 
     private Host _host = null;
 
+    private const string GAME_OVER_SCENE = "EndGameScene";
+
 
     private void Awake()
     {
@@ -176,13 +178,8 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public void StartTurn(ulong activePlayerId)
-    {
-        StartTurnClientRpc(activePlayerId);
-    }
-
     [Rpc(SendTo.ClientsAndHost)]
-    private void StartTurnClientRpc( ulong activePlayerId)
+    public void StartTurnClientRpc( ulong activePlayerId)
     {
         if(_player != null)
         {
@@ -190,17 +187,38 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public void LockRow(int rowIndex)
-    {
-        LockRowClientRpc(rowIndex);
-    }
-
     [Rpc(SendTo.ClientsAndHost)]
-    private void LockRowClientRpc(int rowIndex)
+    public void LockRowClientRpc(int rowIndex)
     {
         if(_player != null)
         {
             _player.LockRow(rowIndex);
+        }
+    }
+
+    public void EndGame()
+    {
+        DeletePlayerClientRpc();
+
+        SceneManager sceneManager = FindAnyObjectByType<SceneManager>();
+
+        if(sceneManager != null)
+        {
+            sceneManager.LoadSceneNetwork(GAME_OVER_SCENE, false);
+        }    
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void DeletePlayerClientRpc()
+    {
+        if(_player != null)
+        {
+            Destroy(_player.gameObject);
+        }
+
+        if(_host != null)
+        {
+            Destroy(_host.gameObject);
         }
     }
 }

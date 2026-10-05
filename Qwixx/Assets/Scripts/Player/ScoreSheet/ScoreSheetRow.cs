@@ -223,8 +223,6 @@ public class ScoreSheetRow : MonoBehaviour
             currentEntry.IsLocked = true;
 
             _entries[i] = currentEntry;
-
-
         }
     }
 }

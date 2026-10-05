@@ -28,6 +28,18 @@ public class ScoreSheet : MonoBehaviour
     public UnityEvent<int> OnRowLockedEvent;
 
 
+    private void OnDestroy()
+    {
+        if(_scoreSheetUI != null)
+        {
+            _scoreSheetUI.OnRollClickedEvent.RemoveAllListeners();
+            _scoreSheetUI.OnReadyClickedEvent.RemoveAllListeners();
+            _scoreSheetUI.OnOptionClickedEvent.RemoveAllListeners();
+            Destroy(_scoreSheetUI.gameObject);
+        }
+
+    }
+
     public void Awake()
     {
         SortRows();
