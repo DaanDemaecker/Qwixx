@@ -82,7 +82,7 @@ public class ScoreSheet : MonoBehaviour
         }
     }
 
-    public void SetInfo(LobbyPlayerData data)
+    public void SetInfo(PlayerData data)
     {
         if (_scoreSheetUiPrefab != null)
         {
@@ -331,5 +331,25 @@ public class ScoreSheet : MonoBehaviour
         {
             OnPlayerDiedEvent.Invoke();
         }
+    }
+
+    public int GetScore()
+    {
+        ScoreCalculator scoreCalculator = FindAnyObjectByType<ScoreCalculator>();
+
+        if(scoreCalculator != null)
+        {
+            int score = 0;
+
+            foreach(ScoreSheetRow row in _scoreSheetRows)
+            {
+                score += scoreCalculator.GetScore(row.CrossedCount);
+            }
+
+            score -= scoreCalculator.GetPenalty(_lifeAmount);
+
+            return score;
+        }
+        return 0;
     }
 }

@@ -119,7 +119,7 @@ public class ScoreSheetUi : MonoBehaviour
         }
     }
 
-    public void InitInfo(LobbyPlayerData playerData)
+    public void InitInfo(PlayerData playerData)
     {
         if (_background != null)
         {

@@ -1,18 +1,7 @@
 using UnityEngine;
 
-public class LobbyPlayerUi : MonoBehaviour
+public class EndscreenPlayerUi : MonoBehaviour
 {
-    [SerializeField]
-    private int _playerNumber = 0;
-
-    public int PlayerNumber
-    {
-        get
-        {
-            return _playerNumber;
-        }
-    }
-
     [SerializeField]
     private GameObject _mainContainer = null;
 
@@ -20,27 +9,28 @@ public class LobbyPlayerUi : MonoBehaviour
     private TMPro.TMP_Text _playerNameText = null;
 
     [SerializeField]
-    private GameObject _playerReadyImage = null;
+    private TMPro.TMP_Text _playerScoreText = null;
 
     public void SetInfo(PlayerData data)
     {
         SetActive(true);
 
-        if(_playerNameText != null)
+        if (_playerNameText != null)
         {
             _playerNameText.text = data.Name.ToString();
             _playerNameText.color = data.Color;
         }
 
-        if(_playerReadyImage != null)
+        if (_playerScoreText != null)
         {
-            _playerReadyImage.SetActive(data.IsReady);
+            _playerScoreText.text = data.Score.ToString();
+            _playerScoreText.color = data.Color;
         }
     }
 
     public void SetActive(bool active)
     {
-        if(_mainContainer != null)
+        if (_mainContainer != null)
         {
             _mainContainer.SetActive(active);
         }

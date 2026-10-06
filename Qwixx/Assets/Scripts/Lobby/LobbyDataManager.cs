@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LobbyDataManager : NetworkBehaviour
 {
-    private NetworkList<LobbyPlayerData> _lobbyPlayerDatas;
+    private NetworkList<PlayerData> _lobbyPlayerDatas;
 
     [SerializeField]
     private List<LobbyPlayerUi> _lobbyPlayerUIs = new();
@@ -48,7 +48,7 @@ public class LobbyDataManager : NetworkBehaviour
             return;
         }
 
-        foreach(LobbyPlayerData data in _lobbyPlayerDatas)
+        foreach(PlayerData data in _lobbyPlayerDatas)
         {
             if(!data.IsReady)
             {
@@ -78,7 +78,7 @@ public class LobbyDataManager : NetworkBehaviour
 
         if (playerToEditIndex >= 0)
         {
-            LobbyPlayerData data = _lobbyPlayerDatas[playerToEditIndex];
+            PlayerData data = _lobbyPlayerDatas[playerToEditIndex];
 
             data.IsReady = true;
 
@@ -92,7 +92,7 @@ public class LobbyDataManager : NetworkBehaviour
 
         if (playerToEditIndex >= 0)
         {
-            LobbyPlayerData data = _lobbyPlayerDatas[playerToEditIndex];
+            PlayerData data = _lobbyPlayerDatas[playerToEditIndex];
 
             data.Color = newColor;
 
@@ -106,7 +106,7 @@ public class LobbyDataManager : NetworkBehaviour
 
         if(playerToEditIndex >= 0)
         {
-            LobbyPlayerData data = _lobbyPlayerDatas[playerToEditIndex];
+            PlayerData data = _lobbyPlayerDatas[playerToEditIndex];
 
             data.Name = newName;
 
@@ -130,7 +130,7 @@ public class LobbyDataManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    private void ChangePlayerEntryServerRpc(int index, LobbyPlayerData data)
+    private void ChangePlayerEntryServerRpc(int index, PlayerData data)
     {
         _lobbyPlayerDatas.Set(index, data, true);
     }
@@ -169,7 +169,7 @@ public class LobbyDataManager : NetworkBehaviour
     {
         for(int i = 0; i < _lobbyPlayerDatas.Count; ++i)
         {
-            LobbyPlayerData data = _lobbyPlayerDatas[i];
+            PlayerData data = _lobbyPlayerDatas[i];
             if(data.PlayerNumber != (i + 1))
             {
                 data.PlayerNumber = i + 1;
@@ -184,7 +184,7 @@ public class LobbyDataManager : NetworkBehaviour
         }
     }
 
-    private void LobbyDataManager_OnListChanged(NetworkListEvent<LobbyPlayerData> changeEvent)
+    private void LobbyDataManager_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
     {
         foreach(LobbyPlayerUi player in _lobbyPlayerUIs)
         {
@@ -202,7 +202,7 @@ public class LobbyDataManager : NetworkBehaviour
 
     private bool SetPlayerData(LobbyPlayerUi player)
     {
-        foreach (LobbyPlayerData data in _lobbyPlayerDatas)
+        foreach (PlayerData data in _lobbyPlayerDatas)
         {
             if (player.PlayerNumber == data.PlayerNumber)
             {
@@ -226,7 +226,7 @@ public class LobbyDataManager : NetworkBehaviour
 
         int playerNumber = GetNextPlayerNumber();
 
-        LobbyPlayerData playerData = new LobbyPlayerData
+        PlayerData playerData = new PlayerData
         {
             ClientId = clientId,
             PlayerNumber = playerNumber,
@@ -259,7 +259,7 @@ public class LobbyDataManager : NetworkBehaviour
 
     private bool IsPlayerNumberAvailable(int number)
     {
-        foreach (LobbyPlayerData data in _lobbyPlayerDatas)
+        foreach (PlayerData data in _lobbyPlayerDatas)
         {
             if (number == data.PlayerNumber)
             {

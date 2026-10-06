@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void InitializeValues(LobbyPlayerData data)
+    public void InitializeValues(PlayerData data)
     {
         _playerName = data.Name.ToString();
         _playerColor = data.Color;
@@ -54,5 +54,14 @@ public class Player : MonoBehaviour
         {
             _scoreSheet.SetRollData(data, isActivePlayer);
         }
+    }
+
+    public int GetScore()
+    {
+        if(_scoreSheet != null)
+        {
+            return _scoreSheet.GetScore();
+        }
+        return 0;
     }
 }

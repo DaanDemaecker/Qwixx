@@ -23,6 +23,14 @@ public class ScoreSheetRow : MonoBehaviour
 
     private int _crossedCount = 0;
 
+    public int CrossedCount
+    {
+        get
+        {
+            return _crossedCount;
+        }
+    }
+
     private const int CROSS_COUNT_TO_LOCK = 1;
 
     private static ScoreSheetRowEntry _defaultEntry = new ScoreSheetRowEntry

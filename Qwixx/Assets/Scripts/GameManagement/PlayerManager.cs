@@ -13,7 +13,16 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField]
     private TurnManager _turnManager = null;
 
-    private NetworkList<LobbyPlayerData> _lobbyPlayerDatas;
+    private NetworkList<PlayerData> _playerDatas;
+
+    public NetworkList<PlayerData> PlayerDatas
+    {
+        get
+        {
+            return _playerDatas;
+        }
+    }
+    
 
     private Player _player = null;
 
@@ -24,22 +33,22 @@ public class PlayerManager : NetworkBehaviour
 
     private void Awake()
     {
-        _lobbyPlayerDatas = new();
+        _playerDatas = new();
     }
-    public void StartLoadingGameScene(NetworkList<LobbyPlayerData> playerDatas)
+    public void StartLoadingGameScene(NetworkList<PlayerData> playerDatas)
     {
-        foreach(LobbyPlayerData data in playerDatas)
+        foreach(PlayerData data in playerDatas)
         {
-            _lobbyPlayerDatas.Add(data);
+            _playerDatas.Add(data);
         }
 
 
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnGameSceneLoadEventCompleted;
     }
 
-    private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, System.Collections.Generic.List<ulong> clientsCompleted, System.Collections.Generic.List<ulong> clientsTimedOut)
+    private void SceneManager_OnGameSceneLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, System.Collections.Generic.List<ulong> clientsCompleted, System.Collections.Generic.List<ulong> clientsTimedOut)
     {
-        foreach (LobbyPlayerData data in _lobbyPlayerDatas)
+        foreach (PlayerData data in _playerDatas)
         {
             if (_turnManager != null)
             {
@@ -49,7 +58,7 @@ public class PlayerManager : NetworkBehaviour
 
         SpawnPlayers();
 
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManager_OnLoadEventCompleted;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManager_OnGameSceneLoadEventCompleted;
     }
 
     public void SpawnPlayers()
@@ -89,7 +98,14 @@ public class PlayerManager : NetworkBehaviour
 
                 if (player.TryGetComponent<Player>(out _player))
                 {
-                    _player.InitializeValues(GetPlayerData(NetworkManager.Singleton.LocalClientId));
+                    int playerDataIndex = GetPlayerDataIndex(NetworkManager.Singleton.LocalClientId);
+
+                    if(playerDataIndex < 0 || playerDataIndex >= _playerDatas.Count)
+                    {
+                        return;
+                    }
+
+                    _player.InitializeValues(_playerDatas[playerDataIndex]);
 
                     ScoreSheet scoreSheet = _player.ScoreSheet;
                     if(scoreSheet != null)
@@ -138,17 +154,17 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-    private LobbyPlayerData GetPlayerData(ulong clientId)
+    private int GetPlayerDataIndex(ulong clientId)
     {
-        foreach(LobbyPlayerData data in _lobbyPlayerDatas)
+        for(int i = 0; i < _playerDatas.Count; ++i)
         {
-            if(data.ClientId == clientId)
+            if (_playerDatas[i].ClientId == clientId)
             {
-                return data;
+                return i;
             }
         }
 
-        return new LobbyPlayerData();
+        return -1;
     }
 
     private void PlayerManager_OnRollClicked()
@@ -213,27 +229,72 @@ public class PlayerManager : NetworkBehaviour
 
     public void EndGame()
     {
-        DeletePlayerClientRpc();
-
-        SceneManager sceneManager = FindAnyObjectByType<SceneManager>();
-
-        if(sceneManager != null)
+        for(int i = 0; i < _playerDatas.Count; i++)
         {
-            sceneManager.LoadSceneNetwork(GAME_OVER_SCENE, false);
-        }    
+            PlayerData data = _playerDatas[i];
+
+            data.IsReady = false;
+
+            _playerDatas.Set(i, data, true);
+        }
+
+        SetPlayerScoreClientRpc();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void SetPlayerScoreServerRpc(PlayerData data, int index)
+    {
+        data.IsReady = true;
+
+        _playerDatas.Set(index, data, true);
+
+        if (AllPlayersReady())
+        {
+            SceneManager sceneManager = FindAnyObjectByType<SceneManager>();
+
+            if (sceneManager != null)
+            {
+                sceneManager.LoadSceneNetwork(GAME_OVER_SCENE, false);
+            }
+        }
+    }
+
+    private bool AllPlayersReady()
+    {
+        foreach(PlayerData data in _playerDatas)
+        {
+            if(!data.IsReady)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void DeletePlayerClientRpc()
+    private void SetPlayerScoreClientRpc()
     {
         if(_player != null)
         {
+            int playerDataIndex = GetPlayerDataIndex(NetworkManager.Singleton.LocalClientId);
+
+            if (playerDataIndex >= 0 || playerDataIndex < _playerDatas.Count)
+            {
+                PlayerData data = _playerDatas[playerDataIndex];
+                data.Score = _player.GetScore();
+
+                SetPlayerScoreServerRpc(data, playerDataIndex);
+            }
+
             Destroy(_player.gameObject);
+            _player = null;
         }
 
         if(_host != null)
         {
             Destroy(_host.gameObject);
+            _host = null;
         }
     }
 }
