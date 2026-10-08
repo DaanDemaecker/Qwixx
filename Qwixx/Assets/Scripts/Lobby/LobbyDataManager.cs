@@ -17,9 +17,6 @@ public class LobbyDataManager : NetworkBehaviour
     [SerializeField]
     private LobbyHostUi _hostUi = null;
 
-    [SerializeField]
-    private int _minPlayers = 2;
-
     public const string GAME_SCENE_NAME = "GameScene";
 
     private void Awake()
@@ -42,34 +39,25 @@ public class LobbyDataManager : NetworkBehaviour
 
     private void LobbyDataManager_OnStartGameClicked()
     {
-        if(_lobbyPlayerDatas.Count < _minPlayers)
+        if (_lobbyPlayerDatas.Count < GameRuleManager.Instance.MinPlayers)
         {
             Debug.LogError("Not enough players");
             return;
         }
 
-        foreach(PlayerData data in _lobbyPlayerDatas)
+        foreach (PlayerData data in _lobbyPlayerDatas)
         {
-            if(!data.IsReady)
+            if (!data.IsReady)
             {
                 Debug.LogError("Not all players are ready");
                 return;
             }
         }
 
-        SceneManager sceneManager = FindAnyObjectByType<SceneManager>();
+        PlayerManager.Instance.StartLoadingGameScene(_lobbyPlayerDatas);
 
-        if (sceneManager != null)
-        {
-            PlayerManager playerManager = FindAnyObjectByType<PlayerManager>();
 
-            if (playerManager != null)
-            {
-                playerManager.StartLoadingGameScene(_lobbyPlayerDatas);
-            }
-
-            sceneManager.LoadSceneNetwork(GAME_SCENE_NAME, false);
-        }
+        SceneManager.Instance.LoadSceneNetwork(GAME_SCENE_NAME, false);
     }
 
     private void LobbyDataManager_OnPlayerReady()

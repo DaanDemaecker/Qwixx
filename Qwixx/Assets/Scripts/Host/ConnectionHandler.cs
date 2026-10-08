@@ -8,8 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class ConnectionHandler : MonoBehaviour
 {
-    [SerializeField]
-    private int _maxPlayers = 4;
+    private static ConnectionHandler _sInstance = null;
+
+    public static ConnectionHandler Instance
+    {
+        get
+        {
+            return _sInstance;
+        }
+    }
 
     [SerializeField]
     private ushort _port = 7777;
@@ -22,6 +29,15 @@ public class ConnectionHandler : MonoBehaviour
 
     private NetworkManager _networkManager;
     private UnityTransport _unityTransport;
+
+    private void Awake()
+    {
+        if (_sInstance != null)
+        {
+            Debug.LogError("An instance of this singleton already exists");
+        }
+        _sInstance = this;
+    }
 
     private void Start()
     {
@@ -72,7 +88,7 @@ public class ConnectionHandler : MonoBehaviour
                 return;
             }
             // Check if the maximum number of connections has been reached, disount 1 as to not count the host as a player
-            else if (_networkManager.ConnectedClients.Count - 1 >= _maxPlayers)
+            else if (_networkManager.ConnectedClients.Count - 1 >= GameRuleManager.Instance.MaxPlayers)
             {
                 response.Approved = false;
                 response.Reason = "Max players reached";

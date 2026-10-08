@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class PlayerManager : NetworkBehaviour
 {
+    private static PlayerManager _playerManager = null;
+
+    public static PlayerManager Instance
+    {
+        get
+        {
+            return _playerManager;
+        }
+    }
+
+  
+
     [SerializeField]
     private GameObject _hostPrefab = null;
 
@@ -33,6 +45,12 @@ public class PlayerManager : NetworkBehaviour
 
     private void Awake()
     {
+        if (_playerManager != null)
+        {
+            Debug.LogError("An instance of this singleton already exists");
+        }
+        _playerManager = this;
+
         _playerDatas = new();
     }
 
@@ -251,12 +269,7 @@ public class PlayerManager : NetworkBehaviour
 
         if (AllPlayersReady())
         {
-            SceneManager sceneManager = FindAnyObjectByType<SceneManager>();
-
-            if (sceneManager != null)
-            {
-                sceneManager.LoadSceneNetwork(GAME_OVER_SCENE, false);
-            }
+            SceneManager.Instance.LoadSceneNetwork(GAME_OVER_SCENE, false);
         }
     }
 

@@ -28,28 +28,14 @@ public class StartScreenManager : MonoBehaviour
 
     private void CreateGame()
     {
-        ConnectionHandler connectionHandler = FindAnyObjectByType<ConnectionHandler>();
+        ConnectionHandler.Instance.ConnectHost();
 
-        if(connectionHandler != null)
-        {
-            connectionHandler.ConnectHost();
-
-            GameManager gameManager = FindAnyObjectByType<GameManager>();
-
-            if(gameManager != null)
-            {
-                gameManager.LoadLobbyScene();
-            }
-        }
+        GameManager.Instance.LoadLobbyScene();
+        
     }
 
     private void JoinGame()
     {
-        ConnectionHandler connectionHandler = FindAnyObjectByType<ConnectionHandler>();
-
-        if (connectionHandler != null)
-        {
-            connectionHandler.ConnectClient(_hostAddress);
-        }
+        ConnectionHandler.Instance.ConnectClient(_hostAddress);
     }
 }

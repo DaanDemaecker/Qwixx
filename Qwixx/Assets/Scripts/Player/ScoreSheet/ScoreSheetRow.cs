@@ -31,8 +31,6 @@ public class ScoreSheetRow : MonoBehaviour
         }
     }
 
-    private const int CROSS_COUNT_TO_LOCK = 1;
-
     private static ScoreSheetRowEntry _defaultEntry = new ScoreSheetRowEntry
     {
         Value = -1,
@@ -190,7 +188,7 @@ public class ScoreSheetRow : MonoBehaviour
 
     public bool CanLockRow(ScoreSheetRowEntry entry)
     {
-        if (_rowLocked || _crossedCount < CROSS_COUNT_TO_LOCK)
+        if (_rowLocked || _crossedCount < GameRuleManager.Instance.MinCrossesForLock)
         {
             return false;
         }

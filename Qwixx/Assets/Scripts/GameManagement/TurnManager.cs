@@ -16,8 +16,6 @@ public class TurnManager : NetworkBehaviour
 
     private List<int> _lockedRows = new();
 
-    private const int MAX_LOCKED_ROWS = 1;
-
     private bool _playerDied = false;
 
     public void Awake()
@@ -62,7 +60,7 @@ public class TurnManager : NetworkBehaviour
 
     private bool ShouldGameEnd()
     {
-        if(_lockedRows.Count >= MAX_LOCKED_ROWS)
+        if(_lockedRows.Count >= GameRuleManager.Instance.MinRowsLocked)
         {
             return true;
         }

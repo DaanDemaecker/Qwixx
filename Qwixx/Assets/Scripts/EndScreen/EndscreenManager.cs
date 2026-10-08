@@ -9,17 +9,13 @@ public class EndscreenManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerManager playerMangar = FindAnyObjectByType<PlayerManager>();
+        NetworkList<PlayerData> playerDatas = PlayerManager.Instance.PlayerDatas;
 
-        if(playerMangar != null)
-        {
-            NetworkList<PlayerData> playerDatas = playerMangar.PlayerDatas;
+        List<PlayerData> sortedDatas = SortList(playerDatas);
 
-            List<PlayerData> sortedDatas = SortList(playerDatas);
-
-            SetPlayerUis(sortedDatas);
-        }
+        SetPlayerUis(sortedDatas);
     }
+
 
     private void SetPlayerUis(List<PlayerData> playerDatas)
     {

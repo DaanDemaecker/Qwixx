@@ -19,8 +19,6 @@ public class ScoreSheet : MonoBehaviour
 
     private int _lifeAmount = 0;
 
-    private const int MAX_LIFE_AMOUNT = 5;
-
     // Options pairs combine the currently selected entry and a bool indicating whether the lock is selected
     private Tuple<ScoreSheetRow.ScoreSheetRowEntry, bool> _currentSelectedOptionNColored = new(ScoreSheetRow.DefaultEntry, false);
 
@@ -38,7 +36,7 @@ public class ScoreSheet : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(_scoreSheetUI != null)
+        if (_scoreSheetUI != null)
         {
             _scoreSheetUI.OnRollClickedEvent.RemoveAllListeners();
             _scoreSheetUI.OnReadyClickedEvent.RemoveAllListeners();
@@ -50,13 +48,13 @@ public class ScoreSheet : MonoBehaviour
 
     public void Awake()
     {
-        _lifeAmount = MAX_LIFE_AMOUNT;
+        _lifeAmount = GameRuleManager.Instance.MaxLives;
 
         SortRows();
     }
     private void SortRows()
     {
-        foreach(ScoreSheetRow row in _scoreSheetRows)
+        foreach (ScoreSheetRow row in _scoreSheetRows)
         {
             SortRow(row);
         }
@@ -66,14 +64,14 @@ public class ScoreSheet : MonoBehaviour
     {
         List<ScoreSheetRow.ScoreSheetRowEntry> entries = row.GetEntries();
 
-        foreach(ScoreSheetRow.ScoreSheetRowEntry entry in entries)
+        foreach (ScoreSheetRow.ScoreSheetRowEntry entry in entries)
         {
             if (EntryExists(entry))
             {
                 Debug.LogError("A duplicate entry has been found, no entry can occurr twice!");
             }
 
-            if(!_ordereredRows.ContainsKey(entry.Color))
+            if (!_ordereredRows.ContainsKey(entry.Color))
             {
                 _ordereredRows[entry.Color] = new();
             }
@@ -125,7 +123,7 @@ public class ScoreSheet : MonoBehaviour
 
     private void LockRow(ScoreSheetRow row)
     {
-        for(int i = 0; i < _scoreSheetRows.Count; ++i)
+        for (int i = 0; i < _scoreSheetRows.Count; ++i)
         {
             if (_scoreSheetRows[i] == row)
             {
@@ -138,9 +136,9 @@ public class ScoreSheet : MonoBehaviour
 
     private void ReadyClicked()
     {
-        if(_isActivePlayer)
+        if (_isActivePlayer)
         {
-            if(!EntryExists(_currentSelectedOptionNColored.Item1) && !EntryExists(_currentSelectedOptionColored.Item1))
+            if (!EntryExists(_currentSelectedOptionNColored.Item1) && !EntryExists(_currentSelectedOptionColored.Item1))
             {
                 LoseLife();
             }
@@ -152,7 +150,7 @@ public class ScoreSheet : MonoBehaviour
             ScoreSheetRow currentRow = _ordereredRows[_currentSelectedOptionColored.Item1.Color][_currentSelectedOptionColored.Item1.Value];
 
             currentRow.CrossEntry(_currentSelectedOptionColored.Item1);
-            if(_currentSelectedOptionColored.Item2)
+            if (_currentSelectedOptionColored.Item2)
             {
                 currentRow.CrossEntry(currentRow.GetLockEntry());
                 LockRow(currentRow);
@@ -177,7 +175,7 @@ public class ScoreSheet : MonoBehaviour
             _scoreSheetUI.UpdateRows(_scoreSheetRows);
             _scoreSheetUI.SetPulsating(_currentSelectedOptionColored.Item1, false);
 
-            if(_currentSelectedOptionColored.Item2)
+            if (_currentSelectedOptionColored.Item2)
             {
                 _scoreSheetUI.SetPulsating(_ordereredRows[_currentSelectedOptionColored.Item1.Color][_currentSelectedOptionColored.Item1.Value].GetLockEntry(), false);
             }
@@ -262,9 +260,9 @@ public class ScoreSheet : MonoBehaviour
 
     private void UnsetChoice(ref Tuple<ScoreSheetRow.ScoreSheetRowEntry, bool> toUnset)
     {
-        if(_scoreSheetUI != null)
+        if (_scoreSheetUI != null)
         {
-            if(toUnset.Item2 && EntryExists(toUnset.Item1))
+            if (toUnset.Item2 && EntryExists(toUnset.Item1))
             {
                 _scoreSheetUI.SetPulsating(_ordereredRows[toUnset.Item1.Color][toUnset.Item1.Value].GetLockEntry(), false);
             }
@@ -283,7 +281,7 @@ public class ScoreSheet : MonoBehaviour
 
         bool lockSet = false;
 
-        if(EntryExists(newValue))
+        if (EntryExists(newValue))
         {
             lockSet = _ordereredRows[newValue.Color][newValue.Value].CanLockRow(newValue);
         }
@@ -291,7 +289,7 @@ public class ScoreSheet : MonoBehaviour
         if (_scoreSheetUI != null)
         {
             _scoreSheetUI.SetPulsating(newValue, true);
-            if(lockSet)
+            if (lockSet)
             {
                 _scoreSheetUI.SetPulsating(_ordereredRows[newValue.Color][newValue.Value].GetLockEntry(), true);
             }
@@ -302,7 +300,7 @@ public class ScoreSheet : MonoBehaviour
 
     public void LockRow(int rowIndex)
     {
-        if(rowIndex < 0 || rowIndex >= _scoreSheetRows.Count)
+        if (rowIndex < 0 || rowIndex >= _scoreSheetRows.Count)
         {
             Debug.LogError("Row index is out of bounds");
             return;
@@ -312,7 +310,7 @@ public class ScoreSheet : MonoBehaviour
 
         row.LockRow();
 
-        if(_scoreSheetUI != null)
+        if (_scoreSheetUI != null)
         {
             _scoreSheetUI.UpdateRows(_scoreSheetRows);
         }
@@ -322,12 +320,12 @@ public class ScoreSheet : MonoBehaviour
     {
         _lifeAmount--;
 
-        if(_scoreSheetUI != null)
+        if (_scoreSheetUI != null)
         {
             _scoreSheetUI.LoseHeart();
         }
 
-        if(_lifeAmount <= 0)
+        if (_lifeAmount <= 0)
         {
             OnPlayerDiedEvent.Invoke();
         }
@@ -335,21 +333,15 @@ public class ScoreSheet : MonoBehaviour
 
     public int GetScore()
     {
-        ScoreCalculator scoreCalculator = FindAnyObjectByType<ScoreCalculator>();
+        int score = 0;
 
-        if(scoreCalculator != null)
+        foreach (ScoreSheetRow row in _scoreSheetRows)
         {
-            int score = 0;
-
-            foreach(ScoreSheetRow row in _scoreSheetRows)
-            {
-                score += scoreCalculator.GetScore(row.CrossedCount);
-            }
-
-            score -= scoreCalculator.GetPenalty(_lifeAmount);
-
-            return score;
+            score += GameRuleManager.Instance.GetScore(row.CrossedCount);
         }
-        return 0;
+
+        score -= GameRuleManager.Instance.GetPenalty(_lifeAmount);
+
+        return score;
     }
 }
