@@ -27,8 +27,6 @@ public class ScoreSheetUiOption : MonoBehaviour
         }
     }
 
-    private static MaterialManager _sMaterialManager = null;
-
     private ScoreSheetRow.ScoreSheetRowEntry _currentEntry;
 
     // Events
@@ -36,11 +34,6 @@ public class ScoreSheetUiOption : MonoBehaviour
 
     private void Awake()
     {
-        if(_sMaterialManager == null)
-        {
-            _sMaterialManager = FindAnyObjectByType<MaterialManager>();
-        }
-
         if(_button != null)
         {
             _button.onClick.AddListener(OnButtonClicked);
@@ -51,9 +44,9 @@ public class ScoreSheetUiOption : MonoBehaviour
     {
         _currentEntry = entry;
 
-        if(_background != null && _sMaterialManager != null)
+        if(_background != null)
         {
-            _background.material = _sMaterialManager.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
+            _background.material = MaterialManager.Instance.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
         }
 
         if(_buttonText != null)

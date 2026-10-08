@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de52caf1a38e89140b5d995eb8ddbec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DieSpawner
+  _diePrefab: {fileID: 5024260092011054314, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
+  _dieParent: {fileID: 0}
+  _dieColor: 0

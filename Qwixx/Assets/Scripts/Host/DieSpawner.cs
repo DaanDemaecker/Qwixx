@@ -8,6 +8,9 @@ public class DieSpawner : MonoBehaviour
     [SerializeField]
     private GameObject _dieParent = null;
 
+    [SerializeField]
+    private DiceColor _dieColor = DiceColor.Color0;
+
     public Die SpawnDie()
     {
         if(_diePrefab != null)
@@ -21,6 +24,7 @@ public class DieSpawner : MonoBehaviour
             if (dieComponent != null)
             {
                 dieComponent.BeginPosition = transform.position;
+                dieComponent.SetColor(_dieColor);
                 return dieComponent;
             }
         }

@@ -35,6 +35,7 @@ public class PlayerManager : NetworkBehaviour
     {
         _playerDatas = new();
     }
+
     public void StartLoadingGameScene(NetworkList<PlayerData> playerDatas)
     {
         foreach(PlayerData data in playerDatas)
@@ -65,12 +66,12 @@ public class PlayerManager : NetworkBehaviour
     {
         if(IsHost)
         {
-            SpawnPlayerRpc();        
+            SpawnPlayerClientRpc();        
         }
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void SpawnPlayerRpc()
+    private void SpawnPlayerClientRpc()
     {
         if (IsHost)
         {

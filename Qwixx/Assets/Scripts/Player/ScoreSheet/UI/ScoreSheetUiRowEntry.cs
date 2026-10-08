@@ -20,9 +20,6 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
     [SerializeField]
     private GameObject _lockContainer = null;
-    
-    
-    private static MaterialManager _sMaterialManager = null;
 
     public void SetPulsing(bool isPulsing)
     {
@@ -41,13 +38,7 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
         if (_background != null)
         {
-            MaterialManager materialManager = GetMaterialManager();
-
-            if (materialManager == null)
-            {
-                return;
-            }
-            _background.material = materialManager.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
+            _background.material = MaterialManager.Instance.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
         }
 
         if (_crossContainer != null)
@@ -64,15 +55,5 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
         {
             _lockContainer.SetActive(entry.IsLock);
         }
-    }
-
-    private MaterialManager GetMaterialManager()
-    {
-        if (_sMaterialManager == null)
-        {
-            _sMaterialManager = FindAnyObjectByType<MaterialManager>();
-        }
-
-        return _sMaterialManager;
     }
 }

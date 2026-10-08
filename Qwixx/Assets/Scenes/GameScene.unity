@@ -140,13 +140,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
+      propertyPath: _dieColor
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: b61e5dc86cb6c464a91436b4fadca8bf, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -218,13 +218,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
+      propertyPath: _dieColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: df7c5c06119dcec41b3c67c80e08962c, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -524,10 +524,6 @@ PrefabInstance:
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: df7c5c06119dcec41b3c67c80e08962c, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -1314,10 +1310,6 @@ PrefabInstance:
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: 74b44cf4a2348c6489f2b48672ae034c, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -1389,13 +1381,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
+      propertyPath: _dieColor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: 8fe985a4ea49b774090b0b84cb69a8a8, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -1504,13 +1496,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
+      propertyPath: _dieColor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: _dieParent
       value: 
       objectReference: {fileID: 1742807301}
-    - target: {fileID: 4915664388621474104, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
-      propertyPath: _diePrefab
-      value: 
-      objectReference: {fileID: 1247808938924941851, guid: e917923a073a077488d9a92270201bdd, type: 3}
     - target: {fileID: 8661812621881981080, guid: 72cd907837a03d042a57284f6cc597eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

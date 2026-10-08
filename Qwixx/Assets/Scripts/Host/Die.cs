@@ -8,7 +8,6 @@ public class Die : MonoBehaviour
     [SerializeField]
     private List<DieSide> _sides = new();
 
-    [SerializeField]
     private DiceColor _color = DiceColor.Color0;
 
     private Rigidbody _rigidBody = null;
@@ -25,7 +24,7 @@ public class Die : MonoBehaviour
 
     private const float MIN_STOP_MOVING_TIME = 0.5f;
 
-    private const float MOVEMENT_DELTA = 0.5f;
+    private const float MOVEMENT_DELTA = 0.05f;
 
     private const float MAX_SLOPE_ANGLE = 5f;
 
@@ -44,7 +43,22 @@ public class Die : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         _rigidBody = GetComponent<Rigidbody>();
+    }
+
+    public void SetColor(DiceColor diceColor)
+    {
+        _color = diceColor;
+
+        if(TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+        {
+            List<Material> materials = new List<Material>(meshRenderer.materials);
+            materials[0] = MaterialManager.Instance.GetMaterial(_color);
+
+            meshRenderer.SetMaterials(materials);
+        }
+
     }
 
     // Update is called once per frame
