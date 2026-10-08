@@ -52,6 +52,8 @@ public class PlayerManager : NetworkBehaviour
         _playerManager = this;
 
         _playerDatas = new();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void StartLoadingGameScene(NetworkList<PlayerData> playerDatas)

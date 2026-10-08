@@ -329,7 +329,8 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 1539069375
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5194501785609400908, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -502,7 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae390ae48de2ec4d87dd90c914e3b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionHandler
-  _maxPlayers: 4
   _port: 7779
 --- !u!114 &748655685
 MonoBehaviour:
