@@ -34,18 +34,26 @@ public class DiceRoll
         }
     }
 
-    private DiceRollData _diceRoll = new DiceRollData();
+    private DiceRollData _diceRollDataHolder = new DiceRollData();
 
-    public UnityEvent<DiceRollData> OnRollCompleteEvent = new UnityEvent<DiceRollData>();
+    public DiceRollData DiceRollDataHolder
+    {
+        get
+        {
+            return _diceRollDataHolder;
+        }
+    }
+
+    public UnityEvent OnRollCompleteEvent = new UnityEvent();
 
     public void Reset()
     {
-        _diceRoll.Color0_1 = -1;
-        _diceRoll.Color0_2 = -1;
-        _diceRoll.Color1 = -1;
-        _diceRoll.Color2 = -1;
-        _diceRoll.Color3 = -1;
-        _diceRoll.Color4 = -1;
+        _diceRollDataHolder.Color0_1 = -1;
+        _diceRollDataHolder.Color0_2 = -1;
+        _diceRollDataHolder.Color1 = -1;
+        _diceRollDataHolder.Color2 = -1;
+        _diceRollDataHolder.Color3 = -1;
+        _diceRollDataHolder.Color4 = -1;
     }
 
     public void SetValue(DiceColor color, int value)
@@ -53,43 +61,43 @@ public class DiceRoll
         switch(color)
         {
             case DiceColor.Color0:
-                if(_diceRoll.Color0_1 <= 0)
+                if(_diceRollDataHolder.Color0_1 <= 0)
                 {
-                    _diceRoll.Color0_1 = value;
+                    _diceRollDataHolder.Color0_1 = value;
                 }
                 else
                 {
-                    _diceRoll.Color0_2 = value;
+                    _diceRollDataHolder.Color0_2 = value;
                 }    
                 break;
             case DiceColor.Color1:
-                _diceRoll.Color1 = value;
+                _diceRollDataHolder.Color1 = value;
                 break;
             case DiceColor.Color2:
-                _diceRoll.Color2 = value;
+                _diceRollDataHolder.Color2 = value;
                 break;
             case DiceColor.Color3:
-                _diceRoll.Color3 = value;
+                _diceRollDataHolder.Color3 = value;
                 break;
             case DiceColor.Color4:
-                _diceRoll.Color4 = value;
+                _diceRollDataHolder.Color4 = value;
                 break;
         }
 
         if(IsComplete())
         {
-            OnRollCompleteEvent.Invoke(_diceRoll);
+            OnRollCompleteEvent.Invoke();
         }    
     }
 
     private bool IsComplete()
     {
-        return _diceRoll.Color0_1 > 0 &&
-            _diceRoll.Color0_2 > 0 &&
-            _diceRoll.Color1 > 0 &&
-            _diceRoll.Color2 > 0 &&
-            _diceRoll.Color3 > 0 &&
-            _diceRoll.Color4 > 0;
+        return _diceRollDataHolder.Color0_1 > 0 &&
+            _diceRollDataHolder.Color0_2 > 0 &&
+            _diceRollDataHolder.Color1 > 0 &&
+            _diceRollDataHolder.Color2 > 0 &&
+            _diceRollDataHolder.Color3 > 0 &&
+            _diceRollDataHolder.Color4 > 0;
     }
 }
 
