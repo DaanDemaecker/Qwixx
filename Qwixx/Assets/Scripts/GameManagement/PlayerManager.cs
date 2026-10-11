@@ -42,6 +42,19 @@ public class PlayerManager : NetworkBehaviour
 
     private const string GAME_OVER_SCENE = "EndGameScene";
 
+    public void ResetGame()
+    {
+        if (_playerDatas.Count > 0)
+        {
+            _playerDatas.Clear();
+        }
+
+        if(_turnManager != null)
+        {
+            _turnManager.Reset();
+        }
+    }
+
 
     private void Awake()
     {

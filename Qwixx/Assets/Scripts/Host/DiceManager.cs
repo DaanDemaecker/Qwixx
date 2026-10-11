@@ -31,6 +31,11 @@ public class DiceManager : MonoBehaviour
     }
 
 #if DEBUG
+    [ConsoleMethod("SetNextRole", "Sets the values of the next role manually")]
+    public static void SetNextRoll(int value)
+    {
+        SetNextRoll(value, value, value, value, value, value);
+    }
 
     [ConsoleMethod("SetNextRole", "Sets the values of the next role manually")]
     public static void SetNextRoll(int color0_1, int color0_2, int color1, int color2, int color3, int color4)

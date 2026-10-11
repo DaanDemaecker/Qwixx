@@ -18,6 +18,16 @@ public class TurnManager : NetworkBehaviour
 
     private bool _playerDied = false;
 
+    public void Reset()
+    {
+        _playerIds.Clear();
+        _playersReady.Clear();
+        _tempLockedRows.Clear();
+        _lockedRows.Clear();
+        _playerDied = false;
+        _currentTurnIndex = -1;
+    }
+
     public void Awake()
     {
         _playerManager = GetComponent<PlayerManager>();

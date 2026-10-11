@@ -153,4 +153,12 @@ public class ConnectionHandler : MonoBehaviour
             _networkManager.StartClient();
         }
     }
+
+    public void Disconnect()
+    {
+        if (_networkManager != null)
+        {
+            _networkManager.Shutdown();
+        }
+    }
 }

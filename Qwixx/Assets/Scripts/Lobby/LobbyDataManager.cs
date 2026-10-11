@@ -37,6 +37,22 @@ public class LobbyDataManager : NetworkBehaviour
         }
     }
 
+    public override void OnDestroy()
+    {
+        _lobbyPlayerDatas.OnListChanged -= LobbyDataManager_OnListChanged;
+        if (_clientUi != null)
+        {
+            _clientUi.onNameChangedEvent.RemoveListener(LobbyDataManager_OnNameChanged);
+            _clientUi.onColorChangedEvent.RemoveListener(LobbyDataManager_OnColorChanged);
+            _clientUi.onPlayerReadyEvent.RemoveListener(LobbyDataManager_OnPlayerReady);
+        }
+        if (_hostUi != null)
+        {
+            _hostUi.onStartGameClicked.RemoveListener(LobbyDataManager_OnStartGameClicked);
+        }
+
+    }
+
     private void LobbyDataManager_OnStartGameClicked()
     {
         if (_lobbyPlayerDatas.Count < GameRuleManager.Instance.MinPlayers)
@@ -129,6 +145,15 @@ public class LobbyDataManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += LobbyDataManager_OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback += LobbyDataManager_OnClientDisconnectedCallback;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsHost)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= LobbyDataManager_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= LobbyDataManager_OnClientDisconnectedCallback;
         }
     }
 

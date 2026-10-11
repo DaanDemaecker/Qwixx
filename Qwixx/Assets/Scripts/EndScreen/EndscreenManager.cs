@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndscreenManager : MonoBehaviour
 {
     [SerializeField]
     private List<EndscreenPlayerUi> _players = null;
+
+    [SerializeField]
+    private Button _mainMenuButton = null;
+
+    public const string MAIN_MENU_SCENE_NAME = "StartMenuScene";
 
     private void Awake()
     {
@@ -14,6 +20,11 @@ public class EndscreenManager : MonoBehaviour
         List<PlayerData> sortedDatas = SortList(playerDatas);
 
         SetPlayerUis(sortedDatas);
+
+        if(_mainMenuButton != null)
+        {
+            _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        }
     }
 
 
@@ -70,5 +81,12 @@ public class EndscreenManager : MonoBehaviour
         }
 
         return index;
+    }
+
+    public void OnMainMenuButtonClicked()
+    {
+        ConnectionHandler.Instance.Disconnect();
+        PlayerManager.Instance.ResetGame();
+        SceneManager.Instance.LoadScene(MAIN_MENU_SCENE_NAME, false);
     }
 }
