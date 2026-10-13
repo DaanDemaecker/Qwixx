@@ -20,6 +20,8 @@ public class GameManager : NetworkBehaviour
 
     private const string LOBBY_SCENE_NAME = "LobbyScene";
 
+    private const string LOBBY_HANDLER_SCENE_NAME = "OnlineLobbyHandlerScene";
+
     private void Awake()
     {
         if (_instance != null)
@@ -33,7 +35,7 @@ public class GameManager : NetworkBehaviour
 
     public void Start()
     {
-        _sceneManager.LoadScene(START_MENU_SCENE_NAME, false);
+        _sceneManager.LoadScene(LOBBY_HANDLER_SCENE_NAME, false);
     }
 
     public void LoadLobbyScene()
