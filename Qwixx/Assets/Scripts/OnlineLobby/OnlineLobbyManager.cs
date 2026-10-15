@@ -21,7 +21,16 @@ public class OnlineLobbyManager : NetworkBehaviour
 
     private Lobby _lobby = null;
 
-    private bool _isHost = false;
+    private bool _isHostDevice = false;
+
+    public bool IsHostDevice
+    {
+        get
+        {
+            return _isHostDevice;
+        }
+    }
+
 
     private bool _tryingToQuit = false;
 
@@ -36,19 +45,12 @@ public class OnlineLobbyManager : NetworkBehaviour
     private float _updateLobbyTime = 2f;
 
 
-    private const string PLAYER_NUMBER_KEY = "PlayerNumber";
-    private const string IS_HOST_DEVICE_KEY = "IsHostDevice";
+    public const string PLAYER_NUMBER_KEY = "PlayerNumber";
+    public const string IS_HOST_DEVICE_KEY = "IsHostDevice";
+    public const string PLAYER_NAME_KEY = "PlayerName";
+    public const string PLAYER_COLOR_KEY = "PlayerColor";
+    public const string PLAYER_READY_KEY = "PlayerReady";
 
-    private const string PLAYER_NAME_KEY = "PlayerName";
-
-
-    public static string PlayerNameKey
-    {
-        get
-        {
-            return PLAYER_NAME_KEY;
-        }
-    }
 
     private const string HOST_NAME = "Host";
 
@@ -105,7 +107,7 @@ public class OnlineLobbyManager : NetworkBehaviour
 
             _lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createLobbyOptions);
 
-            _isHost = true;
+            _isHostDevice = true;
 
             return true;
         }
@@ -142,7 +144,7 @@ public class OnlineLobbyManager : NetworkBehaviour
 
             Debug.Log("Joined lobby");
 
-            _isHost = false;
+            _isHostDevice = false;
 
             return true;
         }
@@ -201,7 +203,7 @@ public class OnlineLobbyManager : NetworkBehaviour
     {
         try
         {
-            if (_isHost && _lobby != null)
+            if (_isHostDevice && _lobby != null)
             {
                 _heartbeatTimer -= Time.deltaTime;
 
@@ -331,6 +333,16 @@ public class OnlineLobbyManager : NetworkBehaviour
         }
 
         return _lobby.Data[key].Value;
+    }
+
+    public List<Unity.Services.Lobbies.Models.Player> GetPlayerList()
+    {
+        if(_lobby == null)
+        {
+            return new();
+        }
+
+        return _lobby.Players;
     }
 
     public string GetPlayerData(string key)

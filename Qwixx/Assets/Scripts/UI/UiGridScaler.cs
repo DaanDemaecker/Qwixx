@@ -12,8 +12,33 @@ public class UiGridScaler : MonoBehaviour
     [SerializeField]
     private int _rowAmount = 2;
 
+    public int RowAmount
+    {
+        get { return _rowAmount; }
+        set
+        {
+            if (_rowAmount != value)
+            {
+                _rowAmount = value;
+                CalculateGridSize();
+            }
+        }
+    }
+
     [SerializeField]
     private int _columnAmount = 2;
+    public int ColumnAmount
+    {
+        get { return _columnAmount; }
+        set
+        {
+            if (_columnAmount != value)
+            {
+                _columnAmount = value;
+            }
+            CalculateGridSize();
+        }
+    }
 
     private int _childAmount = 0;
 

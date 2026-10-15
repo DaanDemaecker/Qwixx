@@ -65,7 +65,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
             {                 
                 Debug.LogError($"Lobby joined: with code {_lobbyCodeInputField.text}");
 
-                OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PlayerNameKey, _playerNameInputField.text);
+                OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_KEY, _playerNameInputField.text);
 
                 SceneManager.Instance.LoadScene(ONLINE_LOBBY_SCENE_NAME, false);
             }
