@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +34,38 @@ public class OnlineLobbyPlayerUi : MonoBehaviour
         get
         {
             return _playerId;
+        }
+    }
+
+    public void UpdateName(string playerName)
+    {
+        if (_playerNameText != null)
+        {
+            _playerNameText.text = playerName;
+        }
+    }
+
+    public void UpdateColor(Color playerColor)
+    {
+        if (_playerNameText != null)
+        {
+            _playerNameText.color = playerColor;
+        }
+    }
+
+    public void UpdateReady(bool ready)
+    {
+        if (ready != _isReady)
+        {
+            _isReady = ready;
+
+            Color newColor = _isReady ? _readyColor : _notReadyColor;
+            newColor.a = _backgroundOpacity;
+
+            if (_backgroundImage != null)
+            {
+                _backgroundImage.color = newColor;
+            }
         }
     }
 

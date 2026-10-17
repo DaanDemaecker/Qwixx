@@ -81,14 +81,14 @@ public class ConnectionHandler : MonoBehaviour
         }
         else
         {
-            if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals(CONNECTION_SCENE_NAME))
+            /*if(!UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals(CONNECTION_SCENE_NAME))
             {
                 response.Approved = false;
                 response.Reason = "Game already started";
                 return;
             }
             // Check if the maximum number of connections has been reached, disount 1 as to not count the host as a player
-            else if (_networkManager.ConnectedClients.Count - 1 >= GameRuleManager.Instance.MaxPlayers)
+            else*/ if (_networkManager.ConnectedClients.Count - 1 >= GameRuleManager.Instance.MaxPlayers)
             {
                 response.Approved = false;
                 response.Reason = "Max players reached";

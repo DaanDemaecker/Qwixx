@@ -1,10 +1,9 @@
-using NUnit.Framework;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using WebSocketSharp;
 
-public class OnlineLobbyPlayerEditor : MonoBehaviour
+public class OnlineLobbyPlayerEditor : NetworkBehaviour
 {
     [SerializeField]
     private GameObject _mainContainer = null;
@@ -24,6 +23,25 @@ public class OnlineLobbyPlayerEditor : MonoBehaviour
     [SerializeField]
     private UiGridScaler _gridScaler = null;
 
+    [SerializeField]
+    private OnlineLobbyUiManager _uiManager = null;
+
+    private bool _isConnected = false;
+
+    private bool _isTryingToConnect = false;
+
+    private string _playerId = string.Empty;
+
+    private void Start()
+    {
+        if(_uiManager == null)
+        {
+            Debug.LogError("No Ui manager was asigned");
+        }
+
+        _playerId = UserManager.Instance.GetId();
+    }
+
     private void OnEnable()
     {
         if(OnlineLobbyManager.Instance.IsHostDevice)
@@ -39,6 +57,33 @@ public class OnlineLobbyPlayerEditor : MonoBehaviour
         }
 
         SetupButtons();
+    }
+
+    private void Update()
+    {
+        ConnectedPlayer();
+    }
+
+    private async void ConnectedPlayer()
+    {
+        if(_isConnected || _isTryingToConnect)
+        {
+            return;
+        }
+
+        _isTryingToConnect = true;
+
+        string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+
+        if(relayJoinKey.IsNullOrEmpty())
+        {
+            _isTryingToConnect = false;
+            return;
+        }
+
+        await RelayManager.Instance.StartClient(relayJoinKey);
+
+        _isConnected = true; ;
     }
 
     private void SetupButtons()
@@ -96,19 +141,30 @@ public class OnlineLobbyPlayerEditor : MonoBehaviour
         else
         {
             OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_KEY, newValue);
+
+            _uiManager.SetPlayerNameClientRpc(_playerId, newValue);
         }
     }
 
     private void OnColorSelected(Color color)
     {
         OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_COLOR_KEY, color.ToHexString());
+
+        _uiManager.SetPlayerColorClientRpc(_playerId, color);
     }
 
     public void OnReadyClickced()
     {
+        ReadyApproved();
+    }
+
+    public void ReadyApproved()
+    {
         OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_READY_KEY, true.ToString());
 
-        if(_mainContainer != null)
+        _uiManager.SetPlayerReadyClientRpc(_playerId, true);
+
+        if (_mainContainer != null)
         {
             _mainContainer.SetActive(false);
         }

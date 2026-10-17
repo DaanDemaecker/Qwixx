@@ -28,6 +28,16 @@ public class UserManager : MonoBehaviour
     [SerializeField]
     private int _userId = -1;
 
+    private bool _isSignedIn = false;
+
+    public bool IsSignedIn
+    {
+        get
+        {
+            return _isSignedIn;
+        }
+    }
+
     private void Awake()
     {
         if(_instance != null)
@@ -48,11 +58,9 @@ public class UserManager : MonoBehaviour
 
         await UnityServices.InitializeAsync(options);
 
-        Debug.Log("Unity services initialized");
-
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        Debug.Log("Logged in anonymously");
+        _isSignedIn = true;
     }
 
     public string GetId()

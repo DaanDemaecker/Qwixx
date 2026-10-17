@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000019073486
+      value: -0.000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -612,11 +612,11 @@ PrefabInstance:
       objectReference: {fileID: 75300669}
     - target: {fileID: 1997801248692470100, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1997801248692470100, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1997801248692470100, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: m_LocalPosition.z
@@ -820,7 +820,6 @@ GameObject:
   - component: {fileID: 748655687}
   - component: {fileID: 748655686}
   - component: {fileID: 748655685}
-  - component: {fileID: 748655684}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -828,19 +827,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &748655684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748655683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae390ae48de2ec4d87dd90c914e3b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ConnectionHandler
-  _port: 5555
 --- !u!114 &748655685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,7 +839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Transports.UTP.UnityTransport
-  m_ProtocolType: 0
+  m_ProtocolType: 1
   m_UseWebSockets: 0
   m_UseEncryption: 0
   m_MaxPacketQueueSize: 128
@@ -940,11 +926,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4466303616156288750, guid: 8e25f3c14dac6a441a77cf628bac3197, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 335.24362
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4466303616156288750, guid: 8e25f3c14dac6a441a77cf628bac3197, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 213.18738
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4466303616156288750, guid: 8e25f3c14dac6a441a77cf628bac3197, type: 3}
       propertyPath: m_LocalPosition.z

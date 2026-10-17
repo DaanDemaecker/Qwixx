@@ -19,6 +19,9 @@ public class OnlineLobbyInputHandler : MonoBehaviour
 
     private const string ONLINE_LOBBY_SCENE_NAME = "OnlineLobbyScene";
 
+    private bool _shouldJoinLobby = false;
+    private bool _tryingToJoin = false;
+
     private void Awake()
     {
         if (UserManager.Instance.IsHostDevice)
@@ -57,17 +60,58 @@ public class OnlineLobbyInputHandler : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(_shouldJoinLobby && !_tryingToJoin)
+        {
+            JoinConnection();
+        }
+    }
+
+    private async void JoinConnection()
+    {
+        _tryingToJoin = true;
+
+        string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+
+        if (relayJoinKey.IsNullOrEmpty())
+        {
+            _tryingToJoin = false;
+            return;
+        }
+
+        if (!await RelayManager.Instance.StartClient(relayJoinKey))
+        {
+            _tryingToJoin = false;
+            return;
+        }
+
+        _shouldJoinLobby = false;
+        _tryingToJoin = false;
+    }
+
     private async void OnJoinLobbyButtonClicked()
     {
         if(_lobbyCodeInputField != null && !_lobbyCodeInputField.text.IsNullOrEmpty() && _playerNameInputField != null && !_playerNameInputField.text.IsNullOrEmpty())
         {
             if(await OnlineLobbyManager.Instance.JoinLobby(_lobbyCodeInputField.text))
             {                 
-                Debug.LogError($"Lobby joined: with code {_lobbyCodeInputField.text}");
-
                 OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_KEY, _playerNameInputField.text);
+                OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_SET_KEY, true.ToString());
 
-                SceneManager.Instance.LoadScene(ONLINE_LOBBY_SCENE_NAME, false);
+                string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+
+                if (relayJoinKey.IsNullOrEmpty())
+                {
+                    _shouldJoinLobby = true;
+                    return;
+                }
+
+                if (!await RelayManager.Instance.StartClient(relayJoinKey))
+                {
+                    _shouldJoinLobby = true;
+                    return;
+                }
             }
             else
             {
@@ -78,11 +122,15 @@ public class OnlineLobbyInputHandler : MonoBehaviour
 
     private async void OnCreateLobbyButtonClicked()
     {
+        if(!await RelayManager.Instance.OpenHost())
+        {
+            Debug.LogError("Failed to open host");
+            return;
+        }
+
         if(await OnlineLobbyManager.Instance.CreateLobby())
         {
-            Debug.LogError($"Lobby created: with code {OnlineLobbyManager.Instance.GetLobbyCode()}");
-
-            SceneManager.Instance.LoadScene(ONLINE_LOBBY_SCENE_NAME, false);
+            SceneManager.Instance.LoadSceneNetwork(ONLINE_LOBBY_SCENE_NAME, false);
         }
         else
         {

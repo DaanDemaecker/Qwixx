@@ -1,13 +1,13 @@
 using IngameDebugConsole;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Netcode;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class OnlineLobbyManager : NetworkBehaviour
+public class OnlineLobbyManager : MonoBehaviour
 {
     private static OnlineLobbyManager _instance = null;
 
@@ -50,9 +50,14 @@ public class OnlineLobbyManager : NetworkBehaviour
     public const string PLAYER_NAME_KEY = "PlayerName";
     public const string PLAYER_COLOR_KEY = "PlayerColor";
     public const string PLAYER_READY_KEY = "PlayerReady";
+    public const string PLAYER_NAME_SET_KEY = "PlayerNameSet";
+
+    public const string RELAY_JOIN_CODE_KEY = "RelayJoinCode";
 
 
     private const string HOST_NAME = "Host";
+
+    public UnityEvent LobbyUpdatedEvent;
 
     private void Awake()
     {
@@ -189,6 +194,7 @@ public class OnlineLobbyManager : NetworkBehaviour
                     _updateLobbyTimer = _updateLobbyTime;
 
                     _lobby = await LobbyService.Instance.GetLobbyAsync(_lobby.Id);
+                    LobbyUpdatedEvent.Invoke();
                 }
             }
 
@@ -285,7 +291,6 @@ public class OnlineLobbyManager : NetworkBehaviour
 
         try
         {
-
             await LobbyService.Instance.UpdateLobbyAsync(_lobby.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject>
@@ -293,7 +298,6 @@ public class OnlineLobbyManager : NetworkBehaviour
                 {key, new DataObject(visibility, value) }
             }
             });
-
         }
         catch (LobbyServiceException e)
         {
@@ -317,7 +321,6 @@ public class OnlineLobbyManager : NetworkBehaviour
                 {key, new PlayerDataObject(visitbility, value) }
             }
             });
-
         }
         catch (LobbyServiceException e)
         {

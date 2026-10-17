@@ -270,7 +270,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.55
+  m_fontSize: 34.2
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -822,12 +822,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 45.65
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 5
+  m_fontSizeMax: 1000
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -876,6 +876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9211573653183720238}
+  - component: {fileID: -2479656122123962701}
   - component: {fileID: 8704984119824335985}
   m_Layer: 5
   m_Name: OnlineLobbyPlayerEditor
@@ -904,6 +905,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-2479656122123962701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708319444910956000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3349819010
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8704984119824335985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,12 +944,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56aed0153b6e6ab4a8c47d6132810b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnlineLobbyPlayerEditor
+  ShowTopMostFoldoutHeaderGroup: 1
   _mainContainer: {fileID: 2984547245816546160}
   _playerNameInputField: {fileID: 2732888172779665330}
   _colorOptionAmount: 9
   _colorButtonPrefab: {fileID: 738235341917247853, guid: 86daa204244b446438d7cb50c3e77ef6, type: 3}
   _colorButtonParent: {fileID: 2834151972382664111}
   _gridScaler: {fileID: 3566997945412262098}
+  _uiManager: {fileID: 0}
 --- !u!1 &9024576183967420386
 GameObject:
   m_ObjectHideFlags: 0
