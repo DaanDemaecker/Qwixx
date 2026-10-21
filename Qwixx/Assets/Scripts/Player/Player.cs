@@ -1,13 +1,7 @@
-using Unity.Netcode;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private string _playerName = "Player";
-    private Color _playerColor = Color.white;
-    private int _playerNumber = -1;
-    private ulong _clientId = ulong.MaxValue;
-
     [SerializeField]
     private ScoreSheet _scoreSheet = null;
 
@@ -21,24 +15,9 @@ public class Player : MonoBehaviour
 
     public void InitializeValues(string name, Color color)
     {
-        _playerName = name;
-        _playerColor = color;
         if(_scoreSheet != null)
         {
             _scoreSheet.SetInfo(name, color);
-        }
-    }
-
-    public void InitializeValues(PlayerData data)
-    {
-        _playerName = data.Name.ToString();
-        _playerColor = data.Color;
-        _playerNumber = data.PlayerNumber;
-        _clientId = data.ClientId;
-
-        if(_scoreSheet != null)
-        {
-            _scoreSheet.SetInfo(data.Name.ToString(), data.Color);
         }
     }
 
