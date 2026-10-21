@@ -2,6 +2,7 @@ using IngameDebugConsole;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.Collections;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -22,7 +23,7 @@ public class DiceManager : MonoBehaviour
 
     private bool _initialRollDone = false;
 
-    private ulong _activePlayerId = 0;
+    private FixedString32Bytes _activePlayerId = new FixedString32Bytes();
 
     private void Awake()
     {
@@ -87,7 +88,7 @@ public class DiceManager : MonoBehaviour
         die.OnRollCompleteEvent.AddListener(DiceManager_OnSingleRollComplete);
     }
 
-    public void Roll(ulong activePlayerId)
+    public void Roll(FixedString32Bytes activePlayerId)
     {
         _activePlayerId = activePlayerId;
         _rollInfo.Reset();

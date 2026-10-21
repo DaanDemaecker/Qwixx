@@ -11,13 +11,13 @@ public class EndscreenPlayerUi : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text _playerScoreText = null;
 
-    public void SetInfo(PlayerData data)
+    public void SetInfo(OnlineScoreManager.PlayerScoreData data)
     {
         SetActive(true);
 
         if (_playerNameText != null)
         {
-            _playerNameText.text = data.Name.ToString();
+            _playerNameText.text = data.PlayerName.ToString();
             _playerNameText.color = data.Color;
         }
 

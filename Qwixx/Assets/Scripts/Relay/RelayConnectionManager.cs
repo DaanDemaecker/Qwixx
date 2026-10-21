@@ -3,13 +3,9 @@ using UnityEngine;
 
 public class RelayConnectionManager : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         NetworkManager.Singleton.ConnectionApprovalCallback = ApprovalCheck;
-    }
-
-    private void OnEnable()
-    {
         NetworkManager.Singleton.OnClientDisconnectCallback += OnDisconnected;
     }
 

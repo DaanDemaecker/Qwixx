@@ -25,7 +25,6 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private int _userId = -1;
 
     private bool _isSignedIn = false;
@@ -40,6 +39,8 @@ public class UserManager : MonoBehaviour
 
     private void Awake()
     {
+        _userId = Random.Range(0, 50000);
+
         if(_instance != null)
         {
             Debug.LogError("An instance of this singleton already exists");

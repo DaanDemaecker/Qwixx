@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,7 +9,7 @@ public class Host : NetworkBehaviour
     [SerializeField]
     private DiceManager _diceManager;
 
-    public UnityEvent<DiceRoll.DiceRollData, ulong> OnRollCompleteEvent;
+    public UnityEvent<DiceRoll.DiceRollData, FixedString32Bytes> OnRollCompleteEvent;
 
     public void SpawnDice()
     {
@@ -26,7 +27,7 @@ public class Host : NetworkBehaviour
     }
 
 
-    public void RollDice(ulong activePlayerId)
+    public void RollDice(FixedString32Bytes activePlayerId)
     {
         if(_diceManager != null)
         {
@@ -34,7 +35,7 @@ public class Host : NetworkBehaviour
         }
     }
 
-    public void RollComplete(DiceRoll.DiceRollData data, ulong activePlayerId)
+    public void RollComplete(DiceRoll.DiceRollData data, FixedString32Bytes activePlayerId)
     {
         OnRollCompleteEvent.Invoke(data, activePlayerId);
     }

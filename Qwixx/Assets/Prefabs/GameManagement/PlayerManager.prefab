@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1997801248692470100}
   - component: {fileID: 5862783667130854305}
-  - component: {fileID: 5194501785609400908}
-  - component: {fileID: 1123910614014982410}
-  - component: {fileID: 8133107298809115995}
+  - component: {fileID: 1755638859636212173}
+  - component: {fileID: 7461839944869290083}
+  - component: {fileID: 6812943114487689045}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1539069375
+  GlobalObjectIdHash: 2537196580
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &5194501785609400908
+--- !u!114 &1755638859636212173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,26 +71,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 328534013105527379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef0ed3b02c6704429e00546cb23e398, type: 3}
+  m_Script: {fileID: 11500000, guid: 13eed2930fac5e14996d36a1af6a0224, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroyOnLoad
---- !u!114 &1123910614014982410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328534013105527379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62171a7ce10e2dd4bad763cefa2eea5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  m_EditorClassIdentifier: Assembly-CSharp::OnlinePlayerManager
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &7461839944869290083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328534013105527379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f95796353e23cd449c13e81ee25ed42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlinePlayerSpawner
   _hostPrefab: {fileID: 7549626942863636254, guid: deddcd0198a29634598672a954997cb4, type: 3}
   _playerPrefab: {fileID: 6712828578452902066, guid: 240c142955fb29d45b95b066c83f05a1, type: 3}
-  _turnManager: {fileID: 8133107298809115995}
---- !u!114 &8133107298809115995
+--- !u!114 &6812943114487689045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +98,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 328534013105527379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378bb1146e39de542ab19db3f4bd73e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 19b4eecc502399042b3f92014cbf13f5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurnManager
-  ShowTopMostFoldoutHeaderGroup: 1
+  m_EditorClassIdentifier: Assembly-CSharp::OnlineTurnManager

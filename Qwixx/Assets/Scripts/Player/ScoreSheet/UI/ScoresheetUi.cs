@@ -119,17 +119,17 @@ public class ScoreSheetUi : MonoBehaviour
         }
     }
 
-    public void InitInfo(PlayerData playerData)
+    public void InitInfo(string playerName, Color color)
     {
         if (_background != null)
         {
-            _background.color = playerData.Color;
+            _background.color = color;
         }
 
         if (_name != null)
         {
-            _name.color = playerData.Color;
-            _name.text = playerData.Name.ToString();
+            _name.color = color;
+            _name.text = playerName;
         }
     }
 

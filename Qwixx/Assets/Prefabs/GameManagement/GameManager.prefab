@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c065b1896aeb8409fb664c22a6adb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnlineLobbyManager
-  ShowTopMostFoldoutHeaderGroup: 1
+  LobbyUpdatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AllPlayersReadyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2136954325352443174
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +162,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1784762628647593058}
   - component: {fileID: 8908523787870087362}
-  - component: {fileID: 2513280739115503850}
+  - component: {fileID: 5562881591625840143}
+  - component: {fileID: 5519870765034097554}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -198,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 529167474
+  GlobalObjectIdHash: 3902609898
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -213,7 +219,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &2513280739115503850
+--- !u!114 &5562881591625840143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,11 +228,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3933673675900845824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557b0f350c5c7ac4c8c6f0d1d5ede7f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 48a6cb6c63894b6449819e682a8380c7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_EditorClassIdentifier: Assembly-CSharp::OnlineGameManager
   ShowTopMostFoldoutHeaderGroup: 1
-  _sceneManager: {fileID: 1222403373383103133}
+--- !u!114 &5519870765034097554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933673675900845824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc0147b38f4dd54bbed39cfb9847f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnlineScoreManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  AllPlayerReadyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5431499549926464796
 GameObject:
   m_ObjectHideFlags: 0

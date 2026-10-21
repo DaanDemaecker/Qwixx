@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -153,8 +154,8 @@ public class PlayerManager : NetworkBehaviour
 
     private void SetupCallbacks(ScoreSheet scoreSheet)
     {
-        scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
-        scoreSheet.OnReadyClickedEvent.AddListener(PlayerManager_OnTurnConfirmed);
+        //scoreSheet.OnRollClickedEvent.AddListener(PlayerManager_OnRollClicked);
+        //scoreSheet.OnReadyClickedEvent.AddListener(PlayerManager_OnTurnConfirmed);
         scoreSheet.OnRowLockedEvent.AddListener(PlayerManager_OnRowLocked);
         scoreSheet.OnPlayerDiedEvent.AddListener(PlayerManager_OnPlayerDied);
     }
@@ -216,7 +217,7 @@ public class PlayerManager : NetworkBehaviour
     {
         if(_host != null)
         {
-            _host.RollDice(rpcParams.Receive.SenderClientId);
+            _host.RollDice(rpcParams.Receive.SenderClientId.ToString());
         }
     }
 
@@ -229,17 +230,17 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    private void PlayerManager_OnRollComplete(DiceRoll.DiceRollData data, ulong activePlayerId)
+    private void PlayerManager_OnRollComplete(DiceRoll.DiceRollData data, FixedString32Bytes activePlayerId)
     {
         OnRollCompleteClientRpc(data, activePlayerId);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    private void OnRollCompleteClientRpc(DiceRoll.DiceRollData data, ulong activePlayerId)
+    private void OnRollCompleteClientRpc(DiceRoll.DiceRollData data, FixedString32Bytes activePlayerId)
     {
         if(_player != null)
         {
-            _player.SetRollData(data, activePlayerId == NetworkManager.Singleton.LocalClientId);
+            _player.SetRollData(data, activePlayerId == NetworkManager.Singleton.LocalClientId.ToString());
         }
     }
 

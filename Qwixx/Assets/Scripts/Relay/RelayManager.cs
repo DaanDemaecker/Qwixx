@@ -82,8 +82,6 @@ public class RelayManager : MonoBehaviour
             _serverAllocation = await RelayService.Instance.CreateAllocationAsync(GameRuleManager.Instance.MaxPlayers + 1);
 
             _joinCode = await RelayService.Instance.GetJoinCodeAsync(_serverAllocation.AllocationId);
-
-            Debug.Log($"Connected host with join code: {_joinCode}");
         }
         catch(RelayServiceException e)
         {
@@ -114,9 +112,6 @@ public class RelayManager : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
 
-
-        Debug.Log($"Connected client with join code: {_joinCode}");
-
         return true;
     }
 
@@ -138,4 +133,16 @@ public class RelayManager : MonoBehaviour
 
         return true;
     }
+
+    public void Disconnect()
+    {
+        if(NetworkManager.Singleton.IsHost)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+        else if(NetworkManager.Singleton.IsClient)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+    }   
 }

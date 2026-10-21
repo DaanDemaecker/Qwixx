@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,21 +20,23 @@ public class ScoreSheet : MonoBehaviour
 
     private int _lifeAmount = 0;
 
+    private string _playerId = string.Empty;
+
     // Options pairs combine the currently selected entry and a bool indicating whether the lock is selected
     private Tuple<ScoreSheetRow.ScoreSheetRowEntry, bool> _currentSelectedOptionNColored = new(ScoreSheetRow.DefaultEntry, false);
 
     private Tuple<ScoreSheetRow.ScoreSheetRowEntry, bool> _currentSelectedOptionColored = new(ScoreSheetRow.DefaultEntry, false);
 
     // Events
-    public UnityEvent OnRollClickedEvent;
+    public UnityEvent<FixedString32Bytes> OnRollClickedEvent;
 
-    public UnityEvent OnReadyClickedEvent;
+    public UnityEvent<FixedString32Bytes> OnReadyClickedEvent;
 
     public UnityEvent<int> OnRowLockedEvent;
 
     public UnityEvent OnPlayerDiedEvent;
 
-
+    
     private void OnDestroy()
     {
         if (_scoreSheetUI != null)
@@ -43,7 +46,6 @@ public class ScoreSheet : MonoBehaviour
             _scoreSheetUI.OnOptionClickedEvent.RemoveAllListeners();
             Destroy(_scoreSheetUI.gameObject);
         }
-
     }
 
     public void Awake()
@@ -51,6 +53,8 @@ public class ScoreSheet : MonoBehaviour
         _lifeAmount = GameRuleManager.Instance.MaxLives;
 
         SortRows();
+
+        _playerId = UserManager.Instance.GetId();
     }
     private void SortRows()
     {
@@ -80,7 +84,7 @@ public class ScoreSheet : MonoBehaviour
         }
     }
 
-    public void SetInfo(PlayerData data)
+    public void SetInfo(string playerName, Color color)
     {
         if (_scoreSheetUiPrefab != null)
         {
@@ -91,10 +95,10 @@ public class ScoreSheet : MonoBehaviour
 
             if (scoreSheet.TryGetComponent<ScoreSheetUi>(out _scoreSheetUI))
             {
-                _scoreSheetUI.InitInfo(data);
+                _scoreSheetUI.InitInfo(playerName, color);
                 _scoreSheetUI.SetRows(_scoreSheetRows);
                 _scoreSheetUI.SetHearts(_lifeAmount);
-                _scoreSheetUI.OnRollClickedEvent.AddListener(() => OnRollClickedEvent.Invoke());
+                _scoreSheetUI.OnRollClickedEvent.AddListener(() => OnRollClickedEvent.Invoke(_playerId));
                 _scoreSheetUI.OnReadyClickedEvent.AddListener(ReadyClicked);
                 _scoreSheetUI.OnOptionClickedEvent.AddListener(OptionClicked);
             }
@@ -193,7 +197,7 @@ public class ScoreSheet : MonoBehaviour
         _currentSelectedOptionNColored = new(ScoreSheetRow.DefaultEntry, false);
 
 
-        OnReadyClickedEvent.Invoke();
+        OnReadyClickedEvent.Invoke(_playerId);
     }
 
     private void HandleData(DiceRoll.DiceRollData data, out List<ScoreSheetRow.ScoreSheetRowEntry> nColoredOptions, out List<ScoreSheetRow.ScoreSheetRowEntry> coloredOptions, bool isActivePlayer)

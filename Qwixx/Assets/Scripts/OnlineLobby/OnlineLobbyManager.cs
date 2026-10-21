@@ -44,6 +44,8 @@ public class OnlineLobbyManager : MonoBehaviour
 
     private float _updateLobbyTime = 2f;
 
+    private bool _gameStarted = false;
+
 
     public const string PLAYER_NUMBER_KEY = "PlayerNumber";
     public const string IS_HOST_DEVICE_KEY = "IsHostDevice";
@@ -58,6 +60,7 @@ public class OnlineLobbyManager : MonoBehaviour
     private const string HOST_NAME = "Host";
 
     public UnityEvent LobbyUpdatedEvent;
+    public UnityEvent AllPlayersReadyEvent;
 
     private void Awake()
     {
@@ -80,7 +83,7 @@ public class OnlineLobbyManager : MonoBehaviour
 
     private bool WantsToQuit()
     {
-        if(_lobby == null)
+        if (_lobby == null)
         {
             return true;
         }
@@ -114,9 +117,11 @@ public class OnlineLobbyManager : MonoBehaviour
 
             _isHostDevice = true;
 
+            _gameStarted = false;
+
             return true;
         }
-        catch(LobbyServiceException e)
+        catch (LobbyServiceException e)
         {
             Debug.LogError(e);
         }
@@ -126,7 +131,7 @@ public class OnlineLobbyManager : MonoBehaviour
 
     public string GetLobbyCode()
     {
-        if(_lobby == null)
+        if (_lobby == null)
         {
             return string.Empty;
         }
@@ -147,9 +152,9 @@ public class OnlineLobbyManager : MonoBehaviour
 
             UpdatePlayerData(PLAYER_NUMBER_KEY, GetNextPlayerNumber().ToString());
 
-            Debug.Log("Joined lobby");
-
             _isHostDevice = false;
+
+            _gameStarted = false;
 
             return true;
         }
@@ -167,6 +172,74 @@ public class OnlineLobbyManager : MonoBehaviour
         HandleQuit();
         HandleHeartbeat();
         HandleLobbyUpdate();
+
+        if (_lobby != null && !_gameStarted)
+        {
+            HandleGameStart();
+        }
+    }
+
+    private void HandleGameStart()
+    {
+        if(AreAllPlayersReady())
+        {
+            _gameStarted = true;
+            AllPlayersReadyEvent.Invoke();
+        }
+    }
+
+    private bool AreAllPlayersReady()
+    {
+        if(_lobby.Players.Count < GameRuleManager.Instance.MinPlayers + 1)
+        {
+            return false;
+        }
+
+        foreach (var player in _lobby.Players)
+        {
+            if(IsPlayerHost(player))
+            {
+                continue;
+            }
+
+            if(!IsPlayerReady(player))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+    private bool IsPlayerHost(Unity.Services.Lobbies.Models.Player player)
+    {
+        if (player.Data.ContainsKey(IS_HOST_DEVICE_KEY))
+        {
+            if (bool.TryParse(player.Data[IS_HOST_DEVICE_KEY].Value, out bool isHostDevice))
+            {
+                if (isHostDevice)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool IsPlayerReady(Unity.Services.Lobbies.Models.Player player)
+    {
+        if (player.Data.ContainsKey(PLAYER_READY_KEY))
+        {
+            if (bool.TryParse(player.Data[PLAYER_READY_KEY].Value, out bool isReady))
+            {
+                return isReady;
+            }
+        }
+
+        return false;
     }
 
     private void HandleQuit()
@@ -197,7 +270,6 @@ public class OnlineLobbyManager : MonoBehaviour
                     LobbyUpdatedEvent.Invoke();
                 }
             }
-
         }
         catch (LobbyServiceException e)
         {

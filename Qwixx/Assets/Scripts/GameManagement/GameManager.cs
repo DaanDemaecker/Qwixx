@@ -16,10 +16,6 @@ public class GameManager : NetworkBehaviour
     [SerializeField]
     private SceneManager _sceneManager = null;
 
-    private const string START_MENU_SCENE_NAME = "StartMenuScene";
-
-    private const string LOBBY_SCENE_NAME = "LobbyScene";
-
     private const string LOBBY_HANDLER_SCENE_NAME = "OnlineLobbyHandlerScene";
 
     private void Awake()
@@ -35,14 +31,11 @@ public class GameManager : NetworkBehaviour
 
     public void Start()
     {
-        _sceneManager.LoadScene(LOBBY_HANDLER_SCENE_NAME, false);
+        LoadLobbyScene();
     }
 
     public void LoadLobbyScene()
     {
-        if(IsServer)
-        {
-            _sceneManager.LoadSceneNetwork(LOBBY_SCENE_NAME, false);
-        }
+        _sceneManager.LoadScene(LOBBY_HANDLER_SCENE_NAME, false);
     }
 }

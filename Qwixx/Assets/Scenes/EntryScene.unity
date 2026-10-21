@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000019073486
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -456,17 +456,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
---- !u!114 &75300669 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8133107298809115995, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
-  m_PrefabInstance: {fileID: 625993980}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378bb1146e39de542ab19db3f4bd73e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurnManager
 --- !u!1 &332956607
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +598,15 @@ PrefabInstance:
     - target: {fileID: 1123910614014982410, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: _turnManager
       value: 
-      objectReference: {fileID: 75300669}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755638859636212173, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
+      propertyPath: _hostPrefab
+      value: 
+      objectReference: {fileID: 7549626942863636254, guid: deddcd0198a29634598672a954997cb4, type: 3}
+    - target: {fileID: 1755638859636212173, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
+      propertyPath: _playerPrefab
+      value: 
+      objectReference: {fileID: 6712828578452902066, guid: 240c142955fb29d45b95b066c83f05a1, type: 3}
     - target: {fileID: 1997801248692470100, guid: d75afd647dc39dd4f9e574b54a6f8c08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -900,7 +897,7 @@ MonoBehaviour:
     NetworkProfilingMetrics: 1
     OldPrefabList: []
   RunInBackground: 1
-  LogLevel: 0
+  LogLevel: 2
 --- !u!4 &748655687
 Transform:
   m_ObjectHideFlags: 0
@@ -970,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7675636741636821945, guid: 8e25f3c14dac6a441a77cf628bac3197, type: 3}
       propertyPath: _isHostDevice
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8281729905427452863, guid: 8e25f3c14dac6a441a77cf628bac3197, type: 3}
       propertyPath: m_Name
@@ -1057,7 +1054,8 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 529167474
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2513280739115503850, guid: 84bad6f9eb715bb4c85471111a0b59c8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -19,6 +19,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void InitializeValues(string name, Color color)
+    {
+        _playerName = name;
+        _playerColor = color;
+        if(_scoreSheet != null)
+        {
+            _scoreSheet.SetInfo(name, color);
+        }
+    }
+
     public void InitializeValues(PlayerData data)
     {
         _playerName = data.Name.ToString();
@@ -28,7 +38,7 @@ public class Player : MonoBehaviour
 
         if(_scoreSheet != null)
         {
-            _scoreSheet.SetInfo(data);
+            _scoreSheet.SetInfo(data.Name.ToString(), data.Color);
         }
     }
 
