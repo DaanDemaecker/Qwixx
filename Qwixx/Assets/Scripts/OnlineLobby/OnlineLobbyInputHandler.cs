@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
-using WebSocketSharp;
 
 public class OnlineLobbyInputHandler : MonoBehaviour
 {
@@ -74,7 +72,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
 
         string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
 
-        if (relayJoinKey.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(relayJoinKey))
         {
             _tryingToJoin = false;
             return;
@@ -92,7 +90,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
 
     private async void OnJoinLobbyButtonClicked()
     {
-        if(_lobbyCodeInputField != null && !_lobbyCodeInputField.text.IsNullOrEmpty() && _playerNameInputField != null && !_playerNameInputField.text.IsNullOrEmpty())
+        if(_lobbyCodeInputField != null && !string.IsNullOrEmpty(_lobbyCodeInputField.text) && _playerNameInputField != null && !string.IsNullOrEmpty(_playerNameInputField.text))
         {
             if(await OnlineLobbyManager.Instance.JoinLobby(_lobbyCodeInputField.text))
             {                 
@@ -101,7 +99,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
 
                 string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
 
-                if (relayJoinKey.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(relayJoinKey))
                 {
                     _shouldJoinLobby = true;
                     return;

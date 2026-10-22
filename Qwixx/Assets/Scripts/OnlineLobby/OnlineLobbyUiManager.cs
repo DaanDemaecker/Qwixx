@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using WebSocketSharp;
 
 public class OnlineLobbyUiManager : NetworkBehaviour
 {
@@ -52,7 +51,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     {
         if(!_joinCodeSet)
         {
-            if(!RelayManager.Instance.JoinCode.IsNullOrEmpty())
+            if(!string.IsNullOrEmpty(RelayManager.Instance.JoinCode))
             {
                 OnlineLobbyManager.Instance.UpdateLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY, RelayManager.Instance.JoinCode, Unity.Services.Lobbies.Models.DataObject.VisibilityOptions.Member);
                 _joinCodeSet = true;

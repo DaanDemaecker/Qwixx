@@ -1,7 +1,6 @@
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
-using WebSocketSharp;
 
 public class OnlineLobbyPlayerEditor : NetworkBehaviour
 {
@@ -75,7 +74,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
         string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
 
-        if(relayJoinKey.IsNullOrEmpty())
+        if(string.IsNullOrEmpty(relayJoinKey))
         {
             _isTryingToConnect = false;
             return;
@@ -134,7 +133,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
     private void OnValueChanged(string newValue)
     {
-        if(newValue.IsNullOrEmpty())
+        if(string.IsNullOrEmpty(newValue))
         {
             return;
         }

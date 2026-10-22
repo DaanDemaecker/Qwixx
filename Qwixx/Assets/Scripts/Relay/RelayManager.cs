@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class RelayManager : MonoBehaviour
     private RelayConnectionManager _connectionManager = null;
 
     private string _joinCode = string.Empty;
+
+    private const string CONNECTION_TYPE = "wss";
 
     public string JoinCode
     {
@@ -56,13 +59,13 @@ public class RelayManager : MonoBehaviour
             return false;
         }
 
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
-            _serverAllocation.RelayServer.IpV4,
-            (ushort)_serverAllocation.RelayServer.Port,
-            _serverAllocation.AllocationIdBytes,
-            _serverAllocation.Key,
-            _serverAllocation.ConnectionData
-            );
+        //NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
+        //    _serverAllocation.RelayServer.IpV4,
+        //    (ushort)_serverAllocation.RelayServer.Port,
+        //    _serverAllocation.AllocationIdBytes,
+        //    _serverAllocation.Key,
+        //    _serverAllocation.ConnectionData
+        //    );
 
         NetworkManager.Singleton.StartHost();
 
@@ -80,6 +83,11 @@ public class RelayManager : MonoBehaviour
         try
         {
             _serverAllocation = await RelayService.Instance.CreateAllocationAsync(GameRuleManager.Instance.MaxPlayers + 1);
+
+
+            UnityTransport transport = NetworkManager.Singleton.gameObject.GetComponent<UnityTransport>();
+            transport.SetRelayServerData(AllocationUtils.ToRelayServerData(_serverAllocation, CONNECTION_TYPE));
+
 
             _joinCode = await RelayService.Instance.GetJoinCodeAsync(_serverAllocation.AllocationId);
         }
@@ -101,14 +109,14 @@ public class RelayManager : MonoBehaviour
             return false;
         }
 
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
-            _joinAllocation.RelayServer.IpV4,
-            (ushort)_joinAllocation.RelayServer.Port,
-            _joinAllocation.AllocationIdBytes,
-            _joinAllocation.Key,
-            _joinAllocation.ConnectionData,
-            _joinAllocation.HostConnectionData
-            );
+       //NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
+       //    _joinAllocation.RelayServer.IpV4,
+       //    (ushort)_joinAllocation.RelayServer.Port,
+       //    _joinAllocation.AllocationIdBytes,
+       //    _joinAllocation.Key,
+       //    _joinAllocation.ConnectionData,
+       //    _joinAllocation.HostConnectionData
+       //    );
 
         NetworkManager.Singleton.StartClient();
 
@@ -125,6 +133,10 @@ public class RelayManager : MonoBehaviour
         try
         {
             _joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+
+            UnityTransport transport = NetworkManager.Singleton.gameObject.GetComponent<UnityTransport>();
+            transport.SetRelayServerData(AllocationUtils.ToRelayServerData(_joinAllocation, CONNECTION_TYPE));
+
         }
         catch (RelayServiceException e)
         {
