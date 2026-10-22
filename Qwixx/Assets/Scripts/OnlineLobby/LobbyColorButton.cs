@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class OnlineLobbyColorButton : MonoBehaviour
+public class LobbyColorButton : MonoBehaviour
 {
     [SerializeField]
     private Image _colorImage = null;

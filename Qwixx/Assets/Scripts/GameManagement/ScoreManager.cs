@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class OnlineScoreManager : NetworkBehaviour
+public class ScoreManager : NetworkBehaviour
 {
     public struct PlayerScoreData : INetworkSerializable, IEquatable<PlayerScoreData>
     {
@@ -53,9 +53,9 @@ public class OnlineScoreManager : NetworkBehaviour
         }
     }
 
-    private static OnlineScoreManager _instance = null;
+    private static ScoreManager _instance = null;
 
-    public static OnlineScoreManager Instance
+    public static ScoreManager Instance
     {
         get
         {

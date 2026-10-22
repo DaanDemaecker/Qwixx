@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OnlineLobbyPlayerUi : MonoBehaviour
+public class LobbyPlayerUi : MonoBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI _playerNameText = null;

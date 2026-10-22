@@ -15,9 +15,9 @@ public class EndscreenManager : MonoBehaviour
 
     private void Awake()
     {
-        var playerDatas = OnlineScoreManager.Instance.PlayerScores;
+        var playerDatas = ScoreManager.Instance.PlayerScores;
 
-        List<OnlineScoreManager.PlayerScoreData> sortedDatas = SortList(playerDatas);
+        List<ScoreManager.PlayerScoreData> sortedDatas = SortList(playerDatas);
 
         SetPlayerUis(sortedDatas);
 
@@ -28,7 +28,7 @@ public class EndscreenManager : MonoBehaviour
     }
 
 
-    private void SetPlayerUis(List<OnlineScoreManager.PlayerScoreData> playerDatas)
+    private void SetPlayerUis(List<ScoreManager.PlayerScoreData> playerDatas)
     {
         for(int i = 0; i < _players.Count; ++i)
         {
@@ -43,9 +43,9 @@ public class EndscreenManager : MonoBehaviour
         }
     }
 
-    private List<OnlineScoreManager.PlayerScoreData> SortList(NetworkList<OnlineScoreManager.PlayerScoreData> playerDatas)
+    private List<ScoreManager.PlayerScoreData> SortList(NetworkList<ScoreManager.PlayerScoreData> playerDatas)
     {
-        List<OnlineScoreManager.PlayerScoreData> sortedDatas = new();
+        List<ScoreManager.PlayerScoreData> sortedDatas = new();
 
         List<int> toIgnoreIndices = new();
 
@@ -61,7 +61,7 @@ public class EndscreenManager : MonoBehaviour
         return sortedDatas;
     }
 
-    private int GetMaxScoreIndex(NetworkList<OnlineScoreManager.PlayerScoreData> playerDatas, List<int> toIgnoreIndices)
+    private int GetMaxScoreIndex(NetworkList<ScoreManager.PlayerScoreData> playerDatas, List<int> toIgnoreIndices)
     {
         int index = -1;
         int maxScore = int.MinValue;
@@ -86,6 +86,6 @@ public class EndscreenManager : MonoBehaviour
     public void OnMainMenuButtonClicked()
     {
         RelayManager.Instance.Disconnect();
-        OnlineGameManager.Instance.ResetGame();
+        GameManager.Instance.ResetGame();
     }
 }

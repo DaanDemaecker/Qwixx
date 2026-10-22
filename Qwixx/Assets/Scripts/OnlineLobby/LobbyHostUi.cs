@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OnlineLobbyHostUi : NetworkBehaviour
+public class LobbyHostUi : NetworkBehaviour
 {
     [SerializeField]
     private GameObject _buttonContainer = null;
@@ -13,7 +13,7 @@ public class OnlineLobbyHostUi : NetworkBehaviour
 
     void Start()
     {
-        if (!OnlineLobbyManager.Instance.IsHostDevice)
+        if (!LobbyManager.Instance.IsHostDevice)
         {
             gameObject.SetActive(false);
             return;
@@ -25,7 +25,7 @@ public class OnlineLobbyHostUi : NetworkBehaviour
             _buttonContainer.SetActive(false);
         }
 
-        OnlineLobbyManager.Instance.AllPlayersReadyEvent.AddListener(AllPlayersReady);
+        LobbyManager.Instance.AllPlayersReadyEvent.AddListener(AllPlayersReady);
         if (_button != null)
         {
             _button.onClick.AddListener(StartGame);
@@ -34,9 +34,9 @@ public class OnlineLobbyHostUi : NetworkBehaviour
 
     public override void OnDestroy()
     {
-        if (OnlineLobbyManager.Instance.IsHostDevice)
+        if (LobbyManager.Instance.IsHostDevice)
         {
-            OnlineLobbyManager.Instance.AllPlayersReadyEvent.RemoveListener(AllPlayersReady);
+            LobbyManager.Instance.AllPlayersReadyEvent.RemoveListener(AllPlayersReady);
         }
 
         if (_button != null)
@@ -56,6 +56,6 @@ public class OnlineLobbyHostUi : NetworkBehaviour
 
     private void StartGame()
     {
-        OnlineGameManager.Instance.StartLoadingGameScene();
+        GameManager.Instance.StartLoadingGameScene();
     }
 }

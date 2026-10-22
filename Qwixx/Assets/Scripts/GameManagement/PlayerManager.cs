@@ -3,11 +3,11 @@ using Unity.Netcode;
 using Unity.Services.Core;
 using UnityEngine;
 
-public class OnlinePlayerManager : NetworkBehaviour
+public class PlayerManager : NetworkBehaviour
 {
-    private static OnlinePlayerManager _instance = null;
+    private static PlayerManager _instance = null;
 
-    public static OnlinePlayerManager Instance
+    public static PlayerManager Instance
     {
         get
         {
@@ -38,13 +38,13 @@ public class OnlinePlayerManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void SpawnPlayerRpc()
     {
-        var players = OnlineLobbyManager.Instance.GetPlayerList();
+        var players = LobbyManager.Instance.GetPlayerList();
 
         foreach (var player in players)
         {
             if (player.Id.Equals(UserManager.Instance.GetId()))
             {
-                if (TryGetComponent<OnlinePlayerSpawner>(out OnlinePlayerSpawner playerSpawner))
+                if (TryGetComponent<PlayerSpawner>(out PlayerSpawner playerSpawner))
                 {
 
                     if (UserManager.Instance.IsHostDevice)
@@ -118,7 +118,7 @@ public class OnlinePlayerManager : NetworkBehaviour
     {
         if(_playerObject != null)
         {
-            OnlineScoreManager.Instance.RegisterScore(UserManager.Instance.GetId(), _playerObject.GetScore());
+            ScoreManager.Instance.RegisterScore(UserManager.Instance.GetId(), _playerObject.GetScore());
         }
     }
 
@@ -127,7 +127,7 @@ public class OnlinePlayerManager : NetworkBehaviour
         _hostObject = null;
         _playerObject = null;
 
-        if(TryGetComponent<OnlineTurnManager>(out OnlineTurnManager onlineTurnManager))
+        if(TryGetComponent<TurnManager>(out TurnManager onlineTurnManager))
         {
             onlineTurnManager.ResetGame();
         }

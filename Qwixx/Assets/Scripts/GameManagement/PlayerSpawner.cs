@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class OnlinePlayerSpawner : NetworkBehaviour
+public class PlayerSpawner : NetworkBehaviour
 {
     // Host
     [SerializeField]
@@ -24,14 +24,14 @@ public class OnlinePlayerSpawner : NetworkBehaviour
         string playerColor = string.Empty;
         Color colorOutput = Color.white;
 
-        if (player.Data.ContainsKey(OnlineLobbyManager.PLAYER_NAME_KEY))
+        if (player.Data.ContainsKey(LobbyManager.PLAYER_NAME_KEY))
         {
-            playerName = player.Data[OnlineLobbyManager.PLAYER_NAME_KEY].Value;
+            playerName = player.Data[LobbyManager.PLAYER_NAME_KEY].Value;
         }
 
-        if (player.Data.ContainsKey(OnlineLobbyManager.PLAYER_COLOR_KEY))
+        if (player.Data.ContainsKey(LobbyManager.PLAYER_COLOR_KEY))
         {
-            playerColor = player.Data[OnlineLobbyManager.PLAYER_COLOR_KEY].Value;
+            playerColor = player.Data[LobbyManager.PLAYER_COLOR_KEY].Value;
         }
         UnityEngine.ColorUtility.TryParseHtmlString($"#{playerColor}", out colorOutput);
 
@@ -46,7 +46,7 @@ public class OnlinePlayerSpawner : NetworkBehaviour
             Debug.LogError("ScoreSheet component not found on the Player GameObject.");
         }
 
-        OnlineScoreManager.Instance.RegisterPlayer(UserManager.Instance.GetId(), playerName, colorOutput);
+        ScoreManager.Instance.RegisterPlayer(UserManager.Instance.GetId(), playerName, colorOutput);
 
         return playerObject;
     }
@@ -64,17 +64,17 @@ public class OnlinePlayerSpawner : NetworkBehaviour
 
     private void SetupCallbacks(ScoreSheet scoreSheet)
     {
-        OnlineTurnManager turnManager = null;
+        TurnManager turnManager = null;
 
-        if (!TryGetComponent<OnlineTurnManager>(out turnManager))
+        if (!TryGetComponent<TurnManager>(out turnManager))
         {
             Debug.LogError("OnlineTurnManager component not found on the GameObject.");
             return;
         }
 
-        OnlinePlayerManager playerManager = null;
+        PlayerManager playerManager = null;
 
-        if (!TryGetComponent<OnlinePlayerManager>(out playerManager))
+        if (!TryGetComponent<PlayerManager>(out playerManager))
         {
             Debug.LogError("OnlinePlayerManager component not found on the GameObject.");
             return;

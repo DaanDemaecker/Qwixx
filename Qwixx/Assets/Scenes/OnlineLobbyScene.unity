@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3424155439572941391, guid: 7ff9a8c00d50dc64eb0ab6e4be9bb045, type: 3}
       propertyPath: m_fontSize
-      value: 90.5
+      value: 86.7
       objectReference: {fileID: 0}
     - target: {fileID: 3848943096196993210, guid: 7ff9a8c00d50dc64eb0ab6e4be9bb045, type: 3}
       propertyPath: m_AnchorMax.y
@@ -479,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4712747009675908281, guid: 7ff9a8c00d50dc64eb0ab6e4be9bb045, type: 3}
       propertyPath: m_fontSize
-      value: 90.5
+      value: 86.7
       objectReference: {fileID: 0}
     - target: {fileID: 5237066412217791401, guid: 7ff9a8c00d50dc64eb0ab6e4be9bb045, type: 3}
       propertyPath: m_Pivot.x
@@ -579,7 +579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9072743831775507540, guid: 7ff9a8c00d50dc64eb0ab6e4be9bb045, type: 3}
       propertyPath: m_Name
-      value: OnlineLobbyCanvas
+      value: LobbyCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

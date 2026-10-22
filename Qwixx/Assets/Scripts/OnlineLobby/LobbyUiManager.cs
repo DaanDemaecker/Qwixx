@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class OnlineLobbyUiManager : NetworkBehaviour
+public class LobbyUiManager : NetworkBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI _lobbyCodeText = null;
@@ -13,8 +13,8 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     [SerializeField]
     private GameObject _playerPrefab = null;
 
-    private List<OnlineLobbyPlayerUi> _nonInitPlayers = new();
-    private List<OnlineLobbyPlayerUi> _allPlayers = new();
+    private List<LobbyPlayerUi> _nonInitPlayers = new();
+    private List<LobbyPlayerUi> _allPlayers = new();
 
     private bool _joinCodeSet = false;
 
@@ -30,19 +30,19 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
     private void OnEnable()
     {
-        OnlineLobbyManager.Instance.LobbyUpdatedEvent.AddListener(UpdateUi);
+        LobbyManager.Instance.LobbyUpdatedEvent.AddListener(UpdateUi);
     }
 
     private void OnDisable()
     {
-        OnlineLobbyManager.Instance.LobbyUpdatedEvent.RemoveListener(UpdateUi);
+        LobbyManager.Instance.LobbyUpdatedEvent.RemoveListener(UpdateUi);
     }
 
     private void Setup()
     {
         if (_lobbyCodeText != null)
         {
-            _lobbyCodeText.text = OnlineLobbyManager.Instance.GetLobbyCode();
+            _lobbyCodeText.text = LobbyManager.Instance.GetLobbyCode();
         }
         SetupUi();
     }
@@ -53,7 +53,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
         {
             if(!string.IsNullOrEmpty(RelayManager.Instance.JoinCode))
             {
-                OnlineLobbyManager.Instance.UpdateLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY, RelayManager.Instance.JoinCode, Unity.Services.Lobbies.Models.DataObject.VisibilityOptions.Member);
+                LobbyManager.Instance.UpdateLobbyData(LobbyManager.RELAY_JOIN_CODE_KEY, RelayManager.Instance.JoinCode, Unity.Services.Lobbies.Models.DataObject.VisibilityOptions.Member);
                 _joinCodeSet = true;
             }
         }
@@ -61,13 +61,13 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
     private void SetupUi()
     {
-        var players = OnlineLobbyManager.Instance.GetPlayerList();
+        var players = LobbyManager.Instance.GetPlayerList();
 
         List<Unity.Services.Lobbies.Models.Player> newPlayers = new();
 
         foreach(var player in players)
         {
-            string isHostString = player.Data[OnlineLobbyManager.IS_HOST_DEVICE_KEY].Value;
+            string isHostString = player.Data[LobbyManager.IS_HOST_DEVICE_KEY].Value;
             
             // If player is host, don't create a player
             if (bool.TryParse(isHostString, out bool result) && result)
@@ -75,7 +75,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
                 continue;
             }
 
-            OnlineLobbyPlayerUi playerUi = GetPlayer(player.Id);
+            LobbyPlayerUi playerUi = GetPlayer(player.Id);
 
             // If no player is found in existing players that matches, create a new one
             if(playerUi == null)
@@ -91,13 +91,13 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     private void UpdateUi()
     {
         List<string> usedIds = new();
-        var players = OnlineLobbyManager.Instance.GetPlayerList();
+        var players = LobbyManager.Instance.GetPlayerList();
 
         List<Unity.Services.Lobbies.Models.Player> newPlayers = new();
 
         foreach (var player in players)
         {
-            string isHostString = player.Data[OnlineLobbyManager.IS_HOST_DEVICE_KEY].Value;
+            string isHostString = player.Data[LobbyManager.IS_HOST_DEVICE_KEY].Value;
 
             // If player is host, don't create a player
             if (bool.TryParse(isHostString, out bool result) && result)
@@ -107,7 +107,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
             usedIds.Add(player.Id);
 
-            OnlineLobbyPlayerUi playerUi = GetPlayer(player.Id);
+            LobbyPlayerUi playerUi = GetPlayer(player.Id);
 
             // If no player is found in existing players that matches, create a new one
             if (playerUi == null)
@@ -123,18 +123,18 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
     private void UpdateNonInitPlayers()
     {
-        var players = OnlineLobbyManager.Instance.GetPlayerList();
+        var players = LobbyManager.Instance.GetPlayerList();
 
         foreach (var player in players)
         {
-            string isHostString = player.Data[OnlineLobbyManager.IS_HOST_DEVICE_KEY].Value;
+            string isHostString = player.Data[LobbyManager.IS_HOST_DEVICE_KEY].Value;
 
             if (bool.TryParse(isHostString, out bool result) && result)
             {
                 continue;
             }
 
-            OnlineLobbyPlayerUi playerUi = GetNonInitPlayer(player.Id);
+            LobbyPlayerUi playerUi = GetNonInitPlayer(player.Id);
 
             if (playerUi == null)
             {
@@ -149,7 +149,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
     private void RemoveUnusedPlayers(List<string> usedIds)
     {
-        List<OnlineLobbyPlayerUi> toRemoveList = new();
+        List<LobbyPlayerUi> toRemoveList = new();
 
         foreach(var player in _allPlayers)
         {
@@ -182,7 +182,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
         {
             GameObject playerObject = Instantiate(_playerPrefab, _playerContainer);
 
-            if(playerObject.TryGetComponent<OnlineLobbyPlayerUi>(out OnlineLobbyPlayerUi component))
+            if(playerObject.TryGetComponent<LobbyPlayerUi>(out LobbyPlayerUi component))
             {
                 _allPlayers.Add(component);
                 _nonInitPlayers.Add(component);
@@ -192,13 +192,13 @@ public class OnlineLobbyUiManager : NetworkBehaviour
         }
     }
 
-    private void UpdatePlayer(OnlineLobbyPlayerUi playerUi, Unity.Services.Lobbies.Models.Player player)
+    private void UpdatePlayer(LobbyPlayerUi playerUi, Unity.Services.Lobbies.Models.Player player)
     {
         string playerNameSet = string.Empty;
 
-        if(player.Data.ContainsKey(OnlineLobbyManager.PLAYER_NAME_SET_KEY))
+        if(player.Data.ContainsKey(LobbyManager.PLAYER_NAME_SET_KEY))
         {
-            playerNameSet = player.Data[OnlineLobbyManager.PLAYER_NAME_SET_KEY].Value;
+            playerNameSet = player.Data[LobbyManager.PLAYER_NAME_SET_KEY].Value;
 
             if(bool.TryParse(playerNameSet, out bool playerNameSetResult))
             {
@@ -220,23 +220,23 @@ public class OnlineLobbyUiManager : NetworkBehaviour
 
         string playerName = string.Empty;
 
-        if (player.Data.ContainsKey(OnlineLobbyManager.PLAYER_NAME_KEY))
+        if (player.Data.ContainsKey(LobbyManager.PLAYER_NAME_KEY))
         {
-            playerName = player.Data[OnlineLobbyManager.PLAYER_NAME_KEY].Value;
+            playerName = player.Data[LobbyManager.PLAYER_NAME_KEY].Value;
         }
 
         string playerColor = Color.white.ToString();
 
-        if(player.Data.ContainsKey(OnlineLobbyManager.PLAYER_COLOR_KEY))
+        if(player.Data.ContainsKey(LobbyManager.PLAYER_COLOR_KEY))
         {
-            playerColor = player.Data[OnlineLobbyManager.PLAYER_COLOR_KEY].Value;
+            playerColor = player.Data[LobbyManager.PLAYER_COLOR_KEY].Value;
         }
 
         string playerReady = false.ToString();
 
-        if(player.Data.ContainsKey(OnlineLobbyManager.PLAYER_READY_KEY))
+        if(player.Data.ContainsKey(LobbyManager.PLAYER_READY_KEY))
         {
-            playerReady = player.Data[OnlineLobbyManager.PLAYER_READY_KEY].Value;
+            playerReady = player.Data[LobbyManager.PLAYER_READY_KEY].Value;
         }
 
         playerUi.SetData(playerName, playerColor, playerReady);
@@ -244,7 +244,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
         PlayerInitialized(playerUi);
     }
 
-    private OnlineLobbyPlayerUi GetNonInitPlayer(string playerId)
+    private LobbyPlayerUi GetNonInitPlayer(string playerId)
     {
         foreach (var player in _nonInitPlayers)
         {
@@ -258,7 +258,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     }
 
 
-    private OnlineLobbyPlayerUi GetPlayer(string playerId)
+    private LobbyPlayerUi GetPlayer(string playerId)
     {
         foreach(var player in _allPlayers)
         {
@@ -274,7 +274,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void SetPlayerNameClientRpc(string id, string newName)
     {
-        OnlineLobbyPlayerUi player = GetPlayer(id);
+        LobbyPlayerUi player = GetPlayer(id);
 
         if(player != null)
         {
@@ -286,7 +286,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void SetPlayerColorClientRpc(string id, Color newColor)
     {
-        OnlineLobbyPlayerUi player = GetPlayer(id);
+        LobbyPlayerUi player = GetPlayer(id);
 
         if (player != null)
         {
@@ -298,7 +298,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void SetPlayerReadyClientRpc(string id, bool ready)
     {
-        OnlineLobbyPlayerUi player = GetPlayer(id);
+        LobbyPlayerUi player = GetPlayer(id);
 
         if (player != null)
         {
@@ -307,7 +307,7 @@ public class OnlineLobbyUiManager : NetworkBehaviour
         }
     }
 
-    private void PlayerInitialized(OnlineLobbyPlayerUi player)
+    private void PlayerInitialized(LobbyPlayerUi player)
     {
         if(_nonInitPlayers.Contains(player))
         {

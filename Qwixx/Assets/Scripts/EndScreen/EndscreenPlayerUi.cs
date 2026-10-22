@@ -11,7 +11,7 @@ public class EndscreenPlayerUi : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text _playerScoreText = null;
 
-    public void SetInfo(OnlineScoreManager.PlayerScoreData data)
+    public void SetInfo(ScoreManager.PlayerScoreData data)
     {
         SetActive(true);
 

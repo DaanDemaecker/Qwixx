@@ -54,8 +54,7 @@ This game is far from finished, future features include:
 - Actual art (made by my lovely girlfriend)
 - Animations (also made by my lovely girlfriend)
 - The possibility of easily replaying the game
-- A lobby system, using Unity's Lobby package
-- Online multiplayer using Unity's Relay package
+- A release and possibility to play the game on Itch.io
 - More player feedback like sound effects and rumble for mobile devices
 - Any more features suggested by friends/family/code reviewers
 - ...

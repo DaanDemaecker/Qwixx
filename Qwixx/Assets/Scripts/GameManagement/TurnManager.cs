@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class OnlineTurnManager : NetworkBehaviour
+public class TurnManager : NetworkBehaviour
 {
     private List<FixedString32Bytes> _playerIds = new();
 
@@ -12,7 +12,7 @@ public class OnlineTurnManager : NetworkBehaviour
 
     private int _currentPlayerIndex = -1;
 
-    private OnlinePlayerManager _playerManager;
+    private PlayerManager _playerManager;
 
     private List<int> _tempLockedRows = new();
 
@@ -22,7 +22,7 @@ public class OnlineTurnManager : NetworkBehaviour
 
     private void Start()
     {
-        if (!TryGetComponent<OnlinePlayerManager>(out _playerManager))
+        if (!TryGetComponent<PlayerManager>(out _playerManager))
         {
             Debug.LogError("OnlinePlayerManager not found");
         }

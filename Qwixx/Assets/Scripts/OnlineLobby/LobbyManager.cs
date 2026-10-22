@@ -7,11 +7,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class OnlineLobbyManager : MonoBehaviour
+public class LobbyManager : MonoBehaviour
 {
-    private static OnlineLobbyManager _instance = null;
+    private static LobbyManager _instance = null;
 
-    public static OnlineLobbyManager Instance
+    public static LobbyManager Instance
     {
         get
         {

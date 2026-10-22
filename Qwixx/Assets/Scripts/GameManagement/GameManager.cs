@@ -2,11 +2,11 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OnlineGameManager : NetworkBehaviour
+public class GameManager : NetworkBehaviour
 {
-    private static OnlineGameManager _instance = null;
+    private static GameManager _instance = null;
 
-    public static OnlineGameManager Instance
+    public static GameManager Instance
     {
         get
         {
@@ -35,7 +35,7 @@ public class OnlineGameManager : NetworkBehaviour
 
     public void Start()
     {
-        OnlineScoreManager.Instance.AllPlayerReadyEvent.AddListener(AllPlayersReadyEndGame);
+        ScoreManager.Instance.AllPlayerReadyEvent.AddListener(AllPlayersReadyEndGame);
         LoadLobbyScene();
     }
 
@@ -57,7 +57,7 @@ public class OnlineGameManager : NetworkBehaviour
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManager_OnGameSceneLoadEventCompleted;
 
-        OnlinePlayerManager.Instance.SpawnPlayerRpc();
+        PlayerManager.Instance.SpawnPlayerRpc();
 
 
 
@@ -67,7 +67,7 @@ public class OnlineGameManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     private void LeaveLobbyRpc()
     {
-        _ = OnlineLobbyManager.Instance.LeaveLobby();
+        _ = LobbyManager.Instance.LeaveLobby();
     }
 
     private void AllPlayersReadyEndGame()
@@ -77,8 +77,8 @@ public class OnlineGameManager : NetworkBehaviour
 
     public void ResetGame()
     {
-        OnlineScoreManager.Instance.ResetGame();
-        OnlinePlayerManager.Instance.ResetGame();
+        ScoreManager.Instance.ResetGame();
+        PlayerManager.Instance.ResetGame();
         LoadLobbyScene();
     }
 }

@@ -2,7 +2,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OnlineLobbyPlayerEditor : NetworkBehaviour
+public class LobbyPlayerEditor : NetworkBehaviour
 {
     [SerializeField]
     private GameObject _mainContainer = null;
@@ -23,7 +23,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
     private UiGridScaler _gridScaler = null;
 
     [SerializeField]
-    private OnlineLobbyUiManager _uiManager = null;
+    private LobbyUiManager _uiManager = null;
 
     private bool _isConnected = false;
 
@@ -43,7 +43,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
     private void OnEnable()
     {
-        if(OnlineLobbyManager.Instance.IsHostDevice)
+        if(LobbyManager.Instance.IsHostDevice)
         {
             gameObject.SetActive(false);
             return;
@@ -51,7 +51,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
         if (_playerNameInputField != null)
         {
-            _playerNameInputField.SetTextWithoutNotify(OnlineLobbyManager.Instance.GetPlayerData(OnlineLobbyManager.PLAYER_NAME_KEY));
+            _playerNameInputField.SetTextWithoutNotify(LobbyManager.Instance.GetPlayerData(LobbyManager.PLAYER_NAME_KEY));
             _playerNameInputField.onValueChanged.AddListener(OnValueChanged);
         }
 
@@ -72,7 +72,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
         _isTryingToConnect = true;
 
-        string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+        string relayJoinKey = LobbyManager.Instance.GetLobbyData(LobbyManager.RELAY_JOIN_CODE_KEY);
 
         if(string.IsNullOrEmpty(relayJoinKey))
         {
@@ -113,7 +113,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
         {
             GameObject buttonObject = Instantiate(_colorButtonPrefab, _colorButtonParent.transform);
 
-            if(buttonObject.TryGetComponent<OnlineLobbyColorButton>(out OnlineLobbyColorButton buttonComponent))
+            if(buttonObject.TryGetComponent<LobbyColorButton>(out LobbyColorButton buttonComponent))
             {
                 float hue = Mathf.Lerp(0, 1, i/_colorOptionAmount);
                 buttonComponent.SetColor(Color.HSVToRGB(hue, 1, 1));
@@ -139,7 +139,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
         }
         else
         {
-            OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_KEY, newValue);
+            LobbyManager.Instance.UpdatePlayerData(LobbyManager.PLAYER_NAME_KEY, newValue);
 
             _uiManager.SetPlayerNameClientRpc(_playerId, newValue);
         }
@@ -147,7 +147,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
     private void OnColorSelected(Color color)
     {
-        OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_COLOR_KEY, color.ToHexString());
+        LobbyManager.Instance.UpdatePlayerData(LobbyManager.PLAYER_COLOR_KEY, color.ToHexString());
 
         _uiManager.SetPlayerColorClientRpc(_playerId, color);
     }
@@ -159,7 +159,7 @@ public class OnlineLobbyPlayerEditor : NetworkBehaviour
 
     public void ReadyApproved()
     {
-        OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_READY_KEY, true.ToString());
+        LobbyManager.Instance.UpdatePlayerData(LobbyManager.PLAYER_READY_KEY, true.ToString());
 
         _uiManager.SetPlayerReadyClientRpc(_playerId, true);
 

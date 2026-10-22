@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OnlineLobbyInputHandler : MonoBehaviour
+public class LobbyInputHandler : MonoBehaviour
 {
     [SerializeField]
     private Button _createLobbyButton = null;
@@ -70,7 +70,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
     {
         _tryingToJoin = true;
 
-        string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+        string relayJoinKey = LobbyManager.Instance.GetLobbyData(LobbyManager.RELAY_JOIN_CODE_KEY);
 
         if (string.IsNullOrEmpty(relayJoinKey))
         {
@@ -92,12 +92,12 @@ public class OnlineLobbyInputHandler : MonoBehaviour
     {
         if(_lobbyCodeInputField != null && !string.IsNullOrEmpty(_lobbyCodeInputField.text) && _playerNameInputField != null && !string.IsNullOrEmpty(_playerNameInputField.text))
         {
-            if(await OnlineLobbyManager.Instance.JoinLobby(_lobbyCodeInputField.text))
+            if(await LobbyManager.Instance.JoinLobby(_lobbyCodeInputField.text))
             {                 
-                OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_KEY, _playerNameInputField.text);
-                OnlineLobbyManager.Instance.UpdatePlayerData(OnlineLobbyManager.PLAYER_NAME_SET_KEY, true.ToString());
+                LobbyManager.Instance.UpdatePlayerData(LobbyManager.PLAYER_NAME_KEY, _playerNameInputField.text);
+                LobbyManager.Instance.UpdatePlayerData(LobbyManager.PLAYER_NAME_SET_KEY, true.ToString());
 
-                string relayJoinKey = OnlineLobbyManager.Instance.GetLobbyData(OnlineLobbyManager.RELAY_JOIN_CODE_KEY);
+                string relayJoinKey = LobbyManager.Instance.GetLobbyData(LobbyManager.RELAY_JOIN_CODE_KEY);
 
                 if (string.IsNullOrEmpty(relayJoinKey))
                 {
@@ -126,7 +126,7 @@ public class OnlineLobbyInputHandler : MonoBehaviour
             return;
         }
 
-        if(await OnlineLobbyManager.Instance.CreateLobby())
+        if(await LobbyManager.Instance.CreateLobby())
         {
             SceneManager.Instance.LoadSceneNetwork(ONLINE_LOBBY_SCENE_NAME, false);
         }

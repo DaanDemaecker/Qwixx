@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: -2479656122123962701}
   - component: {fileID: 8035214149231883535}
   m_Layer: 5
-  m_Name: OnlineLobbyHostEditor
+  m_Name: LobbyHostEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

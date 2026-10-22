@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: -2479656122123962701}
   - component: {fileID: 8704984119824335985}
   m_Layer: 5
-  m_Name: OnlineLobbyPlayerEditor
+  m_Name: LobbyPlayerEditor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
