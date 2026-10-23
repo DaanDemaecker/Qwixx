@@ -1,0 +1,77 @@
+{
+    "version": 1,
+    "name": "MainMenuControls",
+    "maps": [
+        {
+            "name": "MainMenu",
+            "id": "77dba2b6-7dbd-435b-bca8-0e7ab7601ebe",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "411e3b53-0dfd-430b-8b90-b0043f26ea35",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "2a1d19e6-29cf-4c9c-83bc-522f3164e5af",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f97319c8-3ff4-45dd-b7a8-219d6fbdac4b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9cfb709-2871-457d-a4da-83e297c89239",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5c774a6-2c7d-41ce-a256-94b05baf2690",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff15d5ce-3dca-4a6b-a00e-11a45d425c17",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
