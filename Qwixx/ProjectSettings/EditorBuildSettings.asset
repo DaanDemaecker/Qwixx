@@ -9,16 +9,19 @@ EditorBuildSettings:
     path: Assets/Scenes/EntryScene.unity
     guid: c55e0e5c9b3bfcd4f9bfef6f4800acf0
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: d89f2905a80928443b837e983a310948
-  - enabled: 1
-    path: Assets/Scenes/EndGameScene.unity
-    guid: 2e0dddf540d76244bb0513de21f58a20
+    path: Assets/Scenes/MainMenu.unity
+    guid: db8f5eaeba2a2f34fb6b7a1bb18e154d
   - enabled: 1
     path: Assets/Scenes/OnlineLobbyHandlerScene.unity
     guid: b1db1057fa0788b4194683b4141b9678
   - enabled: 1
     path: Assets/Scenes/OnlineLobbyScene.unity
     guid: 0ad9764c31b27304d9cfe13e8ecae13f
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: d89f2905a80928443b837e983a310948
+  - enabled: 1
+    path: Assets/Scenes/EndGameScene.unity
+    guid: 2e0dddf540d76244bb0513de21f58a20
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

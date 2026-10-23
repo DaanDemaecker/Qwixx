@@ -14,7 +14,6 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
     private bool _isHostDevice = false;
 
     public bool IsHostDevice
@@ -22,6 +21,11 @@ public class UserManager : MonoBehaviour
         get
         {
             return _isHostDevice;
+        }
+
+        set
+        {
+            _isHostDevice = value;
         }
     }
 

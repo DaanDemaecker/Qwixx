@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    public const string MAIN_MENU_SCENE_NAME = "MainMenu";
     public const string GAME_SCENE_NAME = "GameScene";
     private const string LOBBY_HANDLER_SCENE_NAME = "OnlineLobbyHandlerScene";
     private const string GAME_OVER_SCENE_NAME = "EndGameScene";
@@ -36,10 +37,15 @@ public class GameManager : NetworkBehaviour
     public void Start()
     {
         ScoreManager.Instance.AllPlayerReadyEvent.AddListener(AllPlayersReadyEndGame);
-        LoadLobbyScene();
+        LoadMainMenu();
     }
 
-    public void LoadLobbyScene()
+    public void LoadMainMenu()
+    {
+        SceneManager.Instance.LoadScene(MAIN_MENU_SCENE_NAME, false);
+    }
+
+    public void LoadLobbyHandlerScene()
     {
         SceneManager.Instance.LoadScene(LOBBY_HANDLER_SCENE_NAME, false);
     }
@@ -79,6 +85,6 @@ public class GameManager : NetworkBehaviour
     {
         ScoreManager.Instance.ResetGame();
         PlayerManager.Instance.ResetGame();
-        LoadLobbyScene();
+        LoadMainMenu();
     }
 }
