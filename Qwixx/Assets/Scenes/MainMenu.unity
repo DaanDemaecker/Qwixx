@@ -183,7 +183,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -261,7 +262,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -471,7 +473,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -545,7 +548,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -623,7 +627,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -989,7 +994,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Die (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 126360286873333988, guid: 390b4947eef0d2e43b41ae5c6d182459, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1117,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836625696350603481, guid: 75a66bb8925a9fd498b5a94f5ce8c138, type: 3}
       propertyPath: m_fontSize
-      value: 108.6
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 3916484910871056513, guid: 75a66bb8925a9fd498b5a94f5ce8c138, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1157,11 +1163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4711146753283709146, guid: 75a66bb8925a9fd498b5a94f5ce8c138, type: 3}
       propertyPath: m_fontSize
-      value: 108.6
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 5591645139820799823, guid: 75a66bb8925a9fd498b5a94f5ce8c138, type: 3}
       propertyPath: m_fontSize
-      value: 108.6
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 5897810711416239905, guid: 75a66bb8925a9fd498b5a94f5ce8c138, type: 3}
       propertyPath: m_Name
