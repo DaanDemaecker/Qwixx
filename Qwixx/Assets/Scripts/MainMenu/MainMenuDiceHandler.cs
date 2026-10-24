@@ -7,14 +7,7 @@ public class MainMenuDiceHandler : MonoBehaviour
     private Vector2 _screenPos = Vector2.zero;
 
     [SerializeField]
-    private float forceMagnitude = 1.0f;
-
-    private CharacterController _characterController;
-
-    private void Start()
-    {
-        _characterController = GetComponent<CharacterController>();
-    }
+    private float forceMagnitude = 50.0f;
 
     public void OnClick(InputAction.CallbackContext context)
     {
@@ -30,7 +23,7 @@ public class MainMenuDiceHandler : MonoBehaviour
 
         if(Physics.Raycast(ray, out result))
         {
-            if(result.collider.gameObject.TryGetComponent<MainMenuDie>(out MainMenuDie dieComponent))
+            if(result.collider.gameObject.TryGetComponent<MainMenuLaunchable>(out MainMenuLaunchable dieComponent))
             {
                 Vector3 direction = result.point - Camera.main.transform.position;
 
