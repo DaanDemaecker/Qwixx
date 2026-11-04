@@ -26,7 +26,7 @@ public class MainMenuLaunchable : MonoBehaviour
     }
 
 
-    public void Launch(Vector3 direction, float magnitude)
+    public void Launch(Vector3 direction, float magnitude, Vector3 point)
     {
         if(_isLaunching)
         {
@@ -39,7 +39,7 @@ public class MainMenuLaunchable : MonoBehaviour
 
             Vector3 force = direction.normalized * magnitude;
 
-            _rb.AddForce(force, ForceMode.Impulse);
+            _rb.AddForceAtPosition(force, point, ForceMode.Impulse);
 
             _isLaunching = true;
 

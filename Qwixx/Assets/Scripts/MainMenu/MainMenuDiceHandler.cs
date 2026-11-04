@@ -27,7 +27,7 @@ public class MainMenuDiceHandler : MonoBehaviour
             {
                 Vector3 direction = result.point - Camera.main.transform.position;
 
-                dieComponent.Launch(direction, forceMagnitude);
+                dieComponent.Launch(direction, forceMagnitude, result.point);
             }
         }
     }
