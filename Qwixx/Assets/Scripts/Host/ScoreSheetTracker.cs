@@ -9,8 +9,20 @@ public class ScoreSheetTracker : MonoBehaviour
 
     private bool _hasListChanged = false;
 
+    private List<DiceColor> _availableColors = new();
+
     public void RegisterScoreSheetRow(ulong playerId, DiceColor color, int value)
     {
+        if(value == 0)
+        {
+            return;
+        }
+
+        if(!_availableColors.Contains(color))
+        {
+            _availableColors.Add(color);
+        }
+
         if (!_allPlayerEntries.ContainsKey(playerId))
         {
             _allPlayerEntries[playerId] = new();
@@ -31,10 +43,33 @@ public class ScoreSheetTracker : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(_hasListChanged)
+        if (_hasListChanged)
         {
-            Debug.Log(_allPlayerEntries.Count);
+            if(_allPlayerEntries.Count != PlayerManager.Instance.GetPlayerCount())
+            {
+                return;
+            }    
             _hasListChanged = false;
         }
+    }
+
+    public void RemoveEntry(ulong playerId, DiceColor color, int value)
+    {
+        if (!_allPlayerEntries.ContainsKey(playerId))
+        {
+            return;
+        }
+
+        if (!_allPlayerEntries[playerId].ContainsKey(color))
+        {
+            return;
+        }
+
+        if (_allPlayerEntries[playerId][color].Contains(value))
+        {
+            _allPlayerEntries[playerId][color].Remove(value);
+        }
+
+        _hasListChanged = true;
     }
 }

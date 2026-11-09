@@ -56,4 +56,9 @@ public class Host : NetworkBehaviour
     {
         _scoreSheetTracker.RegisterScoreSheetRow(playerId, color, value);
     }
+
+    public void RemoveScoreSheetEntry(ulong playerId, DiceColor color, int value)
+    {
+        _scoreSheetTracker.RemoveEntry(playerId, color, value);
+    }
 }

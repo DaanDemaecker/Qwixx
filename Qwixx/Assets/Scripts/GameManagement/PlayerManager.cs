@@ -16,7 +16,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-
+    private NetworkVariable<int> _playerCount = new NetworkVariable<int>();
 
     private Host _hostObject = null;
 
@@ -33,6 +33,11 @@ public class PlayerManager : NetworkBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
 
+    }
+
+    public int GetPlayerCount()
+    {
+        return _playerCount.Value;
     }
 
 
@@ -56,11 +61,18 @@ public class PlayerManager : NetworkBehaviour
                     else
                     {
                         _playerObject = playerSpawner.SpawnPlayer(player);
+                        IncrementPlayerCountRpc();
                     }
                     break;
                 }
             }
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void IncrementPlayerCountRpc()
+    {
+        _playerCount.Value = _playerCount.Value + 1;
     }
 
     private void OnlinePlayerManager_OnRollComplete(DiceRoll.DiceRollData data, FixedString32Bytes activePlayerId)
@@ -145,6 +157,21 @@ public class PlayerManager : NetworkBehaviour
         if(_hostObject != null)
         {
             _hostObject.RegisterScoreSheetRow(rpcParams.Receive.SenderClientId, color, value);
+        }
+    }
+
+
+    public void RemoveScoreSheetEntry(DiceColor color, int value)
+    {
+        RemoveScoreSheetEntryRpc(color, value, new RpcParams());
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RemoveScoreSheetEntryRpc(DiceColor color, int value, RpcParams rpcParams)
+    {
+        if (_hostObject != null)
+        {
+            _hostObject.RemoveScoreSheetEntry(rpcParams.Receive.SenderClientId, color, value);
         }
     }
 }

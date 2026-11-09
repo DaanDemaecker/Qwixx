@@ -59,8 +59,6 @@ public class GameManager : NetworkBehaviour
 
     private void SceneManager_OnGameSceneLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, System.Collections.Generic.List<ulong> clientsCompleted, System.Collections.Generic.List<ulong> clientsTimedOut)
     {
-        UnityEngine.Debug.LogError($"Finished loading scene {sceneName}");
-
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManager_OnGameSceneLoadEventCompleted;
 
         PlayerManager.Instance.SpawnPlayerRpc();
