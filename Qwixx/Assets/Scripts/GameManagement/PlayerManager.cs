@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Core;
@@ -130,6 +131,20 @@ public class PlayerManager : NetworkBehaviour
         if(TryGetComponent<TurnManager>(out TurnManager onlineTurnManager))
         {
             onlineTurnManager.ResetGame();
+        }
+    }
+
+    public void RegisterScoreSheetEntry(DiceColor color, int value)
+    {
+        RegisterScoreSheetRowRpc(color, value, new RpcParams());
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RegisterScoreSheetRowRpc(DiceColor color, int value, RpcParams rpcParams)
+    {
+        if(_hostObject != null)
+        {
+            _hostObject.RegisterScoreSheetRow(rpcParams.Receive.SenderClientId, color, value);
         }
     }
 }

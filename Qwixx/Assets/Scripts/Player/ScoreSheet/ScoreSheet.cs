@@ -55,6 +55,17 @@ public class ScoreSheet : MonoBehaviour
         SortRows();
 
         _playerId = UserManager.Instance.GetId();
+
+        foreach (ScoreSheetRow row in _scoreSheetRows)
+        {
+            List<ScoreSheetRow.ScoreSheetRowEntry> entries = row.GetEntries();
+
+            foreach (ScoreSheetRow.ScoreSheetRowEntry entry in entries)
+            {
+
+                PlayerManager.Instance.RegisterScoreSheetEntry(entry.Color, entry.Value);
+            }
+        }
     }
     private void SortRows()
     {

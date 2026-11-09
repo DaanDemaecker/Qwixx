@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5146328034584577551}
   - component: {fileID: 7469445335900379718}
   - component: {fileID: -2733684944704424561}
+  - component: {fileID: 1153906611364523915}
   m_Layer: 0
   m_Name: Host
   m_TagString: Untagged
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Host
   ShowTopMostFoldoutHeaderGroup: 1
   _diceManager: {fileID: -2733684944704424561}
+  _scoreSheetTracker: {fileID: 1153906611364523915}
   OnRollCompleteEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -91,3 +93,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceManager
   _host: {fileID: 7469445335900379718}
+--- !u!114 &1153906611364523915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549626942863636254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e14e880da3dbdc4f9b5177454fc39e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreSheetTracker
