@@ -9,7 +9,8 @@ public enum DiceColor
     Color1,
     Color2,
     Color3,
-    Color4
+    Color4,
+    Default
 }
 
 public class DiceRoll

@@ -23,6 +23,8 @@ MonoBehaviour:
     Material: {fileID: 2100000, guid: 06304afbc86dd2145b83d3d9f495bae0, type: 2}
   - Color: 4
     Material: {fileID: 2100000, guid: 2966befe7f001f84fa70a634b2eb95c2, type: 2}
+  - Color: 5
+    Material: {fileID: 2100000, guid: 4cca8239bc520a24e96d1f82d4757151, type: 2}
   _uiMaterialList:
   - Color: 0
     Material: {fileID: 2100000, guid: acca3dfd7b11d3a4ba68e0c7b5c40506, type: 2}
@@ -34,3 +36,5 @@ MonoBehaviour:
     Material: {fileID: 2100000, guid: 79249e4203a1ec44aa37bb7fb98c7327, type: 2}
   - Color: 4
     Material: {fileID: 2100000, guid: 94b15cbe20916f54e9a9877f55a1519d, type: 2}
+  - Color: 5
+    Material: {fileID: 2100000, guid: 7560d1619e5332448800086b877b1336, type: 2}

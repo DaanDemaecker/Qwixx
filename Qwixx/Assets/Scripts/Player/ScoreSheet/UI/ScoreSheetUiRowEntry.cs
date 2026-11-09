@@ -13,6 +13,9 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
     private GameObject _crossContainer = null;
 
     [SerializeField]
+    private Image _numberBackgroundImage = null;
+
+    [SerializeField]
     private PulsingComponent _pulsing = null;
 
     [SerializeField]
@@ -31,14 +34,23 @@ public class ScoreSheetUiRowEntry : MonoBehaviour
 
     public void SetEntry(ScoreSheetRow.ScoreSheetRowEntry entry)
     {
+        Material uiMaterial = MaterialManager.Instance.GetUiMaterial(entry.IsLocked ? DiceColor.Default : entry.Color);
+        Material uiMaterial2 = MaterialManager.Instance.GetUiMaterial(DiceColor.Color0);
+
         if (_text != null)
         {
             _text.text = entry.Value.ToString();
+            _text.color = uiMaterial.color;
+        }
+        
+        if(_numberBackgroundImage != null)
+        {
+            _numberBackgroundImage.material = uiMaterial2;
         }
 
         if (_background != null)
         {
-            _background.material = MaterialManager.Instance.GetUiMaterial(entry.IsLocked ? DiceColor.Color0 : entry.Color);
+            _background.material = uiMaterial;
         }
 
         if (_crossContainer != null)
