@@ -48,9 +48,46 @@ public class ScoreSheetTracker : MonoBehaviour
             if(_allPlayerEntries.Count != PlayerManager.Instance.GetPlayerCount())
             {
                 return;
-            }    
+            }
+
+            CheckColors();
             _hasListChanged = false;
         }
+    }
+
+    private void CheckColors()
+    {
+        List<DiceColor> toRemove = new();
+
+        foreach(DiceColor color in _availableColors)
+        {
+            bool isColorStillAvailable = false;
+
+            foreach(ulong playerId in _allPlayerEntries.Keys)
+            {
+                if(_allPlayerEntries[playerId].ContainsKey(color))
+                {
+                    isColorStillAvailable = true;
+                    break;
+                }
+            }
+
+            if(!isColorStillAvailable)
+            {
+                toRemove.Add(color);
+            }
+        }
+
+        foreach(DiceColor color in toRemove)
+        {
+            RemoveColor(color);
+        }
+    }
+
+    private void RemoveColor(DiceColor color)
+    {
+        _availableColors.Remove(color);
+        Debug.Log($"Removing color: {color}");
     }
 
     public void RemoveEntry(ulong playerId, DiceColor color, int value)
@@ -68,6 +105,11 @@ public class ScoreSheetTracker : MonoBehaviour
         if (_allPlayerEntries[playerId][color].Contains(value))
         {
             _allPlayerEntries[playerId][color].Remove(value);
+        }
+
+        if (_allPlayerEntries[playerId][color].Count == 0)
+        {
+            _allPlayerEntries[playerId].Remove(color);
         }
 
         _hasListChanged = true;

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameRules
   MaxLives: 4
   PenaltyPerLife: 5
-  MinCrossedForLock: 1
-  MinRowsLocked: 2
+  MinCrossedForLock: 5
+  MinRowsLocked: 4
   MinPlayers: 1
   MaxPlayers: 4
   ScoreConverter: 0100000003000000060000000a0000000f000000150000001c000000270000002d00000037000000420000004e000000
