@@ -41,6 +41,11 @@ public class Host : NetworkBehaviour
         }
     }
 
+    public void RemoveDie(DiceColor die)
+    {
+        _diceManager.RemoveDie(die);
+    }
+
 
     public void RollDice(FixedString32Bytes activePlayerId)
     {

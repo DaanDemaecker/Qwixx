@@ -10,6 +10,14 @@ public class Die : MonoBehaviour
 
     private DiceColor _color = DiceColor.Color0;
 
+    public DiceColor Color
+    {
+        get
+        {
+            return _color;
+        }
+    }
+
     private Rigidbody _rigidBody = null;
 
     private const float MAX_ANGLE = 30;

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2026745845
+  GlobalObjectIdHash: 3875253988
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -105,3 +105,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e14e880da3dbdc4f9b5177454fc39e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreSheetTracker
+  _host: {fileID: 7469445335900379718}

@@ -100,6 +100,25 @@ public class DiceManager : MonoBehaviour
         }
     }
 
+    public void RemoveDie(DiceColor color)
+    {
+        foreach(Die die in _dice)
+        {
+            if (die.Color == color)
+            {
+                RemoveDie(die);
+                break;
+            }
+        }
+    }
+
+    private void RemoveDie(Die die)
+    {
+        _dice.Remove(die);
+        _rollInfo.SetEnabled(die.Color, false);
+        Destroy(die.gameObject);
+    }
+
     private void DiceManager_OnSingleRollComplete(DiceColor color, int value)
     {
         _rollInfo.SetValue(color, value);
