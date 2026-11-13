@@ -113,7 +113,38 @@ public class ScoreSheetRow : MonoBehaviour
 
     public ScoreSheetRowEntry GetAvailableEntryNColored(DiceRoll.DiceRollData data)
     {
-        return GetAvailableEntry(data.Color0_1 + data.Color0_2, DiceColor.Color0);
+        ScoreSheetRowEntry entry = GetAvailableEntry(data.Color0_1 + data.Color0_2, DiceColor.Color0);
+
+        switch(entry.Color)
+        {
+            case DiceColor.Color1:
+                if(!data.Color1Enabled)
+                {
+                    return DefaultEntry;
+                }
+                break;
+            case DiceColor.Color2:
+                if (!data.Color2Enabled)
+                {
+                    return DefaultEntry;
+                }
+                break;
+            case DiceColor.Color3:
+                if (!data.Color3Enabled)
+                {
+                    return DefaultEntry;
+                }
+                break;
+            case DiceColor.Color4:
+                if (!data.Color4Enabled)
+                {
+                    return DefaultEntry;
+                }
+                break;
+        }
+
+
+        return entry;
     }
 
     public List<ScoreSheetRowEntry> GetAvailableEntriesColored(DiceRoll.DiceRollData data)
@@ -123,57 +154,68 @@ public class ScoreSheetRow : MonoBehaviour
         ScoreSheetRowEntry entry;
 
         // Color1
-        entry = GetAvailableEntry(data.Color0_1 + data.Color1, DiceColor.Color1);
-        if (entry.Value > 0)
+        if (data.Color1Enabled)
         {
-            list.Add(entry);
-        }
+            entry = GetAvailableEntry(data.Color0_1 + data.Color1, DiceColor.Color1);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
 
-        entry = GetAvailableEntry(data.Color0_2 + data.Color1, DiceColor.Color1);
-        if (entry.Value > 0)
-        {
-            list.Add(entry);
+            entry = GetAvailableEntry(data.Color0_2 + data.Color1, DiceColor.Color1);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
         }
 
         // Color2
-        entry = GetAvailableEntry(data.Color0_1 + data.Color2, DiceColor.Color2);
-        if (entry.Value > 0)
+        if (data.Color2Enabled)
         {
-            list.Add(entry);
-        }
+            entry = GetAvailableEntry(data.Color0_1 + data.Color2, DiceColor.Color2);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
 
-        entry = GetAvailableEntry(data.Color0_2 + data.Color2, DiceColor.Color2);
-        if (entry.Value > 0)
-        {
-            list.Add(entry);
+            entry = GetAvailableEntry(data.Color0_2 + data.Color2, DiceColor.Color2);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
         }
 
         // Color3
-        entry = GetAvailableEntry(data.Color0_1 + data.Color3, DiceColor.Color3);
-        if (entry.Value > 0)
+        if (data.Color3Enabled)
         {
-            list.Add(entry);
-        }
+            entry = GetAvailableEntry(data.Color0_1 + data.Color3, DiceColor.Color3);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
 
-        entry = GetAvailableEntry(data.Color0_2 + data.Color3, DiceColor.Color3);
-        if (entry.Value > 0)
-        {
-            list.Add(entry);
+            entry = GetAvailableEntry(data.Color0_2 + data.Color3, DiceColor.Color3);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
         }
 
         // Color4
-        entry = GetAvailableEntry(data.Color0_1 + data.Color4, DiceColor.Color4);
-        if (entry.Value > 0)
+        if (data.Color4Enabled)
         {
-            list.Add(entry);
-        }
+            entry = GetAvailableEntry(data.Color0_1 + data.Color4, DiceColor.Color4);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
 
-        entry = GetAvailableEntry(data.Color0_2 + data.Color4, DiceColor.Color4);
-        if (entry.Value > 0)
-        {
-            list.Add(entry);
+            entry = GetAvailableEntry(data.Color0_2 + data.Color4, DiceColor.Color4);
+            if (entry.Value > 0)
+            {
+                list.Add(entry);
+            }
         }
-
 
         return list;
     }

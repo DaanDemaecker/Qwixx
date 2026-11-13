@@ -218,7 +218,13 @@ public class ScoreSheet : MonoBehaviour
 
         foreach (var row in _scoreSheetRows)
         {
-            nColoredOptions.Add(row.GetAvailableEntryNColored(data));
+            ScoreSheetRow.ScoreSheetRowEntry nColoredOption = row.GetAvailableEntryNColored(data);
+
+            if(nColoredOption.Value != ScoreSheetRow.DefaultEntry.Value)
+            {
+                nColoredOptions.Add(nColoredOption);
+            }
+
             if (isActivePlayer)
             {
                 coloredOptions.AddRange(row.GetAvailableEntriesColored(data));
