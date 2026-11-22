@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_UI_ColorSlider
-  m_Shader: {fileID: -6465566751694194690, guid: c0c7b5233d8f68349be6edd12d10537b, type: 3}
+  m_Name: MAT_UI_ColorSquare
+  m_Shader: {fileID: -6465566751694194690, guid: 04a84520901797b4c82a3ca7ac1601fe, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -113,6 +113,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Hue: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
