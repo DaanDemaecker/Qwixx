@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ColorPickerUI : MonoBehaviour
@@ -15,6 +16,19 @@ public class ColorPickerUI : MonoBehaviour
     private float _hue = 0;
     private float _value = 1;
     private float _saturation = 1;
+
+    private Color _currentColor = Color.red;
+
+    public Color CurrentColor
+    {
+        get
+        {
+            return _currentColor;
+        }
+    }
+
+    public UnityEvent<Color> ColorChangedEvent = new UnityEvent<Color>();
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,7 +86,10 @@ public class ColorPickerUI : MonoBehaviour
 
     private void SetColor()
     {
-        _finalColorImage.color = Color.HSVToRGB(_hue, _saturation, _value);
-    }
+        _currentColor = Color.HSVToRGB(_hue, _saturation, _value);
 
+        _finalColorImage.color = _currentColor;
+
+        ColorChangedEvent.Invoke(_currentColor);
+    }
 }
