@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.7
+  m_fontSize: 84.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.7
+  m_fontSize: 84.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -451,7 +451,7 @@ RectTransform:
   - {fileID: 3712363303405848831}
   - {fileID: 1008624094152259295}
   - {fileID: 6337909833798655427}
-  - {fileID: 74364080753514671}
+  - {fileID: 4408643096653533616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -800,7 +800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914610826990664738, guid: 420e2e5cc7c680e49a4c68d3a1104fc5, type: 3}
       propertyPath: m_fontSize
-      value: 65.25
+      value: 63.5
       objectReference: {fileID: 0}
     - target: {fileID: 6058037904127556605, guid: 420e2e5cc7c680e49a4c68d3a1104fc5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1036,7 +1036,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9211573653183720238, guid: 420e2e5cc7c680e49a4c68d3a1104fc5, type: 3}
   m_PrefabInstance: {fileID: 2892104828473505517}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &9141784779933381505
+--- !u!1001 &4825801508687706782
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1044,9 +1044,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5237066412217791401}
     m_Modifications:
-    - target: {fileID: 6257718612879640402, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
-      propertyPath: m_fontSize
-      value: 79.95
+    - target: {fileID: 2535782896029032283, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2535782896029032283, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8708319444910956000, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
       propertyPath: m_Name
@@ -1137,8 +1141,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
---- !u!224 &74364080753514671 stripped
+--- !u!224 &4408643096653533616 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9211573653183720238, guid: 6dbffa36cbb827e4692bca83570baf00, type: 3}
-  m_PrefabInstance: {fileID: 9141784779933381505}
+  m_PrefabInstance: {fileID: 4825801508687706782}
   m_PrefabAsset: {fileID: 0}

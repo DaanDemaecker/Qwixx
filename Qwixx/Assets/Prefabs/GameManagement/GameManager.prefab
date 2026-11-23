@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367370b5fdbcab649a8324b17996cc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialManager
-  _colorPalette: {fileID: 11400000, guid: 8aca4cbf14b59b2418dfa197a724acec, type: 2}
+  _materialCollection: {fileID: 11400000, guid: 8aca4cbf14b59b2418dfa197a724acec, type: 2}
 --- !u!1 &6631006054865737482
 GameObject:
   m_ObjectHideFlags: 0

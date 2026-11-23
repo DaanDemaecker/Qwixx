@@ -3,7 +3,9 @@ using UnityEngine;
 public class MaterialManager : MonoBehaviour
 {
     [SerializeField]
-    private ColorPalette _colorPalette = null;
+    private MaterialCollection _materialCollection = null;
+
+
 
     private static MaterialManager _sInstance = null;
 
@@ -24,7 +26,7 @@ public class MaterialManager : MonoBehaviour
 
         _sInstance = this;
 
-        if(_colorPalette == null)
+        if(_materialCollection == null)
         {
             Debug.LogError("No color palette was given");
         }
@@ -32,9 +34,9 @@ public class MaterialManager : MonoBehaviour
 
     public Material GetMaterial(DiceColor color)
     {
-        if(_colorPalette.MaterialDictionary.ContainsKey(color))
+        if(_materialCollection.MaterialDictionary.ContainsKey(color))
         {
-            return _colorPalette.MaterialDictionary[color];
+            return _materialCollection.MaterialDictionary[color];
         }
 
         return default;
@@ -42,9 +44,9 @@ public class MaterialManager : MonoBehaviour
 
     public Material GetUiMaterial(DiceColor color)
     {
-        if (_colorPalette.UiMaterialDictionary.ContainsKey(color))
+        if (_materialCollection.UiMaterialDictionary.ContainsKey(color))
         {
-            return _colorPalette.UiMaterialDictionary[color];
+            return _materialCollection.UiMaterialDictionary[color];
         }
 
         return default;

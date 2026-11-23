@@ -4,8 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "ColorPalette", menuName = "Scriptable Objects/ColorPalette")]
-public class ColorPalette : ScriptableObject
+[CreateAssetMenu(fileName = "MaterialCollection", menuName = "Scriptable Objects/MaterialCollection")]
+public class MaterialCollection : ScriptableObject
 {
     [Serializable]
     public struct DicColorMaterialPair
